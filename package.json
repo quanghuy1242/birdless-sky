@@ -27,6 +27,7 @@
     "@material/button": "^3.2.0",
     "@material/elevation": "^3.1.0",
     "@material/top-app-bar": "^3.2.0",
+    "@material/typography": "^3.1.0",
     "install": "^0.13.0",
     "lit-element": "^2.2.1",
     "lit-redux-router": "^0.9.14",
