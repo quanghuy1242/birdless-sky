@@ -1,5 +1,5 @@
 import { LitElement, html, css, property, customElement, query, queryAll, unsafeCSS } from 'lit-element';
-import { mdcTopAppBarStyles, mdcButtonStyles } from '../../sharestyles';
+import { mdcTopAppBarStyles, mdcButtonStyles, mdcElevationStyles } from '../../sharestyles';
 import { MDCTopAppBar } from '@material/top-app-bar';
 import { MDCRipple } from '@material/ripple';
 import style from './app-main-content.scss';
@@ -13,7 +13,8 @@ export class AppNavTop extends LitElement {
     return [
       css`${unsafeCSS(style)}`,
       mdcTopAppBarStyles,
-      mdcButtonStyles
+      mdcButtonStyles,
+      mdcElevationStyles
     ];
   }
 
@@ -27,7 +28,7 @@ export class AppNavTop extends LitElement {
 
   render() {
     return html`
-      <header class="mdc-top-app-bar app-bar">
+      <header class="mdc-top-app-bar app-bar mdc-elevation--z4">
         <div class="mdc-top-app-bar__row">
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
             <a href="/" class="mdc-button mdc-button--unelevated">Birdless Sky</a>
