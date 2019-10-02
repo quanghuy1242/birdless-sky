@@ -1,5 +1,6 @@
 const merge = require('webpack-merge');
 const path = require('path');
+const autoprefixer = require('autoprefixer');
 
 const { createDefaultConfig } = require('@open-wc/building-webpack');
 const config = createDefaultConfig({
@@ -15,7 +16,23 @@ module.exports = (env, argv) => {
       rules: [
         {
           test: /\.(s*)css$/i,
-          use: [ "css-loader", "sass-loader" ]
+          use: [
+            { loader: 'css-loader' },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => [autoprefixer()]
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sassOptions: {
+                  includePaths: ['./node_modules'],
+                }
+              },
+            }
+          ]
         },
       ],
     },

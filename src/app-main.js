@@ -8,6 +8,8 @@ import './Pages/Post/app-post';
 import './Pages/NotFound/app-not-found';
 import './Pages/About/app-about';
 
+import './components/NavTop/app-nav-top';
+
 @customElement('app-main')
 export class AppMain extends LitElement {
   constructor() {
@@ -17,6 +19,7 @@ export class AppMain extends LitElement {
 
   render() {
     return html`
+      <app-nav-top></app-nav-top>
       <nav>
         <a href="/">Home</a>
         <a href="/post/1">Blog số 1</a>
