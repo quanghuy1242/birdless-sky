@@ -24,8 +24,8 @@ export class AppMain extends LitElement {
       <app-main-content>
         <div class="outlet">
           <lit-route
-          	path="/"
-          	.resolve=${() => store.dispatch(navigate('/home'))}
+            path="/"
+            .resolve=${() => store.dispatch(navigate('/home'))}
           ></lit-route>
           <lit-route
             path="/home"
