@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "quanghuy",
     "public": "dist",
     "rewrites": [
       {

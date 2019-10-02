@@ -7,7 +7,7 @@
     "build": "webpack --mode production",
     "start": "webpack-dev-server --open",
     "predeploy": "npm run build",
-    "deploy": "firebase deploy"
+    "deploy": "firebase deploy --only hosting:quanghuy"
   },
   "keywords": [],
   "author": "",
