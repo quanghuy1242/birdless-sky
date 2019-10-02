@@ -31,7 +31,7 @@ export class AppNavTop extends LitElement {
       <header class="mdc-top-app-bar app-bar mdc-elevation--z4">
         <div class="mdc-top-app-bar__row">
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-            <a href="/" class="mdc-button mdc-button--unelevated">Birdless Sky</a>
+            <a href="/home" class="mdc-button mdc-button--unelevated">Birdless Sky</a>
           </section>
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
             <a href="/about" class="mdc-button mdc-button--unelevated">Find me</a>
