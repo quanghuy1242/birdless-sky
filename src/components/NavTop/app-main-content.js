@@ -12,12 +12,14 @@ import { MDCTopAppBar } from '@material/top-app-bar';
 import { MDCRipple } from '@material/ripple';
 import { MDCList } from '@material/list';
 // import { MDCDrawer } from '@material/drawer';
+import { connect } from 'pwa-helpers';
+import { store } from '../../store';
 import style from './app-main-content.scss';
 
 import '../../components/Banner/app-banner';
 
 @customElement('app-main-content')
-export class AppNavTop extends LitElement {
+export class AppNavTop extends connect(store)(LitElement) {
   @query('.mdc-top-app-bar') topAppBarElement;
   @queryAll('.mdc-button') buttonElements;
   @query('.mdc-list') listElement;
@@ -25,6 +27,8 @@ export class AppNavTop extends LitElement {
   @queryAll('.mdc-list-item') listItems;
   @query('.drawer-frame-root') contentElement;
   @query('app-banner') bannerElement;
+
+  @property({ type: String }) pathname = window.location.pathname;
 
   static get styles() {
     return [
@@ -39,6 +43,18 @@ export class AppNavTop extends LitElement {
     ];
   }
 
+  stateChanged(state) {
+    this.pathname = state.router.activeRoute;
+  }
+
+  updated() {
+    // Calculate min-height of content to fit screen
+    setTimeout(() => {
+      this.contentElement.style.minHeight 
+        = `calc(100% - ${this.bannerElement ? this.bannerElement.offsetHeight : 0}px)`;
+    }, 0);
+  }
+
   firstUpdated() {
     this.topAppBar = new MDCTopAppBar(this.topAppBarElement);
 
@@ -50,11 +66,6 @@ export class AppNavTop extends LitElement {
     [...this.buttonElements, ...this.listItems].forEach(buttonElement => {
       MDCRipple.attachTo(buttonElement);
     });
-
-    // Calculate min-height of content to fit screen
-    setTimeout(() => {
-      this.contentElement.style.minHeight = `calc(100% - ${this.bannerElement.offsetHeight}px)`;
-    }, 0);
   }
 
   render() {
@@ -72,7 +83,9 @@ export class AppNavTop extends LitElement {
         </div>
       </header>
       <div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust">
-        <app-banner></app-banner>
+        ${this.pathname === '/home'
+          ? html`<app-banner></app-banner>`
+          : html``}
         <div class="drawer-frame-root">
           <aside class="mdc-drawer">
             <div class="mdc-drawer__content">
