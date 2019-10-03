@@ -4,13 +4,11 @@ import style from './app-circular-progress.scss';
 
 /**
  * ## Property
- * - **size**: "xsmall" | "small" | "medium" | "large" | "xlarge" | "xxlarge"  
- * - **progress**
- * - **max**
- * - **min**
- * 
- * ## Attribute
- * - **center**: styling the circular progress to the center of it's parrent
+ * - **size** [String]: "xsmall" | "small" | "medium" | "large" | "xlarge" | "xxlarge"  
+ * - **progress** [Number]:
+ * - **max** [Number]:
+ * - **min** [Number]:
+ * - **center** [notype]: styling the circular progress to the center of it's parrent
  */
 @customElement('app-circular-progress')
 export class AppCircularProgress extends LitElement {
