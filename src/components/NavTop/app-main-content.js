@@ -91,19 +91,19 @@ export class AppNavTop extends connect(store)(LitElement) {
             <div class="mdc-drawer__content">
               <div class="mdc-list">
                 <a class="mdc-list-item" href="/home">
-                  <i class="material-icons mdc-list-item__graphic">inbox</i>
+                  <i class="material-icons mdc-list-item__graphic">book</i>
                   <span class="mdc-list-item__text">Blog</span>
                 </a>
                 <a class="mdc-list-item" href="/category">
-                  <i class="material-icons mdc-list-item__graphic">send</i>
+                  <i class="material-icons mdc-list-item__graphic">category</i>
                   <span class="mdc-list-item__text">Category</span>
                 </a>
                 <a class="mdc-list-item" href="http://project-showcase.netlify.com" target="_blank">
-                  <i class="material-icons mdc-list-item__graphic">drafts</i>
+                  <i class="material-icons mdc-list-item__graphic">collections</i>
                   <span class="mdc-list-item__text">Showcase</span>
                 </a>
                 <a class="mdc-list-item" href="/about">
-                  <i class="material-icons mdc-list-item__graphic">send</i>
+                  <i class="material-icons mdc-list-item__graphic">info</i>
                   <span class="mdc-list-item__text">About me</span>
                 </a>
               </div>
