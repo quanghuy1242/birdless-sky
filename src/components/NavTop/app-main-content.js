@@ -1,13 +1,30 @@
 import { LitElement, html, css, property, customElement, query, queryAll, unsafeCSS } from 'lit-element';
-import { mdcTopAppBarStyles, mdcButtonStyles, mdcElevationStyles, mdcTypographyStyles } from '../../sharestyles';
+import {
+  mdcTopAppBarStyles,
+  mdcButtonStyles,
+  mdcElevationStyles,
+  mdcTypographyStyles,
+  mdcListStyles,
+  mdcDrawerStyles,
+  materialIconsStyles
+} from '../../sharestyles';
 import { MDCTopAppBar } from '@material/top-app-bar';
 import { MDCRipple } from '@material/ripple';
+import { MDCList } from '@material/list';
+// import { MDCDrawer } from '@material/drawer';
 import style from './app-main-content.scss';
+
+import '../../components/Banner/app-banner';
 
 @customElement('app-main-content')
 export class AppNavTop extends LitElement {
   @query('.mdc-top-app-bar') topAppBarElement;
   @queryAll('.mdc-button') buttonElements;
+  @query('.mdc-list') listElement;
+  @query('.mdc-drawer') drawerElement;
+  @queryAll('.mdc-list-item') listItems;
+  @query('.drawer-frame-root') contentElement;
+  @query('app-banner') bannerElement;
 
   static get styles() {
     return [
@@ -15,16 +32,29 @@ export class AppNavTop extends LitElement {
       mdcTopAppBarStyles,
       mdcButtonStyles,
       mdcElevationStyles,
-      mdcTypographyStyles
+      mdcTypographyStyles,
+      mdcListStyles,
+      mdcDrawerStyles,
+      materialIconsStyles
     ];
   }
 
   firstUpdated() {
     this.topAppBar = new MDCTopAppBar(this.topAppBarElement);
 
-    this.buttonElements.forEach(buttonElement => {
+    this.list = MDCList.attachTo(this.listElement);
+    // this.drawer = MDCDrawer.attachTo(this.drawerElement);
+    // this.drawer.open = true;
+
+    // Attact Ripple
+    [...this.buttonElements, ...this.listItems].forEach(buttonElement => {
       MDCRipple.attachTo(buttonElement);
     });
+
+    // Calculate min-height of content to fit screen
+    setTimeout(() => {
+      this.contentElement.style.minHeight = `calc(100% - ${this.bannerElement.offsetHeight}px)`;
+    }, 0);
   }
 
   render() {
@@ -42,9 +72,34 @@ export class AppNavTop extends LitElement {
         </div>
       </header>
       <div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust">
-        <main class="main-content" id="main-content">
-          <slot></slot>
-        </main>
+        <app-banner></app-banner>
+        <div class="drawer-frame-root">
+          <aside class="mdc-drawer">
+            <div class="mdc-drawer__content">
+              <div class="mdc-list">
+                <a class="mdc-list-item" href="/home">
+                  <i class="material-icons mdc-list-item__graphic">inbox</i>
+                  <span class="mdc-list-item__text">Blog</span>
+                </a>
+                <a class="mdc-list-item" href="/category">
+                  <i class="material-icons mdc-list-item__graphic">send</i>
+                  <span class="mdc-list-item__text">Category</span>
+                </a>
+                <a class="mdc-list-item" href="https://quanghuy.netlify.com/project-showcase" target="_blank">
+                  <i class="material-icons mdc-list-item__graphic">drafts</i>
+                  <span class="mdc-list-item__text">Showcase</span>
+                </a>
+                <a class="mdc-list-item" href="/about">
+                  <i class="material-icons mdc-list-item__graphic">send</i>
+                  <span class="mdc-list-item__text">About me</span>
+                </a>
+              </div>
+            </div>
+          </aside>
+          <main class="main-content" id="main-content">
+            <slot></slot>
+          </main>
+        </div>
       </div>
     `;
   }
