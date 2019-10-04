@@ -5,6 +5,19 @@
   animation-name: fade-in;
 }
 
+.isClosing {
+  animation-name: fade-out;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;

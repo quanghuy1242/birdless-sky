@@ -35,7 +35,11 @@ export class AppTooltip extends LitElement {
   }
 
   handleCloseTooltip() {
-    this.tooltip.dispose();
+    if (!this.tooltipElement.assignedElements()[1]) { return; }
+    this.tooltipElement.assignedElements()[1].classList.add('isClosing');
+    setTimeout(() => {
+      this.tooltip.dispose();
+    }, 200);
   }
 
   render() {
