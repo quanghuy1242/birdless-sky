@@ -76,7 +76,7 @@ export class AppNavTop extends connect(store)(LitElement) {
       <header class="mdc-top-app-bar app-bar mdc-elevation--z4">
         <div class="mdc-top-app-bar__row">
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-            <a href="/home" class="mdc-button mdc-button--unelevated header-text">Birdless Sky</a>
+            <a href="/home" class="mdc-button mdc-button--unelevated header-text mdc-typography--body2">Birdless Sky</a>
           </section>
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end top-bar-sub-item" role="toolbar">
             <app-tooltip content="Find me on the internet">
