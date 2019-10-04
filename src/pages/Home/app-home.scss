@@ -6,9 +6,11 @@
 
   .list-post-panel {
     flex-grow: 1;
+    width: 100%;
   }
 
   .right-panel {
     width: 300px;
+    min-width: 300px;
   }
 }

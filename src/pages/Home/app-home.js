@@ -28,9 +28,8 @@ export class AppMain extends LitElement {
           <app-card-item></app-card-item>
         </div>
         <div class="right-panel">
-          
+          <app-circular-progress size="xlarge" center></app-circular-progress>
         </div>
-        <!-- <app-circular-progress size="xlarge" center></app-circular-progress> -->
       </div>
     `;
   }
