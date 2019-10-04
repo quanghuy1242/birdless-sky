@@ -34,7 +34,6 @@ export class AppNavTop extends connect(store)(LitElement) {
 
   static get styles() {
     return [
-      css`${unsafeCSS(style)}`,
       mdcTopAppBarStyles,
       mdcButtonStyles,
       mdcElevationStyles,
@@ -42,7 +41,8 @@ export class AppNavTop extends connect(store)(LitElement) {
       mdcListStyles,
       mdcDrawerStyles,
       materialIconsStyles,
-      css`${unsafeCSS(tooltipAnimations)}`
+      css`${unsafeCSS(tooltipAnimations)}`,
+      css`${unsafeCSS(style)}`,
     ];
   }
 
