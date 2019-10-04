@@ -44,6 +44,7 @@ export class AppTooltip extends LitElement {
         class="tooltip-wrapper"
         @mouseenter=${this.handleOpenTooltip}
         @mouseleave=${this.handleCloseTooltip}
+        @click=${this.handleCloseTooltip}
       >
         <slot></slot>
       </div>
