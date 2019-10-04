@@ -25,7 +25,9 @@ export class AppMain extends LitElement {
     return html`
       <div class="home-wrapper">
         <div class="list-post-panel">
-          <app-card-item></app-card-item>
+          <div class="list-post-wrapper">
+            <app-card-item></app-card-item>
+          </div>
         </div>
         <div class="right-panel">
           <app-circular-progress size="xlarge" center></app-circular-progress>
