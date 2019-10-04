@@ -17,6 +17,8 @@ import { store } from '../../store';
 import style from './app-main-content.scss';
 
 import '../../components/Banner/app-banner';
+import '../Tooltip/app-tooltip';
+import tooltipAnimations from '../Tooltip/app-tooltip-animation.scss';
 
 @customElement('app-main-content')
 export class AppNavTop extends connect(store)(LitElement) {
@@ -39,7 +41,8 @@ export class AppNavTop extends connect(store)(LitElement) {
       mdcTypographyStyles,
       mdcListStyles,
       mdcDrawerStyles,
-      materialIconsStyles
+      materialIconsStyles,
+      css`${unsafeCSS(tooltipAnimations)}`
     ];
   }
 
@@ -76,7 +79,9 @@ export class AppNavTop extends connect(store)(LitElement) {
             <a href="/home" class="mdc-button mdc-button--unelevated header-text">Birdless Sky</a>
           </section>
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end top-bar-sub-item" role="toolbar">
-            <button href="/about" class="mdc-button mdc-button--unelevated mdc-typography--body2">Find me</button>
+            <app-tooltip content="Find me on the internet">
+              <button href="/about" class="mdc-button mdc-button--unelevated mdc-typography--body2">Find me</button>
+            </app-tooltip>
             <a href="/login" class="mdc-button mdc-button--unelevated mdc-typography--body2">Sign in</a>
             <a href="/register" class="mdc-button mdc-button--unelevated mdc-typography--body2">Register</a>
           </section>
