@@ -1,14 +1,15 @@
 import { LitElement, html, css, property, customElement, query, unsafeCSS } from 'lit-element';
 import style from './app-tooltip.scss';
-import Tooltip from 'tooltip.js';
+import Popper from 'popper.js';
 
 @customElement('app-tooltip')
 export class AppTooltip extends LitElement {
-  @query('slot') tooltipElement;
+  @query('slot') referenceElement;
+  @query('.tooltip-inner') tooltipElement;
 
-  @property({ type: Object }) tooltip;
   @property({ type: String }) content = 'Nội dung';
   @property({ type: String }) placement = 'bottom';
+  @property({ type: Boolean }) isOpen = false;
 
   static get styles() {
     return [
@@ -16,30 +17,29 @@ export class AppTooltip extends LitElement {
     ];
   }
 
-  firstUpdated() {
-    this.tooltip = new Tooltip(this.tooltipElement.assignedElements()[0], {
-      html: true,
-      placement: this.placement,
-      title: this.content,
-      trigger: "hover",
-      popperOptions: {
-        modifiers: {
-          arrow: { enabled: false }
-        }
-      }
-    });
+  updated() {
+    if (this.isOpen) {
+      new Popper(this.referenceElement.assignedElements()[0], this.tooltipElement, {
+        placement: this.placement,
+        positionFixed: true
+      });
+      this.tooltipElement.classList.add('isOpening');
+    }
   }
 
   handleOpenTooltip() {
-    this.tooltip.show();
+    if (!this.isOpen) {
+      this.isOpen = true;
+    }
   }
 
   handleCloseTooltip() {
-    if (!this.tooltipElement.assignedElements()[1]) { return; }
-    this.tooltipElement.assignedElements()[1].classList.add('isClosing');
-    setTimeout(() => {
-      this.tooltip.dispose();
-    }, 200);
+    if (this.tooltipElement) {
+      this.tooltipElement.classList.replace('isOpening', 'isClosing');
+      setTimeout(() => {
+        this.isOpen = false;
+      }, 200);
+    }
   }
 
   render() {
@@ -50,6 +50,13 @@ export class AppTooltip extends LitElement {
         @mouseleave=${this.handleCloseTooltip}
         @click=${this.handleCloseTooltip}
       >
+        ${this.isOpen
+          ? html`
+            <div class="tooltip-inner">
+              ${this.content}
+            </div>
+          `
+          : html``}
         <slot></slot>
       </div>
     `;
