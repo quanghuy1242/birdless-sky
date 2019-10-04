@@ -10,6 +10,8 @@ import {
 } from '../../sharestyles';
 import { MDCRipple } from '@material/ripple';
 
+import '../Tooltip/app-tooltip';
+
 @customElement('app-card-item')
 export class AppCardItem extends LitElement {
   static get styles() {
@@ -47,12 +49,14 @@ export class AppCardItem extends LitElement {
             <button class="mdc-button mdc-card__action mdc-card__action--button">Comment</button>
           </div>
           <div class="mdc-card__action-icons">
-            <button
-              class="mdc-icon-button material-icons mdc-card__action mdc-card__action--icon--unbounded"
-              data-mdc-ripple-is-unbounded="true"
-            >
-              share
-            </button>
+            <app-tooltip content="Shares">
+              <button
+                class="mdc-icon-button material-icons mdc-card__action mdc-card__action--icon--unbounded"
+                data-mdc-ripple-is-unbounded="true"
+              >
+                share
+              </button>
+            </app-tooltip>
             <button
               class="mdc-icon-button material-icons mdc-card__action mdc-card__action--icon--unbounded"
               data-mdc-ripple-is-unbounded="true"

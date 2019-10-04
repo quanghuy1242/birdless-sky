@@ -18,7 +18,6 @@ import style from './app-main-content.scss';
 
 import '../../components/Banner/app-banner';
 import '../Tooltip/app-tooltip';
-import tooltipAnimations from '../Tooltip/app-tooltip-animation.scss';
 
 @customElement('app-main-content')
 export class AppNavTop extends connect(store)(LitElement) {
@@ -41,7 +40,6 @@ export class AppNavTop extends connect(store)(LitElement) {
       mdcListStyles,
       mdcDrawerStyles,
       materialIconsStyles,
-      css`${unsafeCSS(tooltipAnimations)}`,
       css`${unsafeCSS(style)}`,
     ];
   }
