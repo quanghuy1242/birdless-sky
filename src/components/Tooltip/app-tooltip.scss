@@ -1,0 +1,12 @@
+::slotted(div[role="tooltip"]) {
+  margin: 0.75rem;
+  color: white;
+  border-radius: 4px;
+  max-width: 250px;
+  padding: 6px 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 10px;
+  font-family: 'Roboto';
+  background-color: rgba(128, 128, 128, 0.8);
+}

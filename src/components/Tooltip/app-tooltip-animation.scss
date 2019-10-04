@@ -1,0 +1,15 @@
+.tooltip {
+  animation-duration: 200ms;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+  animation-name: fade-in;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
