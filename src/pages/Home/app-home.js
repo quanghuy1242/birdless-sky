@@ -1,9 +1,11 @@
 import { LitElement, html, css, property, customElement, unsafeCSS } from 'lit-element';
-import { updateMetadata } from 'pwa-helpers';
+import { updateMetadata, connect } from 'pwa-helpers';
 import style from './app-home.scss';
 
 import '../../components/CircularProgress/app-circular-progress';
 import '../../components/CardItem/app-card-item';
+
+import '../../components/PostList/app-post-list';
 
 @customElement('app-home')
 export class AppMain extends LitElement {
@@ -26,7 +28,7 @@ export class AppMain extends LitElement {
       <div class="home-wrapper">
         <div class="list-post-panel">
           <div class="list-post-wrapper">
-            <app-card-item></app-card-item>
+            <app-post-list></app-post-list>
           </div>
         </div>
         <div class="right-panel">

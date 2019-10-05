@@ -38,6 +38,8 @@
     "lit-redux-router": "^0.9.14",
     "popper.js": "^1.15.0",
     "pwa-helpers": "^0.9.1",
-    "redux": "^4.0.4"
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
+    "remove-markdown": "^0.3.0"
   }
 }

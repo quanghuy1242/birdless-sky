@@ -1,4 +1,4 @@
-import { LitElement, html, css, property, customElement, unsafeCSS } from 'lit-element';
+import { LitElement, html, css, property, customElement, unsafeCSS, query } from 'lit-element';
 import { styleMap } from 'lit-html/directives/style-map';
 import style from './app-card-item.scss';
 import {
@@ -15,10 +15,13 @@ import '../Tooltip/app-tooltip';
 
 @customElement('app-card-item')
 export class AppCardItem extends LitElement {
+  @query('.mdc-card__media') backgroundImage;
+
+  @property({ type: String }) postId = null;
   @property({ type: String }) title = 'Bài viết số 1';
-  @property({ type: Object }) date = new Date();
-  @property({ type: String }) image = 'https://images.unsplash.com/photo-1496619465405-721b2b66a868?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80%27%20alt=%27Summer';
-  @property({ type: String }) description = 'Có đôi khi những cơn mưa bất chợt rơi xuống mái làm nát cả mái hiên từ lâu đã không còn nguyên vẹn. Có những mùa hè như thế, mưa vẫn nối tiếp mưa. Những hạt mưa đong đưa, cuộn mình rồi lăn đi xuống mặt đất, phủ kín toàn bộ nơi này. Mọi thứ vẫn cứ như thế, đã ...';
+  @property({ type: Object }) date = null;
+  @property({ type: String }) image = undefined;
+  @property({ type: String }) description = 'Preview';
 
   static get styles() {
     return [
@@ -35,7 +38,7 @@ export class AppCardItem extends LitElement {
   firstUpdated() {
     const rippleElemnents
       = this.shadowRoot.querySelectorAll('.mdc-button, .mdc-icon-button, .mdc-card__primary-action')
-    rippleElemnents.forEach(element => MDCRipple.attachTo(element))
+    rippleElemnents.forEach(element => MDCRipple.attachTo(element));
   }
 
   render() {
@@ -43,14 +46,20 @@ export class AppCardItem extends LitElement {
       <div class="mdc-card card-with-header mdc-elevation--z3">
         <div class="card__primary" style=${styleMap({ paddingBottom: this.image ? '1rem' : '0.5rem' })}>
           <h2 class="card__title mdc-typography mdc-typography--headline6">${this.title}</h2>
-          <h3 class="card__subtitle mdc-typography mdc-typography--subtitle2">${this.date.toLocaleDateString()}</h3>
+          ${this.date
+            ? html`
+              <h3 class="card__subtitle mdc-typography mdc-typography--subtitle2">
+                ${this.date.toDate().toLocaleDateString()}
+              </h3>
+            `
+            : html``}
         </div>
         <div class="mdc-card__primary-action card__primary-action" tabindex="0">
           ${this.image
             ? html`
               <div
                 class="mdc-card__media mdc-card__media--16-9 card__media"
-                style="background-image: url('${this.image}');"
+                style="background-image: url(&quot;${this.image}&quot;);"
               ></div>
             `
             : html``}
