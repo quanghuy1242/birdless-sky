@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import { lazyReducerEnhancer } from 'pwa-helpers';
 import { banners } from './reducers/banner';
 import { posts } from './reducers/post';
+import { category } from './reducers/category';
 
 export const store = createStore(
   state => state,
@@ -14,5 +15,6 @@ export const store = createStore(
 
 store.addReducers({
   banner: banners,
-  post: posts
+  post: posts,
+  category: category
 });

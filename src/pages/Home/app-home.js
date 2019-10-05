@@ -5,8 +5,8 @@ import style from './app-home.scss';
 
 import '../../components/CircularProgress/app-circular-progress';
 import '../../components/CardItem/app-card-item';
-
 import '../../components/PostList/app-post-list';
+import '../../components/CategoriesList/app-categories-list';
 
 @customElement('app-home')
 export class AppMain extends connect(store)(LitElement) {
@@ -40,7 +40,7 @@ export class AppMain extends connect(store)(LitElement) {
           </div>
         </div>
         <div class="right-panel">
-          
+          <app-categories-list></app-categories-list>
         </div>
       </div>
     `;
