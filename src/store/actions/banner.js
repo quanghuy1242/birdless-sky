@@ -1,9 +1,9 @@
-import { getDataFromServer } from '../api/conf.api';
+import { getConfigFromServer } from '../api/conf.api';
 
 export const SETBANNERDATA = 'SETBANNERDATA';
 
-export const getData = async () => {
-  const data = await getDataFromServer();
+export const getConfig = async () => {
+  const data = await getConfigFromServer();
   return {
     type: SETBANNERDATA,
     payload: {

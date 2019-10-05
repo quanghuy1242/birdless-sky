@@ -4,7 +4,7 @@ import style from './app-banner.scss';
 import { MDCRipple } from '@material/ripple';
 import { connect } from 'pwa-helpers';
 import { store } from '../../store';
-import { getData } from '../../store/actions/banner';
+import { getConfig } from '../../store/actions/banner';
 
 import '../Tooltip/app-tooltip';
 
@@ -37,7 +37,7 @@ export class AppMain extends connect(store)(LitElement) {
     });
 
     // get data
-    store.dispatch(await getData());
+    store.dispatch(await getConfig());
   }
 
   updated(changedProperties) {
