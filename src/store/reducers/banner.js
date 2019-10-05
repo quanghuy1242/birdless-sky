@@ -1,4 +1,4 @@
-import { SETBANNERDATA } from '../actions/banner';
+import { FETCH_CONFIG_SUCCESS } from '../actions/banner';
 
 const initialState = {
   name: 'Quang Huy',
@@ -8,7 +8,7 @@ const initialState = {
 
 export function banners(state = initialState, action) {
   switch (action.type) {
-    case SETBANNERDATA:
+    case FETCH_CONFIG_SUCCESS:
       return {
         ...state,
         name: action.payload.name,

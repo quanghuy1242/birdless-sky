@@ -1,15 +1,26 @@
-import { getConfigFromServer } from '../api/conf.api';
+import { db } from '../../firebase';
 
-export const SETBANNERDATA = 'SETBANNERDATA';
+export const FETCH_CONFIG_SUCCESS = 'SETBANNERDATA';
 
-export const getConfig = async () => {
-  const data = await getConfigFromServer();
+const fetchConfigSuccess = config => {
   return {
-    type: SETBANNERDATA,
-    payload: {
-      name: data.mainTitle,
-      slogan: data.slogan,
-      image: data.homeImageUrl
-    }
+    type: FETCH_CONFIG_SUCCESS,
+    payload: { ...config }
+  };
+}
+
+export const fetchConfig = () => {
+  return dispatch => {
+    db.collection('conf')
+      .get()
+      .then(dataSnapshot => {
+        const rawData = dataSnapshot.docs.map(doc => doc.data())[0];
+        const config = {
+          name: rawData.mainTitle,
+          slogan: rawData.slogan,
+          image: rawData.homeImageUrl
+        }
+        dispatch(fetchConfigSuccess(config));
+      })
   }
 }
