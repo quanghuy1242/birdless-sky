@@ -1,0 +1,17 @@
+.category-item-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 150px;
+  background-color: var(--mdc-theme-primary);
+  text-decoration: none;
+  color: var(--mdc-theme-text-primary-on-light);
+  background-size: cover;
+  background-position: 50% 50%;
+  transition: opacity 200ms ease-in-out;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}

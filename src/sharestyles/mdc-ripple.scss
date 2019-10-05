@@ -1,0 +1,13 @@
+@import '@material/ripple/mdc-ripple.scss';
+@import '@material/ripple/_keyframes.scss';
+
+@include mdc-ripple-keyframes_;
+
+.mdc-ripple-surface {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

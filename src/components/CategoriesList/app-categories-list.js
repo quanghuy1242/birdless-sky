@@ -27,7 +27,10 @@ export class AppCategoriesList extends connect(store)(LitElement) {
   render() {
     return html`
       ${this.categories.map(category => html`
-        <div>${category.name}</div>
+        <app-category-item
+          .name=${category.name}
+          .image=${category.imgUrl}
+        ></app-category-item>
       `)}
     `;
   }

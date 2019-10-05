@@ -1,0 +1,8 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+app-category-item:not(:last-child) {
+  margin-bottom: 1rem;
+}
