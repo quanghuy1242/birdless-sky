@@ -2,17 +2,26 @@ import { LitElement, html, css, property, customElement, unsafeCSS, queryAll, qu
 import { mdcTypographyStyles, mdcButtonStyles } from '../../sharestyles';
 import style from './app-banner.scss';
 import { MDCRipple } from '@material/ripple';
+import { connect } from 'pwa-helpers';
+import { store } from '../../store';
+import { getData } from '../../store/actions/banner';
 
 import '../Tooltip/app-tooltip';
 
 @customElement('app-banner')
-export class AppMain extends LitElement {
+export class AppMain extends connect(store)(LitElement) {
   @queryAll('.mdc-button') buttonElements;
   @query('.banner-wrapper') bannerWrapper;
   
-  @property({ type: String }) name = 'Quang Huy';
-  @property({ type: String }) slogan = 'Quang Huy';
-  @property({ type: String }) image = '';
+  @property({ type: String }) name;
+  @property({ type: String }) slogan;
+  @property({ type: String }) image;
+
+  stateChanged(state) {
+    this.name = state.banner.name;
+    this.slogan = state.banner.slogan;
+    this.image = state.banner.image;
+  }
 
   static get styles() {
     return [
@@ -22,11 +31,22 @@ export class AppMain extends LitElement {
     ];
   }
 
-  firstUpdated() {
-    this.setBackgroundImage(this.image);
+  async firstUpdated() {
     this.buttonElements.forEach(buttonElement => {
       MDCRipple.attachTo(buttonElement);
     });
+
+    // get data
+    store.dispatch(await getData());
+  }
+
+  updated(changedProperties) {
+    changedProperties.forEach((oldValue, propName) => {
+      if (propName === 'image') {
+        this.setBackgroundImage(this.image);
+      }
+    });
+    
   }
 
   setBackgroundImage(image) {
