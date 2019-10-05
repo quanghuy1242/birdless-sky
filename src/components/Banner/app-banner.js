@@ -31,7 +31,7 @@ export class AppMain extends connect(store)(LitElement) {
     ];
   }
 
-  async firstUpdated() {
+  firstUpdated() {
     this.buttonElements.forEach(buttonElement => {
       MDCRipple.attachTo(buttonElement);
     });

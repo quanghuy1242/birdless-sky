@@ -20,7 +20,7 @@ export class AppPostList extends connect(store)(LitElement) {
     this.posts = state.post.posts;
   }
 
-  async firstUpdated() {
+  firstUpdated() {
     store.dispatch(fetchAllPosts());
   }
 
