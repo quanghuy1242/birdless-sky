@@ -21,6 +21,7 @@ export const fetchAllPosts = () => {
   return dispatch => {
     dispatch(fetchPostsPending());
     db.collection('blogs')
+      .limit(4)
       .orderBy('day', 'desc')
       .get()
       .then(dataSnapshot => {
