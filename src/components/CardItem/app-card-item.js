@@ -7,15 +7,18 @@ import {
   materialIconsStyles,
   mdcTypographyStyles,
   mdcIconButtonStyles,
-  mdcElevationStyles
+  mdcElevationStyles,
+  mdcChipsStyles
 } from '../../sharestyles';
 import { MDCRipple } from '@material/ripple';
+import { MDCChipSet } from '@material/chips';
 
 import '../Tooltip/app-tooltip';
 
 @customElement('app-card-item')
 export class AppCardItem extends LitElement {
   @query('.mdc-card__media') backgroundImage;
+  @query('.mdc-chip-set') chipsetElement;
 
   @property({ type: String }) postId = null;
   @property({ type: String }) title = 'Bài viết số 1';
@@ -31,6 +34,7 @@ export class AppCardItem extends LitElement {
       materialIconsStyles,
       mdcIconButtonStyles,
       mdcElevationStyles,
+      mdcChipsStyles,
       css`${unsafeCSS(style)}`,
     ];
   }
@@ -39,6 +43,9 @@ export class AppCardItem extends LitElement {
     const rippleElemnents
       = this.shadowRoot.querySelectorAll('.mdc-button, .mdc-icon-button, .mdc-card__primary-action')
     rippleElemnents.forEach(element => MDCRipple.attachTo(element));
+
+    // Chip
+    this.chipSet = new MDCChipSet(this.chipsetElement);
   }
 
   render() {
@@ -46,6 +53,14 @@ export class AppCardItem extends LitElement {
       <div class="mdc-card card-with-header mdc-elevation--z3">
         <div class="card__primary" style=${styleMap({ paddingBottom: this.image ? '1rem' : '0.5rem' })}>
           <h2 class="card__title mdc-typography mdc-typography--headline6">${this.title}</h2>
+          <div class="mdc-chip-set">
+            <a class="mdc-chip mdc-chip--primary">
+              <span class="mdc-chip__text">Category</span>
+            </a>
+            <a class="mdc-chip mdc-chip-outline">
+              <span class="mdc-chip__text">Tag 1</span>
+            </a>
+          </div>
           ${this.date
             ? html`
               <h3 class="card__subtitle mdc-typography mdc-typography--subtitle2">

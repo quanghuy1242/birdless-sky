@@ -22,3 +22,16 @@
 .mdc-card__media--16-9:before {
   margin-top: 40.25%;
 }
+
+.mdc-chip-set {
+  margin-left: -5px;
+
+  .mdc-chip--primary {
+    background-color: var(--mdc-theme-primary);
+    color: var(--mdc-theme-text-primary-on-light);
+  
+    &:hover {
+      color: var(--mdc-theme-text-primary-on-light);
+    }
+  }
+}
