@@ -16,7 +16,7 @@ export function posts(state = initialState, action) {
       return {
         ...state,
         pending: false,
-        posts: action.payload
+        posts: state.posts.concat(action.payload || [])
       };
     default:
       return state;
