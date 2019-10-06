@@ -1,6 +1,5 @@
 import { LitElement, html, css, property, customElement, unsafeCSS } from 'lit-element';
-import { updateMetadata, connect } from 'pwa-helpers';
-import { store } from '../../store';
+import { updateMetadata } from 'pwa-helpers';
 import style from './app-home.scss';
 
 import '../../components/CircularProgress/app-circular-progress';
@@ -9,16 +8,12 @@ import '../../components/PostList/app-post-list';
 import '../../components/CategoriesList/app-categories-list';
 
 @customElement('app-home')
-export class AppMain extends connect(store)(LitElement) {
+export class AppMain extends LitElement {
   @property({ type: Boolean }) isPending;
   static get styles() {
     return [
       css`${unsafeCSS(style)}`
     ];
-  }
-
-  stateChanged(state) {
-    this.isPending = state.post.pending;
   }
 
   updated() {
@@ -34,9 +29,7 @@ export class AppMain extends connect(store)(LitElement) {
       <div class="home-wrapper">
         <div class="list-post-panel">
           <div class="list-post-wrapper">
-            ${this.isPending
-              ? html`<app-circular-progress size="xlarge" center></app-circular-progress>`
-              : html`<app-post-list></app-post-list>`}
+            <app-post-list></app-post-list>
           </div>
         </div>
         <div class="right-panel">

@@ -1,18 +1,22 @@
 import { LitElement, html, property, customElement, css, unsafeCSS, query, queryAll } from 'lit-element';
 import { connect } from 'pwa-helpers';
 import { store } from '../../store';
-import { fetchAllPosts } from '../../store/actions/post';
+import { fetchInitPosts, fetchNextPosts } from '../../store/actions/post';
 import style from './app-post-list.scss';
 import { mdcButtonStyles } from '../../sharestyles';
+import { MDCRipple } from '@material/ripple';
 
 import '../../components/CardItem/app-card-item';
-import { MDCRipple } from '@material/ripple';
+import '../../components/CircularProgress/app-circular-progress';
 
 @customElement('app-post-list')
 export class AppPostList extends connect(store)(LitElement) {
   @queryAll('.mdc-button') buttonMore;
 
   @property({ type: Array }) posts;
+  @property({ type: Object }) lastVisible;
+  @property({ type: Number }) lastCount;
+  @property({ type: Boolean }) isPending;
 
   static get styles() {
     return [
@@ -23,13 +27,20 @@ export class AppPostList extends connect(store)(LitElement) {
 
   stateChanged(state) {
     this.posts = state.post.posts;
+    this.lastVisible = state.post.lastVisible;
+    this.lastCount = state.post.lastCount;
+    this.isPending = state.post.pending;
   }
 
   firstUpdated() {
     this.buttonMore.forEach(element => {
       MDCRipple.attachTo(element);
     });
-    store.dispatch(fetchAllPosts());
+    store.dispatch(fetchInitPosts());
+  }
+
+  handleLoadMore() {
+    store.dispatch(fetchNextPosts(this.lastVisible));
   }
 
   render() {
@@ -43,7 +54,18 @@ export class AppPostList extends connect(store)(LitElement) {
           description=${post.preview}
         ></app-card-item>
       `)}
-      <button class="mdc-button mdc-button--raised">Load more</button>
+      ${this.isPending
+        ? html`<app-circular-progress size="xlarge" center></app-circular-progress>`
+        : this.lastCount
+            ? html`
+              <button
+                class="mdc-button mdc-button--raised"
+                @click=${this.handleLoadMore}
+              >
+                Load more
+              </button>
+            `
+            : html``}
     `;
   }
 }
