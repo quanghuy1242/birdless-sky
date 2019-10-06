@@ -25,6 +25,7 @@ export class AppCardItem extends LitElement {
   @property({ type: Object }) date = null;
   @property({ type: String }) image = undefined;
   @property({ type: String }) description = 'Preview';
+  @property({ type: Array }) tags = [];
 
   static get styles() {
     return [
@@ -48,19 +49,39 @@ export class AppCardItem extends LitElement {
     this.chipSet = new MDCChipSet(this.chipsetElement);
   }
 
+  getChipTemplate() {
+    return html`
+      <a class="mdc-chip mdc-chip--primary">
+        <span class="mdc-chip__text">Category</span>
+      </a>
+      ${this.tags.slice(0, 3).map(tag => html`
+        <a class="mdc-chip mdc-chip-outline">
+          <span class="mdc-chip__text">${tag}</span>
+        </a>
+      `)}
+      ${this.tags.length > 3
+        ? html`
+            <a class="mdc-chip mdc-chip-outline">
+              <span class="mdc-chip__text">+${this.tags.slice(3).length}</span>
+            </a>
+          `
+        : ''}
+      ${this.tags.length === 0
+        ? html`
+            <a class="mdc-chip mdc-chip-outline">
+              <span class="mdc-chip__text">No tag</span>
+            </a>
+          `
+        : ''}
+    `;
+  }
+
   render() {
     return html`
       <div class="mdc-card card-with-header mdc-elevation--z3">
         <div class="card__primary" style=${styleMap({ paddingBottom: this.image ? '1rem' : '0.5rem' })}>
           <h2 class="card__title mdc-typography mdc-typography--headline6">${this.title}</h2>
-          <div class="mdc-chip-set">
-            <a class="mdc-chip mdc-chip--primary">
-              <span class="mdc-chip__text">Category</span>
-            </a>
-            <a class="mdc-chip mdc-chip-outline">
-              <span class="mdc-chip__text">Tag 1</span>
-            </a>
-          </div>
+          <div class="mdc-chip-set">${this.getChipTemplate()}</div>
           ${this.date
             ? html`
               <h3 class="card__subtitle mdc-typography mdc-typography--subtitle2">
