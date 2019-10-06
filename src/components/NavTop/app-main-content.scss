@@ -33,6 +33,12 @@
   width: 300px;
 }
 
+.mdc-drawer--modal__mobile {
+  position: absolute !important;
+  margin-top: 64px;
+  z-index: 6;
+}
+
 .drawer-frame-root {
   display: flex;
   // height: calc(100vh - 64px);
