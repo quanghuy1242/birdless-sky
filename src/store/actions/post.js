@@ -21,41 +21,58 @@ const fetchPostsPending = () => {
   };
 }
 
+const getData = (dataRef, dispatch) => {
+  return dataRef.get()
+    .then(dataSnapshot => {
+      return {
+        posts: Promise.all(
+          dataSnapshot.docs.map(async doc => {
+            const docSnapshot = await db.doc(`categories/${doc.data().category}`).get();
+            return {
+              id: doc.id,
+              ...doc.data(),
+              ...additionalField(doc.data()),
+              category: {
+                id: docSnapshot.id,
+                ...docSnapshot.data()
+              }
+            };
+          })
+        ),
+        lastVisible: dataSnapshot.docs[dataSnapshot.docs.length - 1]
+      };
+    })
+    .then(async data => {
+      const posts = await data.posts;
+      dispatch(fetchPostsSuccess({
+        posts,
+        lastVisible: data.lastVisible,
+        lastCount: posts.length
+      }));
+    })
+}
+
 export const fetchInitPosts = () => {
   return dispatch => {
     dispatch(fetchPostsPending());
-    db.collection('blogs')
-      .orderBy('day', 'desc')
-      .limit(4)
-      .get()
-      .then(dataSnapshot => {
-        const posts = dataSnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-          ...additionalField(doc.data())
-        }));
-        const lastVisible = dataSnapshot.docs[posts.length - 1];
-        dispatch(fetchPostsSuccess({ posts, lastVisible, lastCount: posts.length }));
-      })
+    getData(
+      db.collection('blogs')
+        .orderBy('day', 'desc')
+        .limit(4),
+      dispatch
+    );
   }
 }
 
 export const fetchNextPosts = oldLastVisible => {
   return dispatch => {
     dispatch(fetchPostsPending());
-    db.collection('blogs')
-      .orderBy('day', 'desc')
-      .startAfter(oldLastVisible)
-      .limit(4)
-      .get()
-      .then(dataSnapshot => {
-        const posts = dataSnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-          ...additionalField(doc.data())
-        }));
-        const lastVisible = dataSnapshot.docs[dataSnapshot.docs.length - 1];
-        dispatch(fetchPostsSuccess({ posts, lastVisible, lastCount: posts.length }));
-      })
+      getData(
+        db.collection('blogs')
+          .orderBy('day', 'desc')
+          .startAfter(oldLastVisible)
+          .limit(4),
+        dispatch
+      );
   }
 }

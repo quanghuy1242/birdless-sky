@@ -26,6 +26,7 @@ export class AppCardItem extends LitElement {
   @property({ type: String }) image = undefined;
   @property({ type: String }) description = 'Preview';
   @property({ type: Array }) tags = [];
+  @property({ type: Object }) category = {};
 
   static get styles() {
     return [
@@ -52,7 +53,7 @@ export class AppCardItem extends LitElement {
   getChipTemplate() {
     return html`
       <a class="mdc-chip mdc-chip--primary">
-        <span class="mdc-chip__text">Category</span>
+        <span class="mdc-chip__text">${this.category.name}</span>
       </a>
       ${this.tags.slice(0, 3).map(tag => html`
         <a class="mdc-chip mdc-chip-outline">

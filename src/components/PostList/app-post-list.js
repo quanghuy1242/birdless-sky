@@ -52,6 +52,7 @@ export class AppPostList extends connect(store)(LitElement) {
           .image=${post.image}
           description=${post.preview}
           .tags=${post.tags}
+          .category=${post.category}
         ></app-card-item>
       `)}
       ${this.isPending
