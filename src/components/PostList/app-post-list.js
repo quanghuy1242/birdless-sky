@@ -1,7 +1,7 @@
 import { LitElement, html, property, customElement, css, unsafeCSS, query, queryAll } from 'lit-element';
 import { connect } from 'pwa-helpers';
 import { store } from '../../store';
-import { fetchInitPosts, fetchNextPosts } from '../../store/actions/post';
+import { fetchNextPosts } from '../../store/actions/post';
 import style from './app-post-list.scss';
 import { mdcButtonStyles } from '../../sharestyles';
 import { MDCRipple } from '@material/ripple';
@@ -36,7 +36,6 @@ export class AppPostList extends connect(store)(LitElement) {
     this.buttonMore.forEach(element => {
       MDCRipple.attachTo(element);
     });
-    store.dispatch(fetchInitPosts());
   }
 
   handleLoadMore() {

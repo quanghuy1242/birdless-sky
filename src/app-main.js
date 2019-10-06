@@ -1,5 +1,4 @@
-import { LitElement, html, css, property, customElement, query, unsafeCSS } from 'lit-element';
-import { connect } from 'pwa-helpers';
+import { LitElement, html, css, customElement, unsafeCSS } from 'lit-element';
 import { connectRouter, navigate } from 'lit-redux-router';
 import { store } from './store/index';
 import style from './app-main.scss';
@@ -9,6 +8,7 @@ import './pages/Home/app-home';
 import './pages/About/app-about';
 import './pages/NotFound/app-not-found';
 import './pages/Post/app-post';
+import { fetchInitPosts } from './store/actions/post';
 
 @customElement('app-main')
 export class AppMain extends LitElement {
@@ -21,6 +21,10 @@ export class AppMain extends LitElement {
   constructor() {
     super();
     connectRouter(store);
+  }
+
+  firstUpdated() {
+    store.dispatch(fetchInitPosts());
   }
 
   render() {
