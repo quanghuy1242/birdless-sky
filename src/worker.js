@@ -39,13 +39,15 @@ addEventListener('message', e => {
       break;
 
     case 'getNextPosts':
-      getData(
-        db.collection('blogs')
-          .orderBy('day', 'desc')
-          .startAfter(e.data.oldLastVisible)
-          .limit(4),
-        e.data.cmd
-      );
+      db.doc(`blogs/${e.data.oldLastVisible}`).get().then(lastVisibleSnapshot => {
+        getData(
+          db.collection('blogs')
+            .orderBy('day', 'desc')
+            .startAfter(lastVisibleSnapshot)
+            .limit(4),
+          e.data.cmd
+        );
+      });
       break;
   
     default:
@@ -76,12 +78,6 @@ const getData = (dataRef, cmd) => {
     })
     .then(async data => {
       const posts = await data.posts;
-      const dataaa = {
-        posts: posts,
-        lastVisible: data.lastVisible,
-        lastCount: posts.length
-      }
-      // const a = new ArrayBuffer([dataaa]);
       postMessage({ cmd, data: { posts, lastVisible: data.lastVisible, lastCount: posts.length } });
     })
 }
