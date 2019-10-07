@@ -1,7 +1,7 @@
 import { FETCH_CATEG_PENDING, FETCH_CATEG_SUCCESS } from '../actions/category';
 
 const initialState = {
-  pending: false,
+  isPending: false,
   categories: []
 };
 
@@ -10,12 +10,12 @@ export function category(state = initialState, action) {
     case FETCH_CATEG_PENDING:
       return {
         ...state,
-        pending: true
+        isPending: true
       };
     case FETCH_CATEG_SUCCESS:
       return {
         ...state,
-        pending: false,
+        isPending: false,
         categories: action.payload
       };
     default:

@@ -29,7 +29,7 @@ export class AppPostList extends connect(store)(LitElement) {
     this.posts = state.post.posts;
     this.lastVisible = state.post.lastVisible;
     this.lastCount = state.post.lastCount;
-    this.isPending = state.post.pending;
+    this.isPending = state.post.isPending;
   }
 
   firstUpdated() {

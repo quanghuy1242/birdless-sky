@@ -4,6 +4,7 @@ import { lazyReducerEnhancer } from 'pwa-helpers';
 import { banners } from './reducers/banner';
 import { posts } from './reducers/post';
 import { category } from './reducers/category';
+import { router } from './reducers/router';
 
 export const store = createStore(
   state => state,
@@ -16,5 +17,6 @@ export const store = createStore(
 store.addReducers({
   banner: banners,
   post: posts,
-  category: category
+  category: category,
+  router: router
 });

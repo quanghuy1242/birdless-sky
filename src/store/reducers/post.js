@@ -1,7 +1,7 @@
 import { FETCH_POSTS_SUCCESS, FETCH_POSTS_PENDING } from '../actions/post';
 
 const initialState = {
-  pending: false,
+  isPending: false,
   posts: [],
   lastVisible: {},
   lastCount: 0
@@ -12,12 +12,12 @@ export function posts(state = initialState, action) {
     case FETCH_POSTS_PENDING:
       return {
         ...state,
-        pending: true
+        isPending: true
       };
     case FETCH_POSTS_SUCCESS:
       return {
         ...state,
-        pending: false,
+        isPending: false,
         ...action.payload && {
           posts: state.posts.concat(action.payload.posts),
           lastVisible: action.payload.lastVisible,
