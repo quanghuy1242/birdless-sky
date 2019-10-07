@@ -1,6 +1,7 @@
 const merge = require('webpack-merge');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
+const WorkerPlugin = require('worker-plugin');
 
 const { createDefaultConfig } = require('@open-wc/building-webpack');
 const config = createDefaultConfig({
@@ -36,6 +37,9 @@ module.exports = (env, argv) => {
         },
       ],
     },
+    plugins: [
+      new WorkerPlugin()
+    ],
     devtool: argv.mode !== 'production' ? 'source-map' : 'false',
     devServer: {
       contentBase: path.join(__dirname, 'dist'),

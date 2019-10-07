@@ -1,8 +1,8 @@
 import { LitElement, html, property, customElement, css, unsafeCSS } from 'lit-element';
 import { connect } from 'pwa-helpers';
 import { store } from '../../store';
-import { fetchAllCategories } from '../../store/actions/category';
 import style from './app-categories-list.scss';
+import { fetchAllCategories } from '../../workerInstance';
 
 import '../../components/CategoryItem/app-category-item';
 
@@ -20,8 +20,8 @@ export class AppCategoriesList extends connect(store)(LitElement) {
     this.categories = state.category.categories;
   }
 
-  async firstUpdated() {
-    store.dispatch(fetchAllCategories());
+  firstUpdated() {
+    fetchAllCategories()
   }
 
   render() {

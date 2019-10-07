@@ -1,10 +1,10 @@
 import { LitElement, html, property, customElement, css, unsafeCSS, query, queryAll } from 'lit-element';
 import { connect } from 'pwa-helpers';
 import { store } from '../../store';
-import { fetchNextPosts } from '../../store/actions/post';
 import style from './app-post-list.scss';
 import { mdcButtonStyles } from '../../sharestyles';
 import { MDCRipple } from '@material/ripple';
+import { fetchNextPosts } from '../../workerInstance';
 
 import '../../components/CardItem/app-card-item';
 import '../../components/CircularProgress/app-circular-progress';
@@ -39,7 +39,7 @@ export class AppPostList extends connect(store)(LitElement) {
   }
 
   handleLoadMore() {
-    store.dispatch(fetchNextPosts(this.lastVisible));
+    fetchNextPosts(this.lastVisible);
   }
 
   render() {

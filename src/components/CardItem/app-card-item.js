@@ -12,6 +12,7 @@ import {
 } from '../../sharestyles';
 import { MDCRipple } from '@material/ripple';
 import { MDCChipSet } from '@material/chips';
+import { getDate } from '../../utils/post.util';
 
 import '../Tooltip/app-tooltip';
 
@@ -86,7 +87,7 @@ export class AppCardItem extends LitElement {
           ${this.date
             ? html`
               <h3 class="card__subtitle mdc-typography mdc-typography--subtitle2">
-                ${this.date.toDate().toLocaleDateString()}
+                ${getDate(this.date).toLocaleDateString()}
               </h3>
             `
             : html``}

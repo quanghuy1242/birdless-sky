@@ -9,3 +9,7 @@ export const additionalField = data => {
     image: rs ? rs[1] : undefined
   };
 }
+
+export const getDate = timestamp => {
+  return new Date(timestamp.seconds * 1000);
+}
