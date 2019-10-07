@@ -56,25 +56,33 @@ export class AppCardItem extends LitElement {
       <a class="mdc-chip mdc-chip--primary">
         <span class="mdc-chip__text">${this.category.name}</span>
       </a>
-      ${this.tags.slice(0, 3).map(tag => html`
-        <a class="mdc-chip mdc-chip-outline">
-          <span class="mdc-chip__text">${tag}</span>
-        </a>
-      `)}
-      ${this.tags.length > 3
+      ${this.tags
         ? html`
+          ${this.tags.slice(0, 3).map(tag => html`
             <a class="mdc-chip mdc-chip-outline">
-              <span class="mdc-chip__text">+${this.tags.slice(3).length}</span>
+              <span class="mdc-chip__text">${tag}</span>
             </a>
-          `
-        : ''}
-      ${this.tags.length === 0
-        ? html`
-            <a class="mdc-chip mdc-chip-outline">
-              <span class="mdc-chip__text">No tag</span>
-            </a>
-          `
-        : ''}
+          `)}
+          ${this.tags.length > 3
+            ? html`
+                <a class="mdc-chip mdc-chip-outline">
+                  <span class="mdc-chip__text">+${this.tags.slice(3).length}</span>
+                </a>
+              `
+            : ''}
+          ${this.tags.length === 0
+            ? html`
+                <a class="mdc-chip mdc-chip-outline">
+                  <span class="mdc-chip__text">No tag</span>
+                </a>
+              `
+            : ''}
+        `
+        : html`
+          <a class="mdc-chip mdc-chip-outline">
+            <span class="mdc-chip__text">No tag</span>
+          </a>
+        `}
     `;
   }
 
