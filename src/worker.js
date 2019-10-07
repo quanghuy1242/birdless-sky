@@ -73,7 +73,10 @@ const getData = (dataRef, cmd) => {
             };
           })
         ),
-        lastVisible: dataSnapshot.docs[dataSnapshot.docs.length - 1].id
+        lastVisible: (() => {
+          const lastVisible = dataSnapshot.docs[dataSnapshot.docs.length - 1];
+          return lastVisible ? lastVisible.id : undefined
+        })()
       };
     })
     .then(async data => {
