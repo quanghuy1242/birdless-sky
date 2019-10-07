@@ -4,7 +4,7 @@ import { store } from '../../store';
 import style from './app-post-list.scss';
 import { mdcButtonStyles } from '../../sharestyles';
 import { MDCRipple } from '@material/ripple';
-import { fetchNextPosts } from '../../workerInstance';
+import { fetchNextPosts } from '../../worker/worker.instance';
 
 import '../../components/CardItem/app-card-item';
 import '../../components/CircularProgress/app-circular-progress';

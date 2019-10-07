@@ -2,7 +2,7 @@ import { LitElement, html, property, customElement, css, unsafeCSS } from 'lit-e
 import { connect } from 'pwa-helpers';
 import { store } from '../../store';
 import style from './app-categories-list.scss';
-import { fetchAllCategories } from '../../workerInstance';
+import { fetchAllCategories } from '../../worker/worker.instance';
 
 import '../../components/CategoryItem/app-category-item';
 

@@ -4,7 +4,7 @@ import style from './app-banner.scss';
 import { MDCRipple } from '@material/ripple';
 import { connect } from 'pwa-helpers';
 import { store } from '../../store';
-import { fetchConfig } from '../../workerInstance';
+import { fetchConfig } from '../../worker/worker.instance';
 
 import '../Tooltip/app-tooltip';
 

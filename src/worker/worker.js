@@ -1,9 +1,10 @@
-import { db } from './firebase';
-import { additionalField } from './utils/post.util';
+import { db } from '../firebase';
+import { additionalField } from '../utils/post.util';
+import { GET_CATEGORIES, GET_INIT_POSTS, GET_CONF, GET_NEXT_POSTS } from './worker.type';
 
 addEventListener('message', e => {
   switch (e.data.cmd) {
-    case 'getConf':
+    case GET_CONF:
       db.collection('conf')
         .get()
         .then(dataSnapshot => {
@@ -17,7 +18,7 @@ addEventListener('message', e => {
         })
       break;
     
-    case 'getCategories':
+    case GET_CATEGORIES:
       db.collection('categories')
         .orderBy('name', 'desc')
         .get()
@@ -29,8 +30,8 @@ addEventListener('message', e => {
         })
       break;
 
-    case 'getInitPosts':
-      getData(
+    case GET_INIT_POSTS:
+      getPosts(
         db.collection('blogs')
           .orderBy('day', 'desc')
           .limit(4),
@@ -38,9 +39,9 @@ addEventListener('message', e => {
       );
       break;
 
-    case 'getNextPosts':
+    case GET_NEXT_POSTS:
       db.doc(`blogs/${e.data.oldLastVisible}`).get().then(lastVisibleSnapshot => {
-        getData(
+        getPosts(
           db.collection('blogs')
             .orderBy('day', 'desc')
             .startAfter(lastVisibleSnapshot)
@@ -55,7 +56,7 @@ addEventListener('message', e => {
   }
 });
 
-const getData = (dataRef, cmd) => {
+const getPosts = (dataRef, cmd) => {
   return dataRef.get()
     .then(dataSnapshot => {
       return {

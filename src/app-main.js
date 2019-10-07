@@ -2,7 +2,7 @@ import { LitElement, html, css, customElement, unsafeCSS } from 'lit-element';
 import { connectRouter, navigate } from 'lit-redux-router';
 import { store } from './store/index';
 import style from './app-main.scss';
-import { fetchInitPosts } from './workerInstance';
+import { fetchInitPosts } from './worker/worker.instance';
 
 import './components/NavTop/app-main-content';
 import './pages/Home/app-home';
