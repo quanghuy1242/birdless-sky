@@ -13,6 +13,7 @@ import {
 import { MDCRipple } from '@material/ripple';
 import { MDCChipSet } from '@material/chips';
 import { getDate } from '../../utils/post.util';
+import { Router } from '@vaadin/router';
 
 import '../Tooltip/app-tooltip';
 
@@ -23,6 +24,7 @@ export class AppCardItem extends LitElement {
 
   @property({ type: String }) postId = null;
   @property({ type: String }) title = 'Bài viết số 1';
+  @property({ type: String }) titleId = 'bai-viet-so-1';
   @property({ type: Object }) date = null;
   @property({ type: String }) image = undefined;
   @property({ type: String }) description = 'Preview';
@@ -86,11 +88,20 @@ export class AppCardItem extends LitElement {
     `;
   }
 
+  handleEnterDetail() {
+    Router.go(`/post/${this.titleId}/${this.postId}`);
+  }
+
   render() {
     return html`
       <div class="mdc-card card-with-header mdc-elevation--z3">
         <div class="card__primary" style=${styleMap({ paddingBottom: this.image ? '1rem' : '0.5rem' })}>
-          <h2 class="card__title mdc-typography mdc-typography--headline6">${this.title}</h2>
+          <a
+            href="/post/${this.titleId}/${this.postId}"
+            class="card__title mdc-typography mdc-typography--headline6"
+          >
+            ${this.title}
+          </a>
           <div class="mdc-chip-set">${this.getChipTemplate()}</div>
           ${this.date
             ? html`
@@ -100,7 +111,11 @@ export class AppCardItem extends LitElement {
             `
             : html``}
         </div>
-        <div class="mdc-card__primary-action card__primary-action" tabindex="0">
+        <div
+          class="mdc-card__primary-action card__primary-action"
+          tabindex="0" 
+          @click=${this.handleEnterDetail}
+        >
           ${this.image
             ? html`
               <div

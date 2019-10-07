@@ -48,6 +48,7 @@ export class AppPostList extends connect(store)(LitElement) {
         <app-card-item
           postId=${post.id}
           title=${post.title}
+          titleId=${post.titleId}
           .date=${post.day}
           .image=${post.image}
           description=${post.preview}

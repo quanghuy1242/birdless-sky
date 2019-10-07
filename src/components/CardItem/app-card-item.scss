@@ -8,6 +8,11 @@
 
 .card__title {
   margin: 0;
+  color: black;
+
+  &:hover {
+    color: var(--mdc-theme-primary)
+  }
 }
 
 .card__subtitle {
