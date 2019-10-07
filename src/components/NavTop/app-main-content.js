@@ -139,7 +139,7 @@ export class AppNavTop extends connect(store)(LitElement) {
                   <i class="material-icons mdc-list-item__graphic">category</i>
                   <span class="mdc-list-item__text">Category</span>
                 </a>
-                <a class="mdc-list-item" href="http://project-showcase.netlify.com" target="_blank">
+                <a class="mdc-list-item" href="http://project-showcase.netlify.com" target="_blank" rel="noreferrer">
                   <i class="material-icons mdc-list-item__graphic">collections</i>
                   <span class="mdc-list-item__text">Showcase</span>
                 </a>
