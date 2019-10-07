@@ -1,6 +1,6 @@
 import { Router } from '@vaadin/router';
 import { store } from '../store';
-import { changeActiveRoute } from '../store/actions/router';
+import { changeRouteDetail } from '../store/actions/router';
 
 export const initRouter = outlet => {
   const router = new Router(outlet);
@@ -17,7 +17,7 @@ export const initRouter = outlet => {
       }
     },
     {
-      path: '/post/:id',
+      path: '/post/:titleId/:id',
       component: 'app-post',
       action: () => {
         import(/* webpackChunkName: "post-detail" */ '../pages/Post/app-post');
@@ -45,9 +45,11 @@ export const initRouter = outlet => {
       }
     }
   ]);
-}
 
-window.addEventListener('vaadin-router-location-changed', (event) => {
-  const currentRoute = event.detail.location.pathname;
-  store.dispatch(changeActiveRoute(currentRoute));
-});
+  window.addEventListener('vaadin-router-location-changed', (event) => {
+    store.dispatch(changeRouteDetail({
+      activeRoute: event.detail.location.pathname,
+      params: router.location.params
+    }));
+  });
+}

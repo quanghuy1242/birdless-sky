@@ -1,7 +1,8 @@
 import { ON_ROUTE_CHANGE } from '../actions/router';
 
 const initialState = {
-  activeRoute: '/'
+  activeRoute: '/',
+  params: {}
 };
 
 export function router(state = initialState, action) {
@@ -9,7 +10,8 @@ export function router(state = initialState, action) {
     case ON_ROUTE_CHANGE:
       return {
         ...state,
-        activeRoute: action.payload
+        activeRoute: action.payload.activeRoute,
+        params: action.payload.params
       };
     default:
       return state;
