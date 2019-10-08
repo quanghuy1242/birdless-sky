@@ -3,6 +3,8 @@
   overflow: auto;
   position: relative;
   height: calc(100vh - 64px);
+  padding-top: 0 !important;
+  margin-top: 64px;
 }
 
 .main-content {
