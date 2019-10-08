@@ -1,5 +1,5 @@
 import { LitElement, html, css, property, customElement, unsafeCSS } from 'lit-element';
-import { updateMetadata } from 'pwa-helpers';
+import { updateMetadata, connect } from 'pwa-helpers';
 import style from './app-home.scss';
 import { store } from '../../store';
 import { setHomePosition } from '../../store/actions/router';
@@ -10,8 +10,9 @@ import '../../components/PostList/app-post-list';
 import '../../components/CategoriesList/app-categories-list';
 
 @customElement('app-home')
-export class AppMain extends LitElement {
+export class AppMain extends connect(store)(LitElement) {
   @property({ type: Object }) scrollElement = null;
+  @property({ type: Number }) scrollPosition;
   
   static get styles() {
     return [
@@ -19,11 +20,21 @@ export class AppMain extends LitElement {
     ];
   }
 
+  stateChanged(state) {
+    this.scrollPosition = state.router.homePosition;
+  }
+
   firstUpdated() {
     this.scrollElement = document
       .querySelector('app-main').shadowRoot
       .querySelector('app-main-content').shadowRoot
       .querySelector('.mdc-drawer-app-content');
+  }
+
+  onBeforeEnter() {
+    setTimeout(() => {
+      this.scrollElement.scrollTo({ top: this.scrollPosition });
+    }, 0);
   }
   
   onBeforeLeave() {
