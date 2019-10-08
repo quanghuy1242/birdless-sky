@@ -1,5 +1,5 @@
 import { LitElement, html, css, property, customElement, unsafeCSS } from 'lit-element';
-import { updateMetadata, connect } from 'pwa-helpers';
+import { updateMetadata, connect, installMediaQueryWatcher } from 'pwa-helpers';
 import style from './app-home.scss';
 import { store } from '../../store';
 import { setHomePosition } from '../../store/actions/router';
@@ -13,11 +13,17 @@ import '../../components/CategoriesList/app-categories-list';
 export class AppMain extends connect(store)(LitElement) {
   @property({ type: Object }) scrollElement = null;
   @property({ type: Number }) scrollPosition;
+  @property({ type: Boolean }) isMobile;
   
   static get styles() {
     return [
       css`${unsafeCSS(style)}`
     ];
+  }
+
+  constructor() {
+    super();
+    this.excuteQueryMatchers();
   }
 
   stateChanged(state) {
@@ -29,6 +35,12 @@ export class AppMain extends connect(store)(LitElement) {
       .querySelector('app-main').shadowRoot
       .querySelector('app-main-content').shadowRoot
       .querySelector('.mdc-drawer-app-content');
+  }
+
+  excuteQueryMatchers() {
+    installMediaQueryWatcher(`(max-width: 600px)`, isMobile => {
+      this.isMobile = isMobile;
+    });
   }
 
   onBeforeEnter() {
@@ -57,9 +69,13 @@ export class AppMain extends connect(store)(LitElement) {
             <app-post-list></app-post-list>
           </div>
         </div>
-        <div class="right-panel">
-          <app-categories-list></app-categories-list>
-        </div>
+        ${!this.isMobile
+          ? html`
+            <div class="right-panel">
+              <app-categories-list></app-categories-list>
+            </div>
+          `
+          : html``}
       </div>
     `;
   }

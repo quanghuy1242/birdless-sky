@@ -12,9 +12,11 @@
   background-position-y: 100%;
   background-color: var(--mdc-theme-primary);
   color: var(--mdc-theme-text-primary-on-light);
+  padding: 1rem 0;
 
   h1 {
     margin-top: 0;
+    text-align: center;
   }
 
   .slogan {

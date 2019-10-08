@@ -93,64 +93,78 @@ export class AppNavTop extends connect(store)(LitElement) {
     });
   }
 
+  getDrawerTemplate() {
+    return html`
+      <aside
+        class=${classMap({
+          "mdc-drawer--modal": this.isMobile,
+          "mdc-drawer--modal__mobile": this.isMobile,
+          "mdc-drawer": true
+        })}
+      >
+        <div class="mdc-drawer__content">
+          <nav class="mdc-list">
+            <a class="mdc-list-item" href="/home" tabindex="0">
+              <i class="material-icons mdc-list-item__graphic">book</i>
+              <span class="mdc-list-item__text">Blog</span>
+            </a>
+            <a class="mdc-list-item ${classMap({ "mdc-list-item--activated": this.isMobile })}" href="/category">
+              <i class="material-icons mdc-list-item__graphic">category</i>
+              <span class="mdc-list-item__text">Category</span>
+            </a>
+            <a class="mdc-list-item" href="http://project-showcase.netlify.com" target="_blank" rel="noreferrer">
+              <i class="material-icons mdc-list-item__graphic">collections</i>
+              <span class="mdc-list-item__text">Showcase</span>
+            </a>
+            <a class="mdc-list-item" href="/about">
+              <i class="material-icons mdc-list-item__graphic">info</i>
+              <span class="mdc-list-item__text">About me</span>
+            </a>
+          </nav>
+        </div>
+      </aside>
+      <div class="mdc-drawer-scrim"></div>
+    `;
+  }
+
+  getToggleMenu() {
+    return this.isMobile
+      ? html`
+        <button
+          class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
+          @click=${this.handleToggleMenu}
+        >menu</button>
+      `
+      : html``
+  }
+
   render() {
     return html`
       <header class="mdc-top-app-bar app-bar mdc-elevation--z4">
         <div class="mdc-top-app-bar__row">
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-            ${this.isMobile
-              ? html`
-                <button
-                  class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
-                  @click=${this.handleToggleMenu}
-                >menu</button>
-              `
-              : html``}
+            ${this.getToggleMenu()}
             <a href="/home" class="mdc-button mdc-button--unelevated header-text mdc-typography--body2">Birdless Sky</a>
           </section>
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end top-bar-sub-item" role="toolbar">
-            <app-tooltip content="Find me on the internet">
-              <button href="/about" class="mdc-button mdc-button--unelevated mdc-typography--body2">Find me</button>
-            </app-tooltip>
             <a href="/login" class="mdc-button mdc-button--unelevated mdc-typography--body2">Sign in</a>
             <a href="/register" class="mdc-button mdc-button--unelevated mdc-typography--body2">Register</a>
           </section>
         </div>
       </header>
-      <div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust">
+      ${this.isMobile ? this.getDrawerTemplate() : ''}
+      <div
+        class=${classMap({
+          "mdc-drawer-app-content__mobile": this.isMobile,
+          "mdc-drawer-app-content": true,
+          "mdc-top-app-bar--fixed-adjust": true
+        })}
+      >
         ${this.pathname === '/home'
           ? html`<app-banner></app-banner>`
           : html``}
         <div class="drawer-frame-root">
-          <aside
-            class=${classMap({
-              "mdc-drawer--modal": this.isMobile,
-              "mdc-drawer--modal__mobile": this.isMobile,
-              "mdc-drawer": true
-            })}
-          >
-            <div class="mdc-drawer__content">
-              <nav class="mdc-list">
-                <a class="mdc-list-item" href="/home" tabindex="0">
-                  <i class="material-icons mdc-list-item__graphic">book</i>
-                  <span class="mdc-list-item__text">Blog</span>
-                </a>
-                <a class="mdc-list-item ${classMap({ "mdc-list-item--activated": this.isMobile })}" href="/category">
-                  <i class="material-icons mdc-list-item__graphic">category</i>
-                  <span class="mdc-list-item__text">Category</span>
-                </a>
-                <a class="mdc-list-item" href="http://project-showcase.netlify.com" target="_blank" rel="noreferrer">
-                  <i class="material-icons mdc-list-item__graphic">collections</i>
-                  <span class="mdc-list-item__text">Showcase</span>
-                </a>
-                <a class="mdc-list-item" href="/about">
-                  <i class="material-icons mdc-list-item__graphic">info</i>
-                  <span class="mdc-list-item__text">About me</span>
-                </a>
-              </nav>
-            </div>
-          </aside>
-          <div class="mdc-drawer-scrim"></div>
+          ${!this.isMobile ? this.getDrawerTemplate() : ''}
           <main class="main-content" id="main-content">
             <slot></slot>
           </main>

@@ -7,6 +7,10 @@
   margin-top: 64px;
 }
 
+.mdc-drawer-app-content__mobile {
+  margin-top: 55px;
+}
+
 .main-content {
   overflow: auto;
   width: 100%;
@@ -37,7 +41,7 @@
 
 .mdc-drawer--modal__mobile {
   position: absolute !important;
-  margin-top: 64px;
+  margin-top: 56px;
   z-index: 6;
 }
 
