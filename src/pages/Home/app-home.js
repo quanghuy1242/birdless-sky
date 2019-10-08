@@ -1,6 +1,8 @@
 import { LitElement, html, css, property, customElement, unsafeCSS } from 'lit-element';
 import { updateMetadata } from 'pwa-helpers';
 import style from './app-home.scss';
+import { store } from '../../store';
+import { setHomePosition } from '../../store/actions/router';
 
 import '../../components/CircularProgress/app-circular-progress';
 import '../../components/CardItem/app-card-item';
@@ -9,12 +11,23 @@ import '../../components/CategoriesList/app-categories-list';
 
 @customElement('app-home')
 export class AppMain extends LitElement {
-  @property({ type: Boolean }) isPending;
+  @property({ type: Object }) scrollElement = null;
   
   static get styles() {
     return [
       css`${unsafeCSS(style)}`
     ];
+  }
+
+  firstUpdated() {
+    this.scrollElement = document
+      .querySelector('app-main').shadowRoot
+      .querySelector('app-main-content').shadowRoot
+      .querySelector('.mdc-drawer-app-content');
+  }
+  
+  onBeforeLeave() {
+    store.dispatch(setHomePosition(this.scrollElement.scrollTop));
   }
 
   updated() {

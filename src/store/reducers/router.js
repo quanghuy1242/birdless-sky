@@ -1,8 +1,9 @@
-import { ON_ROUTE_CHANGE } from '../actions/router';
+import { ON_ROUTE_CHANGE, SET_HOME_POSITION } from '../actions/router';
 
 const initialState = {
   activeRoute: '/',
-  params: {}
+  params: {},
+  homePosition: 0
 };
 
 export function router(state = initialState, action) {
@@ -11,8 +12,13 @@ export function router(state = initialState, action) {
       return {
         ...state,
         activeRoute: action.payload.activeRoute,
-        params: action.payload.params
+        params: action.payload.params,
       };
+      case SET_HOME_POSITION:
+        return {
+          ...state,
+          homePosition: action.payload,
+        };
     default:
       return state;
   }

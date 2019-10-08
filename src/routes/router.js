@@ -52,4 +52,16 @@ export const initRouter = outlet => {
       params: router.location.params
     }));
   });
+
+  store.subscribe(() => {
+    const activeRoute = store.getState().router.activeRoute;
+    if (activeRoute === '/home') {
+      const position = store.getState().router.homePosition;
+      document
+        .querySelector('app-main').shadowRoot
+        .querySelector('app-main-content').shadowRoot
+        .querySelector('.mdc-drawer-app-content')
+        .scrollTo({ top: position });
+    };
+  })
 }
