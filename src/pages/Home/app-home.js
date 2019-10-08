@@ -10,6 +10,7 @@ import '../../components/CategoriesList/app-categories-list';
 @customElement('app-home')
 export class AppMain extends LitElement {
   @property({ type: Boolean }) isPending;
+  
   static get styles() {
     return [
       css`${unsafeCSS(style)}`
