@@ -18,7 +18,7 @@ import { classMap } from 'lit-html/directives/class-map';
 import { store } from '../../store';
 import style from './app-main-content.scss';
 
-import '../../components/Banner/app-banner';
+import '../Banner/app-banner';
 import '../Tooltip/app-tooltip';
 
 @customElement('app-main-content')

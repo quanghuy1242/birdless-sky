@@ -3,7 +3,7 @@ import style from './app-main.scss';
 import { fetchInitPosts } from './worker/worker.instance';
 import { initRouter } from './routes/router';
 
-import './components/NavTop/app-main-content';
+import './components/MainContent/app-main-content';
 
 @customElement('app-main')
 export class AppMain extends LitElement {
