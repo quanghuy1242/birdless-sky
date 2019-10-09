@@ -13,5 +13,5 @@ export const additionalField = data => {
 }
 
 export const getDate = timestamp => {
-  return new Date(timestamp.seconds * 1000);
+  return new Date(timestamp?.seconds * 1000);
 }
