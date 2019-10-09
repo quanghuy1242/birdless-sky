@@ -139,6 +139,11 @@ export class AppNavTop extends connect(store)(LitElement) {
   }
 
   render() {
+    const buttonClass =
+      !this.isMobile 
+        ? "mdc-button mdc-button--unelevated mdc-typography--body2"
+        : "mdc-icon-button material-icons";
+
     return html`
       <header class="mdc-top-app-bar app-bar mdc-elevation--z4">
         <div class="mdc-top-app-bar__row">
@@ -147,8 +152,8 @@ export class AppNavTop extends connect(store)(LitElement) {
             <a href="/home" class="mdc-button mdc-button--unelevated header-text mdc-typography--body2">Birdless Sky</a>
           </section>
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end top-bar-sub-item" role="toolbar">
-            <a href="/login" class="mdc-button mdc-button--unelevated mdc-typography--body2">Sign in</a>
-            <a href="/register" class="mdc-button mdc-button--unelevated mdc-typography--body2">Register</a>
+            <a href="/login" class="${buttonClass}">${!this.isMobile ? "Sign in" : "face"}</a>
+            <a href="/register" class="${buttonClass}">${!this.isMobile ? "Register" : "exit_to_app"}</a>
           </section>
         </div>
       </header>
