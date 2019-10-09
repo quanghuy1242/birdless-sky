@@ -49,7 +49,7 @@ export class AppMain extends connect(store)(LitElement) {
 
   updated() {
     updateMetadata({
-      title: `Bài viết số ${this.id}`,
+      title: `${this.title ? this.title + ' - Quang Huy' : ''}`,
       description: `Bài viết số ${this.id}`,
       url: window.location.href
     });
