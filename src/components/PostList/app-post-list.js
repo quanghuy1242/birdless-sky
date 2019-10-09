@@ -1,4 +1,4 @@
-import { LitElement, html, property, customElement, css, unsafeCSS, query, queryAll } from 'lit-element';
+import { LitElement, html, property, customElement, css, unsafeCSS, queryAll } from 'lit-element';
 import { connect } from 'pwa-helpers';
 import { store } from '../../store';
 import style from './app-post-list.scss';
