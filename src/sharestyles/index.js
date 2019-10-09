@@ -1,5 +1,6 @@
 import { css, unsafeCSS } from 'lit-element';
 
+import githubMarkdown from './github-markdown.scss';
 import materialIcons from './material-icons.scss';
 import mdcTopAppBar from './mdc-top-app-bar.scss';
 import mdcButton from './mdc-button.scss';
@@ -12,6 +13,7 @@ import mdcIconButton from './mdc-icon-button.scss';
 import mdcRipple from './mdc-ripple.scss';
 import mdcChips from './mdc-chips.scss';
 
+export const githubMarkdownStyles = css`${unsafeCSS(githubMarkdown)}`;
 export const materialIconsStyles = css`${unsafeCSS(materialIcons)}`;
 export const mdcTopAppBarStyles = css`${unsafeCSS(mdcTopAppBar)}`;
 export const mdcButtonStyles = css`${unsafeCSS(mdcButton)}`;

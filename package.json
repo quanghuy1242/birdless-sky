@@ -42,6 +42,7 @@
     "@vaadin/router": "^1.4.3",
     "firebase": "^7.1.0",
     "lit-element": "^2.2.1",
+    "markdown-it": "^10.0.0",
     "popper.js": "^1.15.0",
     "pwa-helpers": "^0.9.1",
     "redux": "^4.0.4",

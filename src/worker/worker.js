@@ -1,6 +1,12 @@
 import { db } from '../firebase';
 import { additionalField } from '../utils/post.util';
-import { GET_CATEGORIES, GET_INIT_POSTS, GET_CONF, GET_NEXT_POSTS } from './worker.type';
+import {
+  GET_CATEGORIES,
+  GET_INIT_POSTS,
+  GET_CONF,
+  GET_NEXT_POSTS,
+  GET_POST_DETAIL
+} from './worker.type';
 
 addEventListener('message', e => {
   switch (e.data.cmd) {
@@ -49,6 +55,15 @@ addEventListener('message', e => {
           e.data.cmd
         );
       });
+      break;
+
+    case GET_POST_DETAIL:
+      db.doc(`blogs/${e.data.postId}`)
+        .get()
+        .then(docSnapshot => {
+          const post = { id: docSnapshot.id, ...docSnapshot.data() };
+          postMessage({ cmd: e.data.cmd, post })
+        });
       break;
   
     default:

@@ -2,7 +2,14 @@ import { store } from "../store";
 import { fetchCategoriesPending, fetchCategoriesSuccess } from "../store/actions/category";
 import { fetchConfigSuccess } from "../store/actions/banner";
 import { fetchPostsPending, fetchPostsSuccess } from "../store/actions/post";
-import { GET_CATEGORIES, GET_INIT_POSTS, GET_CONF, GET_NEXT_POSTS } from './worker.type';
+import {
+  GET_CATEGORIES,
+  GET_INIT_POSTS,
+  GET_CONF,
+  GET_NEXT_POSTS,
+  GET_POST_DETAIL
+} from './worker.type';
+import { fetchPostDetailSuccess, fetchPostDetailPending } from "../store/actions/post-detail";
 
 export const worker = new Worker('./worker.js', { type: 'module' });
 
@@ -35,6 +42,10 @@ worker.onmessage = e => {
       }));
       break;
 
+    case GET_POST_DETAIL:
+      store.dispatch(fetchPostDetailSuccess(e.data.post));
+      break;
+
     default:
       break;
   }
@@ -57,4 +68,9 @@ export const fetchInitPosts = () => {
 export const fetchNextPosts = oldLastVisible => {
   store.dispatch(fetchPostsPending());
   worker.postMessage({ cmd: GET_NEXT_POSTS, oldLastVisible });
+}
+
+export const fetchPostById = postId => {
+  store.dispatch(fetchPostDetailPending());
+  worker.postMessage({ cmd: GET_POST_DETAIL, postId });
 }

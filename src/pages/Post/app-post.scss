@@ -1,6 +1,7 @@
 .post-detail {
   display: flex;
   flex-direction: column;
+  background-color: #fafafa;
 
   &__header {
     display: flex;
@@ -16,6 +17,18 @@
 
     &__action {
       display: flex;
+    }
+  }
+
+  &__body {
+    &__content {
+      margin: 0.5rem;
+    }
+
+    &__author {
+      margin: 1rem;
+      display: flex;
+      justify-content: flex-end;
     }
   }
 }
