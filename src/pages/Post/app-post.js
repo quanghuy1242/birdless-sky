@@ -1,11 +1,22 @@
-import { LitElement, html, css, property, customElement } from 'lit-element';
+import { LitElement, html, css, property, customElement, unsafeCSS } from 'lit-element';
 import { updateMetadata, connect } from 'pwa-helpers';
 import { store } from '../../store';
+import style from './app-post.scss';
+import { mdcTypographyStyles, mdcIconButtonStyles, materialIconsStyles } from '../../sharestyles';
 
 @customElement('app-post')
 export class AppMain extends connect(store)(LitElement) {
   @property({ type: String }) id;
   @property({ type: String }) titleId;
+
+  static get styles() {
+    return [
+      materialIconsStyles,
+      mdcTypographyStyles,
+      mdcIconButtonStyles,
+      css`${unsafeCSS(style)}`
+    ];
+  }
 
   stateChanged(state) {
     this.id = state.router.params.id;
@@ -22,8 +33,17 @@ export class AppMain extends connect(store)(LitElement) {
 
   render() {
     return html`
-      <p>Post id: ${this.id}</p>
-      <p>Post title id: ${this.titleId}</p>
+      <div class="post-detail">
+        <div class="post-detail__header">
+          <div class="post-detail__header__text">
+            <div class="post-detail__header__text__title mdc-typography--headline5">${this.titleId}</div>
+            <div class="post-detail__header__text__subtitle mdc-typography--body2">${this.id}</div>
+          </div>
+          <div class="post-detail__header--action">
+            <button class="mdc-icon-button material-icons">more_vert</button>
+          </div>
+        </div>
+      </div>
     `;
   }
 }

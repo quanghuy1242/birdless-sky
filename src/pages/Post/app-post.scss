@@ -1,0 +1,21 @@
+.post-detail {
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    padding: 1rem;
+    background-color: var(--mdc-theme-primary);
+    color: var(--mdc-theme-text-primary-on-light);
+
+    &__text {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__action {
+      display: flex;
+    }
+  }
+}
