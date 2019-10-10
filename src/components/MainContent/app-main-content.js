@@ -170,7 +170,12 @@ export class AppNavTop extends connect(store)(LitElement) {
           : html``}
         <div class="drawer-frame-root">
           ${!this.isMobile ? this.getDrawerTemplate() : ''}
-          <main class="main-content main-content__mobile" id="main-content">
+          <main
+            class=${classMap({
+              "main-content__mobile": this.isMobile,
+              "main-content": true
+            })}
+          >
             <slot></slot>
           </main>
         </div>
