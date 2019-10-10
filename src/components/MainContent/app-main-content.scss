@@ -53,3 +53,11 @@
   display: flex;
   // height: calc(100vh - 64px);
 }
+
+.mdc-drawer .mdc-list-item--activated {
+  color: var(--mdc-theme-primary);
+}
+
+.mdc-drawer .mdc-list-item--activated .mdc-list-item__graphic {
+  color: var(--mdc-theme-primary);
+}
