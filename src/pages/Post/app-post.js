@@ -1,5 +1,5 @@
 import { LitElement, html, css, property, customElement, unsafeCSS, query } from 'lit-element';
-import {  } from 'lit-html';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import { updateMetadata, connect } from 'pwa-helpers';
 import { store } from '../../store';
 import style from './app-post.scss';
@@ -53,7 +53,6 @@ export class AppMain extends connect(store)(LitElement) {
       description: `Bài viết số ${this.id}`,
       url: window.location.href
     });
-    this.markdownContent.innerHTML = md.render(this.content);
   }
 
   render() {
@@ -73,7 +72,9 @@ export class AppMain extends connect(store)(LitElement) {
               </div>
             </div>
             <div class="post-detail__body">
-              <div class="post-detail__body__content markdown-body"></div>
+              <div class="post-detail__body__content markdown-body">
+                ${unsafeHTML(md.render(this.content))}
+              </div>
               <div class="post-detail__body__author mdc-typography--subtitle2">
                 <b><i>Quang Huy</i></b>
               </div>
