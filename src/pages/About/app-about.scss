@@ -1,0 +1,24 @@
+.header-text {
+  text-align: center;
+  font-weight: 500;
+  padding: 1rem;
+}
+
+.image-header {
+  height: 220px;
+  background-position: 50%;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+
+  img {
+    border: 3px solid white;
+  }
+}
+
+.mdc-tab-bar {
+  border-top: 1px solid #d8d7d7;
+  border-bottom: 1px solid #d8d7d7;
+}
