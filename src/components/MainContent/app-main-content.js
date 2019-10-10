@@ -170,7 +170,7 @@ export class AppNavTop extends connect(store)(LitElement) {
           : html``}
         <div class="drawer-frame-root">
           ${!this.isMobile ? this.getDrawerTemplate() : ''}
-          <main class="main-content" id="main-content">
+          <main class="main-content main-content__mobile" id="main-content">
             <slot></slot>
           </main>
         </div>
