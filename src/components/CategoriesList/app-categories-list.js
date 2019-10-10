@@ -26,7 +26,7 @@ export class AppCategoriesList extends connect(store)(LitElement) {
 
   render() {
     return html`
-      ${this.categories.map(category => html`
+      ${this.categories?.map(category => html`
         <app-category-item
           .name=${category.name}
           .image=${category.imgUrl}

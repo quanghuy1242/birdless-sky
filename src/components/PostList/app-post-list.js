@@ -44,7 +44,7 @@ export class AppPostList extends connect(store)(LitElement) {
 
   render() {
     return html`
-      ${this.posts.map(post => html`
+      ${this.posts?.map(post => html`
         <app-card-item
           postId=${post.id}
           title=${post.title}
