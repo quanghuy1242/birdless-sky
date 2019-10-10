@@ -12,6 +12,7 @@ import mdcCard from './mdc-card.scss';
 import mdcIconButton from './mdc-icon-button.scss';
 import mdcRipple from './mdc-ripple.scss';
 import mdcChips from './mdc-chips.scss';
+import mdcTabBar from './mdc-tab-bar.scss';
 
 export const githubMarkdownStyles = css`${unsafeCSS(githubMarkdown)}`;
 export const materialIconsStyles = css`${unsafeCSS(materialIcons)}`;
@@ -25,3 +26,4 @@ export const mdcCardStyles = css`${unsafeCSS(mdcCard)}`;
 export const mdcIconButtonStyles = css`${unsafeCSS(mdcIconButton)}`;
 export const mdcRippleStyles = css`${unsafeCSS(mdcRipple)}`;
 export const mdcChipsStyles = css`${unsafeCSS(mdcChips)}`;
+export const mdcTabBarStyles = css`${unsafeCSS(mdcTabBar)}`;
