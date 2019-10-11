@@ -24,6 +24,13 @@ export const initRouter = outlet => {
       }
     },
     {
+      path: '/category',
+      component: 'app-category',
+      action: () => {
+        import(/* webpackChunkName: "category" */ '../pages/Category/app-category');
+      }
+    },
+    {
       path: '/category/:id',
       component: 'app-post',
       action: () => {
