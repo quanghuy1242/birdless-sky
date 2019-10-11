@@ -69,8 +69,11 @@ export class AppNavTop extends connect(store)(LitElement) {
         = `calc(100% - ${this.bannerElement ? this.bannerElement.offsetHeight : 0}px)`;
     }, 0);
 
-    if (this.isMobile) {
-      this.drawer = MDCDrawer.attachTo(this.drawerElement);
+    if (this.checkIfMenuShoudRender()) {
+      if (this.isMobile) {
+        this.drawer = MDCDrawer.attachTo(this.drawerElement);
+      }
+      new MDCTextField(this.textFieldElement);
     } else {
       delete this.drawer;
     }
@@ -85,8 +88,6 @@ export class AppNavTop extends connect(store)(LitElement) {
     [...this.buttonElements, ...this.listItems].forEach(buttonElement => {
       MDCRipple.attachTo(buttonElement);
     });
-
-    new MDCTextField(this.textFieldElement);
   }
 
   handleToggleMenu() {
@@ -99,53 +100,60 @@ export class AppNavTop extends connect(store)(LitElement) {
     });
   }
 
-  getDrawerTemplate() {
+  checkIfMenuShoudRender() {
     if (this.pathname === '/login' || this.pathname === '/register') {
-      return html``;
+      if (this.isMobile) { return true; }
+      else { return false; }
     }
-    return html`
-      <aside
-        class=${classMap({
-          "mdc-drawer--modal": this.isMobile,
-          "mdc-drawer--modal__mobile": this.isMobile,
-          "mdc-drawer": true
-        })}
-      >
-        <div class="mdc-drawer__content">
-          <nav class="mdc-list">
-            <div class="mdc-text-field-wrapper">
-              <div class="mdc-text-field mdc-text-field--outlined">
-                <input class="mdc-text-field__input" id="text-field-hero-input">
-                <div class="mdc-notched-outline">
-                  <div class="mdc-notched-outline__leading"></div>
-                  <div class="mdc-notched-outline__notch">
-                    <label for="text-field-hero-input" class="mdc-floating-label">Search</label>
+    return true;
+  }
+
+  getDrawerTemplate() {
+    if (this.checkIfMenuShoudRender()) {
+      return html`
+        <aside
+          class=${classMap({
+            "mdc-drawer--modal": this.isMobile,
+            "mdc-drawer--modal__mobile": this.isMobile,
+            "mdc-drawer": true
+          })}
+        >
+          <div class="mdc-drawer__content">
+            <nav class="mdc-list">
+              <div class="mdc-text-field-wrapper">
+                <div class="mdc-text-field mdc-text-field--outlined">
+                  <input class="mdc-text-field__input" id="text-field-hero-input">
+                  <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                      <label for="text-field-hero-input" class="mdc-floating-label">Search</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
                   </div>
-                  <div class="mdc-notched-outline__trailing"></div>
                 </div>
               </div>
-            </div>
-            <a class="mdc-list-item" href="/home" tabindex="0">
-              <i class="material-icons mdc-list-item__graphic">book</i>
-              <span class="mdc-list-item__text">Blog</span>
-            </a>
-            <a class="mdc-list-item ${classMap({ "mdc-list-item--activated": this.isMobile })}" href="/category">
-              <i class="material-icons mdc-list-item__graphic">category</i>
-              <span class="mdc-list-item__text">Category</span>
-            </a>
-            <a class="mdc-list-item" href="http://project-showcase.netlify.com" target="_blank" rel="noreferrer">
-              <i class="material-icons mdc-list-item__graphic">collections</i>
-              <span class="mdc-list-item__text">Showcase</span>
-            </a>
-            <a class="mdc-list-item" href="/about">
-              <i class="material-icons mdc-list-item__graphic">info</i>
-              <span class="mdc-list-item__text">About me</span>
-            </a>
-          </nav>
-        </div>
-      </aside>
-      ${this.isMobile ? html`<div class="mdc-drawer-scrim"></div>` : ''}
+              <a class="mdc-list-item" href="/home" tabindex="0">
+                <i class="material-icons mdc-list-item__graphic">book</i>
+                <span class="mdc-list-item__text">Blog</span>
+              </a>
+              <a class="mdc-list-item ${classMap({ "mdc-list-item--activated": this.isMobile })}" href="/category">
+                <i class="material-icons mdc-list-item__graphic">category</i>
+                <span class="mdc-list-item__text">Category</span>
+              </a>
+              <a class="mdc-list-item" href="http://project-showcase.netlify.com" target="_blank" rel="noreferrer">
+                <i class="material-icons mdc-list-item__graphic">collections</i>
+                <span class="mdc-list-item__text">Showcase</span>
+              </a>
+              <a class="mdc-list-item" href="/about">
+                <i class="material-icons mdc-list-item__graphic">info</i>
+                <span class="mdc-list-item__text">About me</span>
+              </a>
+            </nav>
+          </div>
+        </aside>
+        ${this.isMobile ? html`<div class="mdc-drawer-scrim"></div>` : ''}
     `;
+    }
   }
 
   getToggleMenu() {
