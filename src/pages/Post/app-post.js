@@ -68,7 +68,7 @@ export class AppMain extends connect(store)(LitElement) {
                     ${getDate(this.date).toLocaleDateString()}
                   </div>
                 </div>
-                <div class="post-detail__header--action">
+                <div class="post-detail__header__action">
                   <button class="mdc-icon-button material-icons">more_vert</button>
                 </div>
               </div>
