@@ -7,7 +7,8 @@ import {
   mdcListStyles,
   mdcDrawerStyles,
   materialIconsStyles,
-  mdcIconButtonStyles
+  mdcIconButtonStyles,
+  mdcTextFieldStyles
 } from '../../sharestyles';
 import { MDCTopAppBar } from '@material/top-app-bar';
 import { MDCRipple } from '@material/ripple';
@@ -20,6 +21,7 @@ import style from './app-main-content.scss';
 
 import '../Banner/app-banner';
 import '../Tooltip/app-tooltip';
+import { MDCTextField } from '@material/textfield';
 
 @customElement('app-main-content')
 export class AppNavTop extends connect(store)(LitElement) {
@@ -30,6 +32,7 @@ export class AppNavTop extends connect(store)(LitElement) {
   @queryAll('.mdc-list-item') listItems;
   @query('.drawer-frame-root') contentElement;
   @query('app-banner') bannerElement;
+  @query('.mdc-text-field') textFieldElement;
 
   @property({ type: String }) pathname = window.location.pathname;
   @property({ type: Boolean }) isMobile;
@@ -44,6 +47,7 @@ export class AppNavTop extends connect(store)(LitElement) {
       mdcDrawerStyles,
       materialIconsStyles,
       mdcIconButtonStyles,
+      mdcTextFieldStyles,
       css`${unsafeCSS(style)}`,
     ];
   }
@@ -81,6 +85,8 @@ export class AppNavTop extends connect(store)(LitElement) {
     [...this.buttonElements, ...this.listItems].forEach(buttonElement => {
       MDCRipple.attachTo(buttonElement);
     });
+
+    new MDCTextField(this.textFieldElement);
   }
 
   handleToggleMenu() {
@@ -104,6 +110,18 @@ export class AppNavTop extends connect(store)(LitElement) {
       >
         <div class="mdc-drawer__content">
           <nav class="mdc-list">
+            <div class="mdc-text-field-wrapper">
+              <div class="mdc-text-field mdc-text-field--outlined">
+                <input class="mdc-text-field__input" id="text-field-hero-input">
+                <div class="mdc-notched-outline">
+                  <div class="mdc-notched-outline__leading"></div>
+                  <div class="mdc-notched-outline__notch">
+                    <label for="text-field-hero-input" class="mdc-floating-label">Search</label>
+                  </div>
+                  <div class="mdc-notched-outline__trailing"></div>
+                </div>
+              </div>
+            </div>
             <a class="mdc-list-item" href="/home" tabindex="0">
               <i class="material-icons mdc-list-item__graphic">book</i>
               <span class="mdc-list-item__text">Blog</span>
