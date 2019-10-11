@@ -1,0 +1,25 @@
+.wrapper {
+  .banner {
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-image: url(https://raw.githubusercontent.com/quanghuy1242/MyLibary/master/images/2019/5/20/photo-1461958508236-9a742665a0d5.jpg);
+    background-size: cover;
+    margin-bottom: 1rem;
+  }
+
+  .category-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    justify-items: center;
+    gap: 1rem 1rem;
+    margin: 0 1rem;
+
+    app-category-item {
+      width: 100%;
+    }
+  }
+}
