@@ -80,7 +80,7 @@ export class AppMain extends connect(store)(LitElement) {
               </div>
             </div>
           `
-          : html`<app-circular-progress size="xlarge" center></app-circular-progress>`}
+          : html`<app-circular-progress size="xlarge" center style="margin: 2rem 0"></app-circular-progress>`}
       </div>
     `;
   }

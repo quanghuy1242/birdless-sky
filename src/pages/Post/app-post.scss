@@ -2,6 +2,11 @@
   display: flex;
   flex-direction: column;
   background-color: #fafafa;
+  min-height: calc(100vh - 64px);
+
+  @media screen and (max-width: 600px) {
+    min-height: calc(100vh - 56px);
+  }
 
   &__header {
     display: flex;
