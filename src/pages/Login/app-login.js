@@ -27,16 +27,20 @@ export class AppMain extends LitElement {
       new MDCRipple(element);
     })
 
-    this.hideAside();
+    this.hideAside(true);
+  }
+
+  onBeforeLeave() {
+    this.hideAside(false);
   }
 
   // Ẩn aside đi cho đẹp
-  hideAside() {
+  hideAside(isHide) {
     document
       .querySelector('app-main').shadowRoot
       .querySelector('app-main-content').shadowRoot
       .querySelector('aside')
-      .style.display = 'none';
+      .style.display = isHide ? 'none' : 'flex';
   }
 
   render() {
