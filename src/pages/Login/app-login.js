@@ -26,21 +26,6 @@ export class AppMain extends LitElement {
     this.buttonElements.forEach(element => {
       new MDCRipple(element);
     })
-
-    this.hideAside(true);
-  }
-
-  onBeforeLeave() {
-    this.hideAside(false);
-  }
-
-  // Ẩn aside đi cho đẹp
-  hideAside(isHide) {
-    document
-      .querySelector('app-main').shadowRoot
-      .querySelector('app-main-content').shadowRoot
-      .querySelector('aside')
-      .style.display = isHide ? 'none' : 'flex';
   }
 
   render() {

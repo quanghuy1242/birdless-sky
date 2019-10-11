@@ -100,6 +100,9 @@ export class AppNavTop extends connect(store)(LitElement) {
   }
 
   getDrawerTemplate() {
+    if (this.pathname === '/login' || this.pathname === '/register') {
+      return html``;
+    }
     return html`
       <aside
         class=${classMap({
@@ -141,7 +144,7 @@ export class AppNavTop extends connect(store)(LitElement) {
           </nav>
         </div>
       </aside>
-      <div class="mdc-drawer-scrim"></div>
+      ${this.isMobile ? html`<div class="mdc-drawer-scrim"></div>` : ''}
     `;
   }
 

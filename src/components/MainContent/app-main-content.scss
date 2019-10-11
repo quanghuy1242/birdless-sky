@@ -45,8 +45,12 @@
 
 .mdc-drawer--modal__mobile {
   position: absolute !important;
-  margin-top: 56px;
-  z-index: 6;
+  margin-top: 0;
+  z-index: 67;
+}
+
+.mdc-drawer-scrim {
+  z-index: 66;
 }
 
 .drawer-frame-root {
