@@ -60,23 +60,25 @@ export class AppMain extends connect(store)(LitElement) {
       <div class="post-detail">
         ${!this.isPending
           ? html`
-            <div class="post-detail__header">
-              <div class="post-detail__header__text">
-                <div class="post-detail__header__text__title mdc-typography--headline5">${this.title}</div>
-                <div class="post-detail__header__text__subtitle mdc-typography--body2">
-                  ${getDate(this.date).toLocaleDateString()}
+            <div class="wrapper">
+              <div class="post-detail__header">
+                <div class="post-detail__header__text">
+                  <div class="post-detail__header__text__title mdc-typography--headline5">${this.title}</div>
+                  <div class="post-detail__header__text__subtitle mdc-typography--body2">
+                    ${getDate(this.date).toLocaleDateString()}
+                  </div>
+                </div>
+                <div class="post-detail__header--action">
+                  <button class="mdc-icon-button material-icons">more_vert</button>
                 </div>
               </div>
-              <div class="post-detail__header--action">
-                <button class="mdc-icon-button material-icons">more_vert</button>
-              </div>
-            </div>
-            <div class="post-detail__body">
-              <div class="post-detail__body__content markdown-body">
-                ${unsafeHTML(md.render(this.content))}
-              </div>
-              <div class="post-detail__body__author mdc-typography--subtitle2">
-                <b><i>Quang Huy</i></b>
+              <div class="post-detail__body">
+                <div class="post-detail__body__content markdown-body">
+                  ${unsafeHTML(md.render(this.content))}
+                </div>
+                <div class="post-detail__body__author mdc-typography--subtitle2">
+                  <b><i>Quang Huy</i></b>
+                </div>
               </div>
             </div>
           `
