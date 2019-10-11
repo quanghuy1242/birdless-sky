@@ -1,4 +1,4 @@
-import { LitElement, html, customElement, css, unsafeCSS, query } from 'lit-element';
+import { LitElement, html, customElement, css, unsafeCSS, query, property } from 'lit-element';
 import { updateMetadata } from 'pwa-helpers';
 import { materialIconsStyles, mdcTabBarStyles, mdcTypographyStyles, mdcElevationStyles } from '../../sharestyles';
 import style from './app-about.scss';
@@ -7,6 +7,8 @@ import { MDCTabBar } from '@material/tab-bar';
 @customElement('app-about')
 export class AppAbout extends LitElement {
   @query('.mdc-tab-bar') tabBarElement;
+
+  @property({ type: Number }) seletedIndex = 0;
 
   static get styles() {
     return [
@@ -20,6 +22,9 @@ export class AppAbout extends LitElement {
 
   firstUpdated() {
     this.tabBar = new MDCTabBar(this.tabBarElement);
+    this.tabBar.listen('MDCTabBar:activated', e => {
+      this.seletedIndex = e.detail.index;
+    })
   }
 
   updated() {
@@ -28,6 +33,28 @@ export class AppAbout extends LitElement {
       description: 'About Quang Huy Blog',
       url: window.location.href
     });
+  }
+
+  getContent(index) {
+    switch (index) {
+      case 0:
+        return html`
+          Xin chào các bạn
+        `;
+      
+      case 1:
+        return html`
+          Thông tin liên hệ
+        `;
+
+      case 2:
+        return html`
+          Comming soon
+        `;
+    
+      default:
+        return '';
+    }
   }
 
   render() {
@@ -77,6 +104,9 @@ export class AppAbout extends LitElement {
               </div>
             </div>
           </div>
+        </div>
+        <div class="tab-content mdc-typography--body2">
+          ${this.getContent(this.seletedIndex)}
         </div>
       </div>
     `;
