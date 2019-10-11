@@ -38,6 +38,13 @@ export const initRouter = outlet => {
       }
     },
     {
+      path: '/login',
+      component: 'app-login',
+      action: () => {
+        import(/* webpackChunkName: "login" */ '../pages/Login/app-login');
+      }
+    },
+    {
       path: '(.*)+',
       component: 'app-not-found',
       action: () => {

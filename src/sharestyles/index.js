@@ -13,6 +13,7 @@ import mdcIconButton from './mdc-icon-button.scss';
 import mdcRipple from './mdc-ripple.scss';
 import mdcChips from './mdc-chips.scss';
 import mdcTabBar from './mdc-tab-bar.scss';
+import mdcTextField from './mdc-text-field.scss';
 
 export const githubMarkdownStyles = css`${unsafeCSS(githubMarkdown)}`;
 export const materialIconsStyles = css`${unsafeCSS(materialIcons)}`;
@@ -27,3 +28,4 @@ export const mdcIconButtonStyles = css`${unsafeCSS(mdcIconButton)}`;
 export const mdcRippleStyles = css`${unsafeCSS(mdcRipple)}`;
 export const mdcChipsStyles = css`${unsafeCSS(mdcChips)}`;
 export const mdcTabBarStyles = css`${unsafeCSS(mdcTabBar)}`;
+export const mdcTextFieldStyles = css`${unsafeCSS(mdcTextField)}`;
