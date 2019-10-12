@@ -1,11 +1,12 @@
-import { db } from '../firebase';
+import { db, auth } from '../firebase';
 import { additionalField } from '../utils/post.util';
 import {
   GET_CATEGORIES,
   GET_INIT_POSTS,
   GET_CONF,
   GET_NEXT_POSTS,
-  GET_POST_DETAIL
+  GET_POST_DETAIL,
+  ADD_NEW_USER
 } from './worker.type';
 
 addEventListener('message', e => {
@@ -65,6 +66,33 @@ addEventListener('message', e => {
           postMessage({ cmd: e.data.cmd, post })
         });
       break;
+
+    case ADD_NEW_USER: {
+      const { email, password, username } = e.data;
+      db.collection('users').where('username', '==', username).get()
+        .then(docSnapshot => {
+          if (docSnapshot.docs.length) {
+            postMessage({
+              cmd: e.data.cmd,
+              msg: 'An Error Happened',
+              err: { message: 'Username does exist' }
+            })
+          } else {
+            auth.createUserWithEmailAndPassword(email, password)
+              .then(credential => {
+                db.collection('users').doc(credential.user.uid).set({
+                  username
+                }).then(() => {
+                  postMessage({ cmd: e.data.cmd, msg: 'Success!' })
+                });
+              })
+              .catch(err => {
+                postMessage({ cmd: e.data.cmd, msg: 'An Error Happened', err })
+              })
+          }
+        })
+      break;
+    }
   
     default:
       break;

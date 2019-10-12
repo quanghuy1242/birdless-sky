@@ -7,9 +7,12 @@ import {
   GET_INIT_POSTS,
   GET_CONF,
   GET_NEXT_POSTS,
-  GET_POST_DETAIL
+  GET_POST_DETAIL,
+  ADD_NEW_USER
 } from './worker.type';
 import { fetchPostDetailSuccess, fetchPostDetailPending } from "../store/actions/post-detail";
+import { Router } from '@vaadin/router';
+import { addUserPending, addUserErr } from "../store/actions/auth";
 
 export const worker = new Worker('./worker.js', { type: 'module' });
 
@@ -46,6 +49,15 @@ worker.onmessage = e => {
       store.dispatch(fetchPostDetailSuccess(e.data.post));
       break;
 
+    case ADD_NEW_USER: {
+      if (e.data.err) {
+        store.dispatch(addUserErr(e.data.err.message));
+      } else {
+        Router.go('/login');
+      }
+      break;
+    }
+
     default:
       break;
   }
@@ -73,4 +85,9 @@ export const fetchNextPosts = oldLastVisible => {
 export const fetchPostById = postId => {
   store.dispatch(fetchPostDetailPending());
   worker.postMessage({ cmd: GET_POST_DETAIL, postId });
+}
+
+export const addNewUser = ({ username, email, password }) => {
+  store.dispatch(addUserPending());
+  worker.postMessage({ cmd: ADD_NEW_USER, email, password, username });
 }

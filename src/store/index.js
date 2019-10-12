@@ -6,6 +6,7 @@ import { posts } from './reducers/post';
 import { category } from './reducers/category';
 import { router } from './reducers/router';
 import { postDetail } from './reducers/post-detail';
+import { auth } from './reducers/auth';
 
 export const store = createStore(
   state => state,
@@ -18,7 +19,8 @@ export const store = createStore(
 store.addReducers({
   banner: banners,
   post: posts,
-  category: category,
-  router: router,
-  postDetail: postDetail
+  category,
+  router,
+  postDetail,
+  auth
 });

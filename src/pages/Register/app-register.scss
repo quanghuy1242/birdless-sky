@@ -1,6 +1,7 @@
 .wrapper {
   height: calc(100vh - 64px);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 0 1rem;
@@ -49,5 +50,11 @@
         margin-right: 0.5rem;
       }
     }
+  }
+
+  .error {
+    display: block;
+    width: 500px;
+    color: red;
   }
 }
