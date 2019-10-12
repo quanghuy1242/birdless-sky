@@ -52,6 +52,13 @@ export const initRouter = outlet => {
       }
     },
     {
+      path: '/register',
+      component: 'app-register',
+      action: () => {
+        import(/* webpackChunkName: "register" */ '../pages/Register/app-register');
+      }
+    },
+    {
       path: '(.*)+',
       component: 'app-not-found',
       action: () => {
