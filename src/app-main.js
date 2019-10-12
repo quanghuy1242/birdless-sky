@@ -14,10 +14,6 @@ export class AppMain extends LitElement {
       css`${unsafeCSS(style)}`
     ];
   }
-  
-  constructor() {
-    super();
-  }
 
   firstUpdated() {
     initRouter(this.outlet);
