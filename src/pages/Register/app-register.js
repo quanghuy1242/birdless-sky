@@ -4,7 +4,7 @@ import { mdcTextFieldStyles, mdcButtonStyles, mdcTypographyStyles } from '../../
 import { MDCTextField } from '@material/textfield';
 import { MDCRipple } from '@material/ripple';
 import { addNewUser } from '../../worker/worker.instance';
-import { connect } from 'pwa-helpers';
+import { connect, updateMetadata } from 'pwa-helpers';
 import { store } from '../../store';
 
 @customElement('app-register')
@@ -30,6 +30,14 @@ export class AppMain extends connect(store)(LitElement) {
   stateChanged(state) {
     this.isPending = state.auth.isPending;
     this.error = state.auth.error;
+  }
+
+  updated() {
+    updateMetadata({
+      title: 'Register',
+      description: 'Đăng kí tài khoản',
+      url: window.location.href
+    });
   }
 
   firstUpdated() {
