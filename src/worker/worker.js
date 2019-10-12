@@ -100,8 +100,7 @@ addEventListener('message', e => {
       const { email, password } = e.data;
       auth.signInWithEmailAndPassword(email, password)
         .then(credential => {
-          console.log(auth.currentUser);
-          postMessage({ cmd: e.data.cmd, msg: 'Success!', user: JSON.stringify(credential) });
+          postMessage({ cmd: e.data.cmd, msg: 'Success!', user: JSON.stringify(credential.user) });
         })
         .catch(error => {
           console.log(error);
