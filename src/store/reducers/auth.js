@@ -1,8 +1,9 @@
-import { ADD_USER_PENDING, ADD_USER_ERROR, ADD_USER_SUCCESS } from '../actions/auth';
+import { ADD_USER_PENDING, ADD_USER_ERROR, ADD_USER_SUCCESS, SET_AUTH_STATE } from '../actions/auth';
 
 const initialState = {
   isPending: false,
-  error: ''
+  error: '',
+  isAuth: false 
 };
 
 export function auth(state = initialState, action) {
@@ -25,6 +26,12 @@ export function auth(state = initialState, action) {
         ...state,
         isPending: false
       }
+    
+    case SET_AUTH_STATE:
+        return {
+          ...state,
+          isAuth: action.payload
+        }
   
     default:
       return state;

@@ -6,6 +6,7 @@ import { MDCRipple } from '@material/ripple';
 import { addNewUser } from '../../worker/worker.instance';
 import { connect, updateMetadata } from 'pwa-helpers';
 import { store } from '../../store';
+import { Router } from '@vaadin/router';
 
 @customElement('app-register')
 export class AppMain extends connect(store)(LitElement) {
@@ -17,6 +18,7 @@ export class AppMain extends connect(store)(LitElement) {
   @property({ type: String }) password = '';
   @property({ type: Boolean }) isPending;
   @property({ type: String }) error;
+  @property({ type: Boolean }) isAuth;
 
   static get styles() {
     return [
@@ -30,9 +32,14 @@ export class AppMain extends connect(store)(LitElement) {
   stateChanged(state) {
     this.isPending = state.auth.isPending;
     this.error = state.auth.error;
+    this.isAuth = state.auth.isAuth || undefined;
   }
 
   updated() {
+    if (this.isAuth) {
+      Router.go('/home');
+    }
+    
     updateMetadata({
       title: 'Register',
       description: 'Đăng kí tài khoản',

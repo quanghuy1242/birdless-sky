@@ -6,7 +6,9 @@ import {
   GET_CONF,
   GET_NEXT_POSTS,
   GET_POST_DETAIL,
-  ADD_NEW_USER
+  ADD_NEW_USER,
+  SIGN_IN,
+  IS_SIGN_IN
 } from './worker.type';
 
 addEventListener('message', e => {
@@ -91,6 +93,31 @@ addEventListener('message', e => {
               })
           }
         })
+      break;
+    }
+
+    case SIGN_IN: {
+      const { email, password } = e.data;
+      auth.signInWithEmailAndPassword(email, password)
+        .then(credential => {
+          console.log(auth.currentUser);
+          postMessage({ cmd: e.data.cmd, msg: 'Success!', user: JSON.stringify(credential) });
+        })
+        .catch(error => {
+          console.log(error);
+          postMessage({ cmd: e.data.cmd, msg: 'An Error Happened', error })
+        })
+      break;
+    }
+
+    case IS_SIGN_IN: {
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          postMessage({ cmd: e.data.cmd, isAuth: true });
+        } else {
+          postMessage({ cmd: e.data.cmd, isAuth: false });
+        }
+      })
       break;
     }
   

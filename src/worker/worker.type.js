@@ -4,3 +4,6 @@ export const GET_INIT_POSTS = 'GET_INIT_POSTS';
 export const GET_NEXT_POSTS = 'GET_NEXT_POSTS';
 export const GET_POST_DETAIL = 'GET_POST_DETAIL';
 export const ADD_NEW_USER = 'ADD_NEW_USER';
+export const SIGN_IN = 'SIGN_IN';
+export const IS_SIGN_IN = 'IS_SIGN_IN';
+export const RE_SIGN_IN = 'RE_SIGN_IN';

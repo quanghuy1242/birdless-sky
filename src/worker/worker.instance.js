@@ -8,11 +8,13 @@ import {
   GET_CONF,
   GET_NEXT_POSTS,
   GET_POST_DETAIL,
-  ADD_NEW_USER
+  ADD_NEW_USER,
+  SIGN_IN,
+  IS_SIGN_IN
 } from './worker.type';
 import { fetchPostDetailSuccess, fetchPostDetailPending } from "../store/actions/post-detail";
 import { Router } from '@vaadin/router';
-import { addUserPending, addUserErr } from "../store/actions/auth";
+import { addUserPending, addUserErr, setAuthState } from "../store/actions/auth";
 
 export const worker = new Worker('./worker.js', { type: 'module' });
 
@@ -58,6 +60,22 @@ worker.onmessage = e => {
       break;
     }
 
+    case SIGN_IN: {
+      if (e.data.err) {
+        store.dispatch(addUserErr(e.data.err.message));
+      } else {
+        localStorage.setItem('user', e.data.user);
+        Router.go('/');
+      }
+      break;
+    }
+
+    case IS_SIGN_IN: {
+      console.log(e.data.isAuth);
+      store.dispatch(setAuthState(e.data.isAuth));
+      break;
+    }
+
     default:
       break;
   }
@@ -90,4 +108,13 @@ export const fetchPostById = postId => {
 export const addNewUser = ({ username, email, password }) => {
   store.dispatch(addUserPending());
   worker.postMessage({ cmd: ADD_NEW_USER, email, password, username });
+}
+
+export const signIn = ({ email, password }) => {
+  store.dispatch(addUserPending());
+  worker.postMessage({ cmd: SIGN_IN, email, password });
+}
+
+export const isSignIn = () => {
+  worker.postMessage({ cmd: IS_SIGN_IN });
 }

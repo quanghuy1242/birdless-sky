@@ -36,6 +36,7 @@ export class AppNavTop extends connect(store)(LitElement) {
 
   @property({ type: String }) pathname = window.location.pathname;
   @property({ type: Boolean }) isMobile;
+  @property({ type: Boolean }) isAuth;
 
   static get styles() {
     return [
@@ -60,6 +61,7 @@ export class AppNavTop extends connect(store)(LitElement) {
 
   stateChanged(state) {
     this.pathname = state.router.activeRoute;
+    this.isAuth = state.auth.isAuth || undefined;
   }
 
   updated() {
@@ -181,8 +183,14 @@ export class AppNavTop extends connect(store)(LitElement) {
             <a href="/home" class="mdc-button mdc-button--unelevated header-text mdc-typography--body2">Birdless Sky</a>
           </section>
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end top-bar-sub-item" role="toolbar">
-            <a href="/login" class="${buttonClass}">${!this.isMobile ? "Sign in" : "face"}</a>
-            <a href="/register" class="${buttonClass}">${!this.isMobile ? "Register" : "exit_to_app"}</a>
+            ${!this.isAuth
+              ? html`
+                <a href="/login" class="${buttonClass}">${!this.isMobile ? "Sign in" : "face"}</a>
+                <a href="/register" class="${buttonClass}">${!this.isMobile ? "Register" : "exit_to_app"}</a>
+              `
+              : html`
+                <button class="${buttonClass}">${!this.isMobile ? "Đã đăng nhập" : "favorite"}</button>
+              `}
           </section>
         </div>
       </header>
