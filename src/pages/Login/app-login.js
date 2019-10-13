@@ -73,6 +73,15 @@ export class AppMain extends connect(store)(LitElement) {
 
   handleLogin(e) {
     e.preventDefault();
+
+    if (this.email.length === 0) {
+      return alert('Email không bỏ trống');
+    }
+
+    if (this.password.length === 0) {
+      return alert('Password không bỏ trống');
+    }
+
     signIn({
       email: this.email,
       password: this.password
