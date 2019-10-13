@@ -8,6 +8,8 @@ import { store } from '../../store';
 import { signIn } from '../../worker/worker.instance';
 import { Router } from '@vaadin/router';
 
+import '../../components/Tooltip/app-tooltip';
+
 @customElement('app-login')
 export class AppMain extends connect(store)(LitElement) {
   @queryAll('.mdc-text-field') textFieldElements;
@@ -96,44 +98,48 @@ export class AppMain extends connect(store)(LitElement) {
         <form class="login-form">
           <div class="header mdc-typography--headline4">Đăng nhập</div>
           <div class="main-form">
-            <div class="mdc-textfield-wrapper">
-              <div class="mdc-text-field mdc-text-field--outlined">
-                <input
-                  class="mdc-text-field__input" 
-                  id="text-field-hero-input-1"
-                  .value=${this.email}
-                  required
-                  type="email"
-                  @change=${(event) => this.handleValueChange(event, 'email')}
-                >
-                <div class="mdc-notched-outline">
-                  <div class="mdc-notched-outline__leading"></div>
-                  <div class="mdc-notched-outline__notch">
-                    <label for="text-field-hero-input" class="mdc-floating-label">Email</label>
+            <app-tooltip content="Email đúng định dạng" placement="top-end">
+              <div class="mdc-textfield-wrapper">
+                <div class="mdc-text-field mdc-text-field--outlined">
+                  <input
+                    class="mdc-text-field__input" 
+                    id="text-field-hero-input-1"
+                    .value=${this.email}
+                    required
+                    type="email"
+                    @change=${(event) => this.handleValueChange(event, 'email')}
+                  >
+                  <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                      <label for="text-field-hero-input" class="mdc-floating-label">Email</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
                   </div>
-                  <div class="mdc-notched-outline__trailing"></div>
                 </div>
               </div>
-            </div>
-            <div class="mdc-textfield-wrapper">
-              <div class="mdc-text-field mdc-text-field--outlined">
-                <input
-                  class="mdc-text-field__input"
-                  id="text-field-hero-input-2"
-                  type="password"
-                  .value=${this.password}
-                  required
-                  @change=${(event) => this.handleValueChange(event, 'password')}
-                >
-                <div class="mdc-notched-outline">
-                  <div class="mdc-notched-outline__leading"></div>
-                  <div class="mdc-notched-outline__notch">
-                    <label for="text-field-hero-input" class="mdc-floating-label">Password</label>
+            </app-tooltip>
+            <app-tooltip content="Mật khẩu phải có ít nhất 1 ký tự hoa, 1 ký tự thường, 1 ký tự số" placement="top-end">
+              <div class="mdc-textfield-wrapper">
+                <div class="mdc-text-field mdc-text-field--outlined">
+                  <input
+                    class="mdc-text-field__input"
+                    id="text-field-hero-input-2"
+                    type="password"
+                    .value=${this.password}
+                    required
+                    @change=${(event) => this.handleValueChange(event, 'password')}
+                  >
+                  <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                      <label for="text-field-hero-input" class="mdc-floating-label">Password</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
                   </div>
-                  <div class="mdc-notched-outline__trailing"></div>
                 </div>
               </div>
-            </div>
+            </app-tooltip>
           </div>
           <div class="action">
             <a class="mdc-button" href="/register">Register</a>

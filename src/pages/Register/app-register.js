@@ -8,6 +8,8 @@ import { connect, updateMetadata } from 'pwa-helpers';
 import { store } from '../../store';
 import { Router } from '@vaadin/router';
 
+import '../../components/Tooltip/app-tooltip';
+
 @customElement('app-register')
 export class AppMain extends connect(store)(LitElement) {
   @queryAll('.mdc-text-field') textFieldElements;
@@ -16,6 +18,7 @@ export class AppMain extends connect(store)(LitElement) {
   @property({ type: String }) username = '';
   @property({ type: String }) email = '';
   @property({ type: String }) password = '';
+  @property({ type: String }) rePassword = '';
   @property({ type: Boolean }) isPending;
   @property({ type: String }) error;
   @property({ type: Boolean }) isAuth;
@@ -73,6 +76,11 @@ export class AppMain extends connect(store)(LitElement) {
         this.password = event.target.value;
         break;
       }
+
+      case 'rePassword': {
+        this.rePassword = event.target.value;
+        break;
+      }
     
       default:
         break;
@@ -81,6 +89,10 @@ export class AppMain extends connect(store)(LitElement) {
 
   handleRegister(e) {
     e.preventDefault();
+
+    if (this.password !== this.rePassword) {
+      return alert('Mật khẩu không khớp!');
+    }
 
     if (this.username.length <= 5) {
       return alert('Tên đăng nhập có tối thiểu 5 chữ số')
@@ -107,62 +119,89 @@ export class AppMain extends connect(store)(LitElement) {
         <form class="login-form">
           <div class="header mdc-typography--headline4">Đăng ký</div>
           <div class="main-form">
-            <div class="mdc-textfield-wrapper">
-              <div class="mdc-text-field mdc-text-field--outlined">
-                <input
-                  class="mdc-text-field__input"
-                  id="text-field-hero-input-1"
-                  .value=${this.username}
-                  required
-                  @change=${(event) => this.handleValueChange(event, 'username')}
-                >
-                <div class="mdc-notched-outline">
-                  <div class="mdc-notched-outline__leading"></div>
-                  <div class="mdc-notched-outline__notch">
-                    <label for="text-field-hero-input" class="mdc-floating-label">Username</label>
+            <app-tooltip content="Tên đăng nhập có tối thiểu 5 chữ số" placement="top-end">
+              <div class="mdc-textfield-wrapper">
+                <div class="mdc-text-field mdc-text-field--outlined">
+                  <input
+                    class="mdc-text-field__input"
+                    id="text-field-hero-input-1"
+                    .value=${this.username}
+                    required
+                    @change=${(event) => this.handleValueChange(event, 'username')}
+                  >
+                  <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                      <label for="text-field-hero-input" class="mdc-floating-label">Username</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
                   </div>
-                  <div class="mdc-notched-outline__trailing"></div>
                 </div>
               </div>
-            </div>
-            <div class="mdc-textfield-wrapper">
-              <div class="mdc-text-field mdc-text-field--outlined">
-                <input
-                  class="mdc-text-field__input"
-                  id="text-field-hero-input-2"
-                  .value=${this.email}
-                  required
-                  type="email"
-                  @change=${(event) => this.handleValueChange(event, 'email')}
-                >
-                <div class="mdc-notched-outline">
-                  <div class="mdc-notched-outline__leading"></div>
-                  <div class="mdc-notched-outline__notch">
-                    <label for="text-field-hero-input" class="mdc-floating-label">Email</label>
+            </app-tooltip>
+            <app-tooltip content="Email đúng định dạng" placement="top-end">
+              <div class="mdc-textfield-wrapper">
+                <div class="mdc-text-field mdc-text-field--outlined">
+                  <input
+                    class="mdc-text-field__input" 
+                    id="text-field-hero-input-1"
+                    .value=${this.email}
+                    required
+                    type="email"
+                    @change=${(event) => this.handleValueChange(event, 'email')}
+                  >
+                  <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                      <label for="text-field-hero-input" class="mdc-floating-label">Email</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
                   </div>
-                  <div class="mdc-notched-outline__trailing"></div>
                 </div>
               </div>
-            </div>
-            <div class="mdc-textfield-wrapper">
-              <div class="mdc-text-field mdc-text-field--outlined">
-                <input
-                  class="mdc-text-field__input"
-                  id="text-field-hero-input-3"
-                  type="password"
-                  .value=${this.password}
-                  required
-                  @change=${(event) => this.handleValueChange(event, 'password')}
-                >
-                <div class="mdc-notched-outline">
-                  <div class="mdc-notched-outline__leading"></div>
-                  <div class="mdc-notched-outline__notch">
-                    <label for="text-field-hero-input" class="mdc-floating-label">Password</label>
+            </app-tooltip>
+            <app-tooltip content="Mật khẩu phải có ít nhất 1 ký tự hoa, 1 ký tự thường, 1 ký tự số" placement="top-end">
+              <div class="mdc-textfield-wrapper">
+                <div class="mdc-text-field mdc-text-field--outlined">
+                  <input
+                    class="mdc-text-field__input"
+                    id="text-field-hero-input-2"
+                    type="password"
+                    .value=${this.password}
+                    required
+                    @change=${(event) => this.handleValueChange(event, 'password')}
+                  >
+                  <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                      <label for="text-field-hero-input" class="mdc-floating-label">Password</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
                   </div>
-                  <div class="mdc-notched-outline__trailing"></div>
                 </div>
               </div>
-            </div>
+            </app-tooltip>
+            <app-tooltip content="Nhập lại mật khẩu" placement="top-end">
+              <div class="mdc-textfield-wrapper">
+                <div class="mdc-text-field mdc-text-field--outlined">
+                  <input
+                    class="mdc-text-field__input"
+                    id="text-field-hero-input-2"
+                    type="password"
+                    .value=${this.rePassword}
+                    required
+                    @change=${(event) => this.handleValueChange(event, 'rePassword')}
+                  >
+                  <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                      <label for="text-field-hero-input" class="mdc-floating-label">Retype Password</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                  </div>
+                </div>
+              </div>
+            </app-tooltip>
           </div>
           <div class="action">
             <button
