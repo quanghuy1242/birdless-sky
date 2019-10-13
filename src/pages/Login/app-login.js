@@ -33,7 +33,6 @@ export class AppMain extends connect(store)(LitElement) {
     this.isPending = state.auth.isPending;
     this.error = state.auth.error;
     this.isAuth = state.auth.isAuth || undefined;
-    console.log(state.auth.isPending);
   }
 
   updated() {
