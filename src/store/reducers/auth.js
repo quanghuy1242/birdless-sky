@@ -30,6 +30,7 @@ export function auth(state = initialState, action) {
     case SET_AUTH_STATE:
         return {
           ...state,
+          isPending: false,
           isAuth: action.payload
         }
   

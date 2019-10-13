@@ -116,5 +116,6 @@ export const signIn = ({ email, password }) => {
 }
 
 export const subscribeAuthState = () => {
+  store.dispatch(addUserPending());
   worker.postMessage({ cmd: IS_SIGN_IN });
 }
