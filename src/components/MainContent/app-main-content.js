@@ -22,6 +22,7 @@ import style from './app-main-content.scss';
 import '../Banner/app-banner';
 import '../Tooltip/app-tooltip';
 import { MDCTextField } from '@material/textfield';
+import { signOut } from '../../worker/worker.instance';
 
 @customElement('app-main-content')
 export class AppNavTop extends connect(store)(LitElement) {
@@ -171,6 +172,10 @@ export class AppNavTop extends connect(store)(LitElement) {
       : html``
   }
 
+  handleSignOut() {
+    signOut();
+  }
+
   render() {
     const buttonClass =
       !this.isMobile 
@@ -194,6 +199,12 @@ export class AppNavTop extends connect(store)(LitElement) {
                   `
                   : html`
                     <button class="${buttonClass}">${!this.isMobile ? "Đã đăng nhập" : "favorite"}</button>
+                    <button
+                      class="${buttonClass}"
+                      @click=${this.handleSignOut}
+                    >
+                      ${!this.isMobile ? "Sign out" : "exit_to_app"}
+                    </button>
                   `}
               `
               : ''}

@@ -10,7 +10,8 @@ import {
   GET_POST_DETAIL,
   ADD_NEW_USER,
   SIGN_IN,
-  IS_SIGN_IN
+  IS_SIGN_IN,
+  SIGN_OUT
 } from './worker.type';
 import { fetchPostDetailSuccess, fetchPostDetailPending } from "../store/actions/post-detail";
 import { Router } from '@vaadin/router';
@@ -76,6 +77,11 @@ worker.onmessage = e => {
       break;
     }
 
+    case SIGN_OUT: {
+      localStorage.removeItem('user');
+      break;
+    }
+
     default:
       break;
   }
@@ -113,6 +119,10 @@ export const addNewUser = ({ username, email, password }) => {
 export const signIn = ({ email, password }) => {
   store.dispatch(addUserPending());
   worker.postMessage({ cmd: SIGN_IN, email, password });
+}
+
+export const signOut = () => {
+  worker.postMessage({ cmd: SIGN_OUT });
 }
 
 export const subscribeAuthState = () => {

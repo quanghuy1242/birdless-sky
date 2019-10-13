@@ -8,7 +8,8 @@ import {
   GET_POST_DETAIL,
   ADD_NEW_USER,
   SIGN_IN,
-  IS_SIGN_IN
+  IS_SIGN_IN,
+  SIGN_OUT
 } from './worker.type';
 
 addEventListener('message', e => {
@@ -117,6 +118,12 @@ addEventListener('message', e => {
           postMessage({ cmd: e.data.cmd, isAuth: false });
         }
       })
+      break;
+    }
+
+    case SIGN_OUT: {
+      auth.signOut();
+      postMessage({ cmd: e.data.cmd });
       break;
     }
   
