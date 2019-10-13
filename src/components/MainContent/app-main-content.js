@@ -81,17 +81,17 @@ export class AppNavTop extends connect(store)(LitElement) {
     } else {
       delete this.drawer;
     }
+
+    // Attact Ripple
+    [...this.buttonElements, ...this.listItems].forEach(buttonElement => {
+      MDCRipple.attachTo(buttonElement);
+    });
   }
 
   firstUpdated() {
     this.topAppBar = new MDCTopAppBar(this.topAppBarElement);
 
     this.list = MDCList.attachTo(this.listElement);
-
-    // Attact Ripple
-    [...this.buttonElements, ...this.listItems].forEach(buttonElement => {
-      MDCRipple.attachTo(buttonElement);
-    });
   }
 
   handleToggleMenu() {
