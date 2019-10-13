@@ -115,6 +115,6 @@ export const signIn = ({ email, password }) => {
   worker.postMessage({ cmd: SIGN_IN, email, password });
 }
 
-export const isSignIn = () => {
+export const subscribeAuthState = () => {
   worker.postMessage({ cmd: IS_SIGN_IN });
 }
