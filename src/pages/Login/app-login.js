@@ -16,6 +16,7 @@ export class AppMain extends connect(store)(LitElement) {
   @property({ type: String }) email = '';
   @property({ type: String }) password = '';
   @property({ type: Boolean }) isAuth;
+  @property({ type: Boolean }) isPending;
 
   static get styles() {
     return [
@@ -30,6 +31,7 @@ export class AppMain extends connect(store)(LitElement) {
     this.isPending = state.auth.isPending;
     this.error = state.auth.error;
     this.isAuth = state.auth.isAuth || undefined;
+    console.log(state.auth.isPending);
   }
 
   updated() {
