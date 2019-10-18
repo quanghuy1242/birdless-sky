@@ -64,9 +64,16 @@ addEventListener('message', e => {
     case GET_POST_DETAIL:
       db.doc(`blogs/${e.data.postId}`)
         .get()
-        .then(docSnapshot => {
+        .then(async docSnapshot => {
           const post = { id: docSnapshot.id, ...docSnapshot.data() };
-          postMessage({ cmd: e.data.cmd, post })
+          const categorySnapshot = await db.doc(`categories/${post.category}`).get();
+          postMessage({
+            cmd: e.data.cmd,
+            post: {
+              ...post,
+              category: { id: categorySnapshot.id, ...categorySnapshot.data() }
+            }
+          });
         });
       break;
 
