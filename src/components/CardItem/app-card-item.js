@@ -13,7 +13,6 @@ import {
 import { MDCRipple } from '@material/ripple';
 import { MDCChipSet } from '@material/chips';
 import { getDate } from '../../utils/post.util';
-import { Router } from '@vaadin/router';
 
 import '../Tooltip/app-tooltip';
 
@@ -88,10 +87,6 @@ export class AppCardItem extends LitElement {
     `;
   }
 
-  handleEnterDetail() {
-    Router.go(`/post/${this.titleId}/${this.postId}`);
-  }
-
   render() {
     return html`
       <div class="mdc-card card-with-header mdc-elevation--z3">
@@ -114,7 +109,6 @@ export class AppCardItem extends LitElement {
         <div
           class="mdc-card__primary-action card__primary-action"
           tabindex="0" 
-          @click=${this.handleEnterDetail}
         >
           ${this.image
             ? html`
@@ -131,8 +125,18 @@ export class AppCardItem extends LitElement {
         </div>
         <div class="mdc-card__actions">
           <div class="mdc-card__action-buttons">
-            <button class="mdc-button mdc-card__action mdc-card__action--button">Read</button>
-            <button class="mdc-button mdc-card__action mdc-card__action--button">Comment</button>
+            <a
+              class="mdc-button mdc-card__action mdc-card__action--button"
+              href="/post/${this.titleId}/${this.postId}"
+            >
+              Read
+            </a>
+            <a
+              class="mdc-button mdc-card__action mdc-card__action--button"
+              href="/post/${this.titleId}/${this.postId}"
+            >
+              Comment
+            </a>
           </div>
           <div class="mdc-card__action-icons">
             <app-tooltip content="Shares">
@@ -143,12 +147,6 @@ export class AppCardItem extends LitElement {
                 share
               </button>
             </app-tooltip>
-            <button
-              class="mdc-icon-button material-icons mdc-card__action mdc-card__action--icon--unbounded"
-              data-mdc-ripple-is-unbounded="true"
-            >
-              more_vert
-            </button>
           </div>
         </div>
       </div>
