@@ -111,3 +111,48 @@
     opacity: 1;
   }
 }
+
+.next-previous-panel {
+  display: flex;
+  flex-direction: row;
+  margin: 0.5rem;
+
+  > a {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    text-transform: initial;
+    color: black !important;
+    padding: 0.5rem 1rem;
+    height: auto;
+    
+    > :not(:last-child) {
+      margin-right: 0.7rem;
+    }
+  }
+
+  .prev-button {
+    justify-content: flex-start;
+  }
+
+  .next-button {
+    justify-content: flex-end;
+
+    .np_text {
+      text-align: right;
+    }
+  }
+
+  .np_text {
+    display: flex;
+    flex-direction: column;
+
+    > :not(:last-child) {
+      margin-bottom: 0.5rem;
+    }
+
+    .np_header, .material-icons {
+      color: var(--mdc-theme-primary);
+    }
+  }
+}

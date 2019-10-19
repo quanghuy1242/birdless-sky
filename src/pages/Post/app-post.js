@@ -111,6 +111,22 @@ export class AppMain extends connect(store)(LitElement) {
                     <b><i>Quang Huy</i></b>
                   </div>
                 </div>
+                <div class="next-previous-panel">
+                  <a class="prev-button mdc-button">
+                    <i class="material-icons">arrow_back_ios</i>
+                    <div class="np_text">
+                      <div class="np_header">Trước</div>
+                      <div>Bài Viết Trước Đó</div>
+                    </div>
+                  </a>
+                  <a class="next-button mdc-button">
+                    <div class="np_text">
+                      <div class="np_header">Sau</div>
+                      <div>Bài Viết Sau Đó</div>
+                    </div>
+                    <i class="material-icons">arrow_forward_ios</i>
+                  </a>
+                </div>
               </div>
               <div class="additional-information">
                 <div class="additional-information-inner">
