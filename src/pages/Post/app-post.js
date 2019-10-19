@@ -10,7 +10,6 @@ import { md } from '../../markdown';
 import { MDCChipSet } from '@material/chips';
 
 import '../../components/CircularProgress/app-circular-progress';
-import '../../components/Tooltip/app-tooltip';
 import { MDCTextField } from '@material/textfield';
 import { MDCRipple } from '@material/ripple/component';
 
@@ -103,11 +102,9 @@ export class AppMain extends connect(store)(LitElement) {
                     </div>
                   </div>
                   <div class="post-detail__header__action">
-                    <app-tooltip content="Chi Tiết" placement="left">
-                      <button class="mdc-icon-button material-icons" @click=${this.handleTogglePanel}>
-                        more_vert
-                      </button>
-                    </app-tooltip>
+                    <button class="mdc-icon-button material-icons" @click=${this.handleTogglePanel}>
+                      ${this.isPanelOpen ? 'menu_open' : 'menu'}
+                    </button>
                   </div>
                 </div>
                 <div class="post-detail__body">
