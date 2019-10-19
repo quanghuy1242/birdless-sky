@@ -12,6 +12,7 @@ import { MDCChipSet } from '@material/chips';
 import '../../components/CircularProgress/app-circular-progress';
 import { MDCTextField } from '@material/textfield';
 import { MDCRipple } from '@material/ripple/component';
+import highlightStyles from 'highlight.js/scss/vs.scss';
 
 @customElement('app-post')
 export class AppMain extends connect(store)(LitElement) {
@@ -40,6 +41,7 @@ export class AppMain extends connect(store)(LitElement) {
       mdcChipsStyles,
       mdcTextFieldStyles,
       mdcButtonStyles,
+      css`${unsafeCSS(highlightStyles)}`,
       css`${unsafeCSS(style)}`
     ];
   }
