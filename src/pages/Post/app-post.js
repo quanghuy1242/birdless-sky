@@ -10,6 +10,7 @@ import { md } from '../../markdown';
 import { MDCChipSet } from '@material/chips';
 
 import '../../components/CircularProgress/app-circular-progress';
+import '../../components/Tooltip/app-tooltip';
 import { MDCTextField } from '@material/textfield';
 import { MDCRipple } from '@material/ripple/component';
 
@@ -28,6 +29,8 @@ export class AppMain extends connect(store)(LitElement) {
   @property({ type: Array }) tags;
   @property({ type: Object }) category;
   @property({ type: Boolean }) isPending;
+  
+  @property({ type: Boolean }) isPanelOpen = false;
 
   static get styles() {
     return [
@@ -76,12 +79,16 @@ export class AppMain extends connect(store)(LitElement) {
     });
   }
 
+  handleTogglePanel() {
+    this.isPanelOpen = !this.isPanelOpen;
+  }
+
   render() {
     return html`
       <div class="post-detail">
         ${!this.isPending
           ? html`
-              <div class="wrapper">
+              <div class="wrapper ${this.isPanelOpen ? 'panel-open' : ''}">
                 <div class="post-detail__header">
                   <div class="post-detail__header__text">
                     <div
@@ -96,9 +103,11 @@ export class AppMain extends connect(store)(LitElement) {
                     </div>
                   </div>
                   <div class="post-detail__header__action">
-                    <button class="mdc-icon-button material-icons">
-                      more_vert
-                    </button>
+                    <app-tooltip content="Chi Tiết" placement="left">
+                      <button class="mdc-icon-button material-icons" @click=${this.handleTogglePanel}>
+                        more_vert
+                      </button>
+                    </app-tooltip>
                   </div>
                 </div>
                 <div class="post-detail__body">
@@ -128,7 +137,7 @@ export class AppMain extends connect(store)(LitElement) {
                   </a>
                 </div>
               </div>
-              <div class="additional-information">
+              <div class="additional-information ${this.isPanelOpen ? 'open' : ''}">
                 <div class="additional-information-inner">
                   <div class="category">
                     <div class="mdc-typography--caption header">Thể loại</div>
