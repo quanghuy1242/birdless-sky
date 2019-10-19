@@ -3,6 +3,7 @@
   flex-direction: row;
   background-color: #fafafa;
   min-height: calc(100vh - 64px);
+  height: calc(100vh - 64px);
 
   @media screen and (max-width: 600px) {
     min-height: calc(100vh - 56px);
@@ -42,7 +43,6 @@
     display: block;
     width: 300px;
     min-width: 300px;
-    min-height: calc(100vh - 64px);
     padding: 0.5rem;
     border-left: 1px solid rgba(0, 0, 0, 0.12);
 
@@ -91,6 +91,7 @@
 .wrapper {
   animation: fade-in 200ms ease-in-out both;
   flex-grow: 1;
+  overflow: auto;
 }
 
 @keyframes fade-in {
