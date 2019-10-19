@@ -3,7 +3,7 @@ import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import { updateMetadata, connect } from 'pwa-helpers';
 import { store } from '../../store';
 import style from './app-post.scss';
-import { mdcTypographyStyles, mdcIconButtonStyles, materialIconsStyles, githubMarkdownStyles, mdcChipsStyles, mdcTextFieldStyles } from '../../sharestyles';
+import { mdcTypographyStyles, mdcIconButtonStyles, materialIconsStyles, githubMarkdownStyles, mdcChipsStyles, mdcTextFieldStyles, mdcButtonStyles } from '../../sharestyles';
 import { fetchPostById } from '../../worker/worker.instance';
 import { getDate } from '../../utils/post.util';
 import { md } from '../../markdown';
@@ -11,11 +11,13 @@ import { MDCChipSet } from '@material/chips';
 
 import '../../components/CircularProgress/app-circular-progress';
 import { MDCTextField } from '@material/textfield';
+import { MDCRipple } from '@material/ripple/component';
 
 @customElement('app-post')
 export class AppMain extends connect(store)(LitElement) {
   @query('.post-detail__body__content') markdownContent;
   @queryAll('.mdc-chip-set') chipsetElements;
+  @queryAll('.mdc-button') buttonElements;
   @queryAll('.mdc-text-field') textFieldElements;
 
   @property({ type: String }) id;
@@ -35,6 +37,7 @@ export class AppMain extends connect(store)(LitElement) {
       githubMarkdownStyles,
       mdcChipsStyles,
       mdcTextFieldStyles,
+      mdcButtonStyles,
       css`${unsafeCSS(style)}`
     ];
   }
@@ -63,6 +66,8 @@ export class AppMain extends connect(store)(LitElement) {
     this.textFieldElements.forEach(element => {
       new MDCTextField(element);
     });
+    
+    this.buttonElements.forEach(button => MDCRipple.attachTo(button));
 
     updateMetadata({
       title: `${this.title ? this.title + ' - Quang Huy' : ''}`,
@@ -133,6 +138,13 @@ export class AppMain extends connect(store)(LitElement) {
                               </a>
                             `
                           )}
+                    </div>
+                  </div>
+                  <div class="social">
+                    <div class="mdc-typography--caption header">Chia sẻ</div>
+                    <div class="action-button">
+                      <button class="mdc-button mdc-button--raised">Facebook</button>
+                      <button class="mdc-button mdc-button--raised">Twitter</button>
                     </div>
                   </div>
                   <div class="comments">
