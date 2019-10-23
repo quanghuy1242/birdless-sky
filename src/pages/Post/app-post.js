@@ -13,6 +13,7 @@ import '../../components/CircularProgress/app-circular-progress';
 import { MDCTextField } from '@material/textfield';
 import { MDCRipple } from '@material/ripple/component';
 import highlightStyles from 'highlight.js/scss/vs.scss';
+import { classMap } from 'lit-html/directives/class-map';
 
 @customElement('app-post')
 export class AppMain extends connect(store)(LitElement) {
@@ -89,7 +90,12 @@ export class AppMain extends connect(store)(LitElement) {
       <div class="post-detail">
         ${!this.isPending
           ? html`
-              <div class="wrapper ${this.isPanelOpen ? 'panel-open' : ''}">
+              <div
+                class=${classMap({
+                  "wrapper": true,
+                  "panel-open": this.isPanelOpen
+                })}
+              >
                 <div class="post-detail__header">
                   <div class="post-detail__header__text">
                     <div
@@ -137,6 +143,12 @@ export class AppMain extends connect(store)(LitElement) {
                 </div>
               </div>
               <div class="additional-information ${this.isPanelOpen ? 'open' : ''}">
+                <button
+                  class="mdc-icon-button material-icons close-addition"
+                  @click=${this.handleTogglePanel}
+                >
+                  close
+                </button>
                 <div class="additional-information-inner">
                   <div class="category">
                     <div class="mdc-typography--caption header">Thể loại</div>
