@@ -49,6 +49,7 @@ worker.onmessage = e => {
       break;
 
     case GET_POST_DETAIL:
+      if (!e.data.post) { return Router.go('/404'); }
       store.dispatch(fetchPostDetailSuccess(e.data.post));
       break;
 

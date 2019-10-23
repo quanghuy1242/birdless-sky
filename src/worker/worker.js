@@ -69,9 +69,11 @@ addEventListener('message', e => {
           const categorySnapshot = await db.doc(`categories/${post.category}`).get();
           postMessage({
             cmd: e.data.cmd,
-            post: {
-              ...post,
-              category: { id: categorySnapshot.id, ...categorySnapshot.data() }
+            ...docSnapshot.exists && {
+              post: {
+                ...post,
+                category: { id: categorySnapshot.id, ...categorySnapshot.data() }
+              }
             }
           });
         });
