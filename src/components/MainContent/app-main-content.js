@@ -192,7 +192,7 @@ export class AppNavTop extends connect(store)(LitElement) {
         <div class="mdc-top-app-bar__row">
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
             ${this.getToggleMenu()}
-            <a href="/home" class="mdc-button mdc-button--unelevated header-text mdc-typography--body2">${this.name}</a>
+            <a href="/home" class="mdc-button mdc-button--unelevated header-text mdc-typography--body2">Birdless Sky</a>
           </section>
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end top-bar-sub-item" role="toolbar">
             ${!this.isPending
