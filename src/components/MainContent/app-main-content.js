@@ -35,6 +35,7 @@ export class AppNavTop extends connect(store)(LitElement) {
   @query('app-banner') bannerElement;
   @query('.mdc-text-field') textFieldElement;
 
+  @property({ type: String }) name;
   @property({ type: String }) pathname = window.location.pathname;
   @property({ type: Boolean }) isMobile;
   @property({ type: Boolean }) isAuth;
@@ -62,6 +63,7 @@ export class AppNavTop extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
+    this.name = state.banner.name;
     this.pathname = state.router.activeRoute;
     this.isAuth = state.auth.isAuth || undefined;
     this.isPending = state.auth.isPending;
@@ -190,7 +192,7 @@ export class AppNavTop extends connect(store)(LitElement) {
         <div class="mdc-top-app-bar__row">
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
             ${this.getToggleMenu()}
-            <a href="/home" class="mdc-button mdc-button--unelevated header-text mdc-typography--body2">Birdless Sky</a>
+            <a href="/home" class="mdc-button mdc-button--unelevated header-text mdc-typography--body2">${this.name}</a>
           </section>
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end top-bar-sub-item" role="toolbar">
             ${!this.isPending
