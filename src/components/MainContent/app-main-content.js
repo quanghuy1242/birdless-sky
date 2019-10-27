@@ -127,7 +127,7 @@ export class AppNavTop extends connect(store)(LitElement) {
             <nav class="mdc-list">
               <div class="mdc-text-field-wrapper">
                 <div class="mdc-text-field mdc-text-field--outlined">
-                  <input class="mdc-text-field__input" id="text-field-hero-input">
+                  <input class="mdc-text-field__input" id="text-field-hero-input" tabindex="-1">
                   <div class="mdc-notched-outline">
                     <div class="mdc-notched-outline__leading"></div>
                     <div class="mdc-notched-outline__notch">
