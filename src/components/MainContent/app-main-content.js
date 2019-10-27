@@ -93,6 +93,9 @@ export class AppNavTop extends connect(store)(LitElement) {
     this.topAppBar = new MDCTopAppBar(this.topAppBarElement);
 
     this.list = MDCList.attachTo(this.listElement);
+    this.list.listen('MDCList:action', () => {
+      if (this.drawer) { this.drawer.open = false; }
+    })
   }
 
   handleToggleMenu() {
