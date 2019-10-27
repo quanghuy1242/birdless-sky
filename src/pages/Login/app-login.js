@@ -150,6 +150,9 @@ export class AppMain extends connect(store)(LitElement) {
               Sign in
             </button>
           </div>
+          ${this.error
+            ? html`<div class="mdc-typography--body2 error">${this.error}</div>`
+            : ''}
         </form>
       </div>
     `;

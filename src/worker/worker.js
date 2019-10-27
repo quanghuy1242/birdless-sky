@@ -112,9 +112,8 @@ addEventListener('message', e => {
         .then(credential => {
           postMessage({ cmd: e.data.cmd, msg: 'Success!', user: JSON.stringify(credential.user) });
         })
-        .catch(error => {
-          console.log(error);
-          postMessage({ cmd: e.data.cmd, msg: 'An Error Happened', error })
+        .catch(err => {
+          postMessage({ cmd: e.data.cmd, msg: 'An Error Happened', err })
         })
       break;
     }
