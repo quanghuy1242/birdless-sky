@@ -1,8 +1,8 @@
 import { FETCH_CONFIG_SUCCESS } from '../actions/banner';
 
 const initialState = {
-  name: 'Quang Huy',
-  slogan: 'Quang Huy Huy',
+  name: 'Birdless Sky',
+  slogan: 'Quang Huy',
   image: ''
 };
 
