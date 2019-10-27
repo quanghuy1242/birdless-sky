@@ -14,4 +14,22 @@
   &:hover {
     opacity: 0.9;
   }
+
+  .main-text {
+    transition: transform 200ms ease-in-out;
+    transform: translateY(15px);
+
+    &.hover {
+      transform: translateY(5px);
+    }
+  }
+
+  .subtitle {
+    transition: opacity 200ms ease-in-out;
+    opacity: 0;
+
+    &.show {
+      opacity: 1;
+    }
+  }
 }

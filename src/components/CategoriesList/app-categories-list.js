@@ -25,6 +25,7 @@ export class AppCategoriesList extends connect(store)(LitElement) {
         <app-category-item
           .name=${category.name}
           .image=${category.imgUrl}
+          .description=${category.description}
         ></app-category-item>
       `)}
     `;
