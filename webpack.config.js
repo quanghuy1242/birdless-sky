@@ -2,6 +2,7 @@ const merge = require('webpack-merge');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const WorkerPlugin = require('worker-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const { createDefaultConfig } = require('@open-wc/building-webpack');
 const config = createDefaultConfig({
@@ -38,7 +39,10 @@ module.exports = (env, argv) => {
       ],
     },
     plugins: [
-      new WorkerPlugin()
+      new WorkerPlugin(),
+      new CopyPlugin([
+        { from: './robots.txt', to: './' },
+      ])
     ],
     devtool: argv.mode !== 'production' ? 'source-map' : 'false',
     devServer: {
