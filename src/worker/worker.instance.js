@@ -11,11 +11,13 @@ import {
   ADD_NEW_USER,
   SIGN_IN,
   IS_SIGN_IN,
-  SIGN_OUT
+  SIGN_OUT,
+  GET_RELATED_POST
 } from './worker.type';
-import { fetchPostDetailSuccess, fetchPostDetailPending } from "../store/actions/post-detail";
+import { fetchPostDetailSuccess, fetchPostDetailPending, fetchRelatedPost } from "../store/actions/post-detail";
 import { Router } from '@vaadin/router';
 import { addUserPending, addUserErr, setAuthState } from "../store/actions/auth";
+import { getDate } from "../utils/post.util";
 
 export const worker = new Worker('./worker.js', { type: 'module' });
 
@@ -51,7 +53,13 @@ worker.onmessage = e => {
     case GET_POST_DETAIL:
       if (!e.data.post) { return Router.go('/404'); }
       store.dispatch(fetchPostDetailSuccess(e.data.post));
+      getRelatedPost(e.data.post.day);
       break;
+
+    case GET_RELATED_POST: {
+      store.dispatch(fetchRelatedPost(e.data.relatedPost));
+      break;
+    }
 
     case ADD_NEW_USER: {
       if (e.data.err) {
@@ -129,4 +137,8 @@ export const signOut = () => {
 export const subscribeAuthState = () => {
   store.dispatch(addUserPending());
   worker.postMessage({ cmd: IS_SIGN_IN });
+}
+
+export const getRelatedPost = timestand => {
+  worker.postMessage({ cmd: GET_RELATED_POST, timestand })
 }

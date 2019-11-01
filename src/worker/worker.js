@@ -1,4 +1,4 @@
-import { db, auth } from '../firebase';
+import { db, auth, Timestamp } from '../firebase';
 import { additionalField } from '../utils/post.util';
 import {
   GET_CATEGORIES,
@@ -9,7 +9,8 @@ import {
   ADD_NEW_USER,
   SIGN_IN,
   IS_SIGN_IN,
-  SIGN_OUT
+  SIGN_OUT,
+  GET_RELATED_POST
 } from './worker.type';
 
 addEventListener('message', e => {
@@ -78,6 +79,32 @@ addEventListener('message', e => {
           });
         });
       break;
+
+    case GET_RELATED_POST: {
+      const date = new Timestamp(e.data.timestand.seconds, e.data.timestand.nanoseconds);
+      Promise.all([
+        db.collection('blogs')
+          .orderBy('day', 'asc')
+          .where('day', '>', date)
+          .limit(1)
+          .get(),
+        db.collection('blogs')
+          .orderBy('day', 'desc')
+          .where('day', '<', date)
+          .limit(1)
+          .get()
+      ]).then(relatedPosts => {
+        const rs = relatedPosts.map(relatedPost => ({
+          id: relatedPost.docs[0]?.id,
+          ...relatedPost.docs[0]?.data(),
+          ...additionalField(relatedPost.docs[0]?.data()),
+        }));
+        postMessage({
+          cmd: e.data.cmd,
+          relatedPost: rs
+        });
+      }).catch(error => {})
+    }
 
     case ADD_NEW_USER: {
       const { email, password, username } = e.data;

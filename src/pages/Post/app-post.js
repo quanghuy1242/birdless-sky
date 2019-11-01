@@ -4,7 +4,7 @@ import { updateMetadata, connect } from 'pwa-helpers';
 import { store } from '../../store';
 import style from './app-post.scss';
 import { mdcTypographyStyles, mdcIconButtonStyles, materialIconsStyles, githubMarkdownStyles, mdcChipsStyles, mdcTextFieldStyles, mdcButtonStyles } from '../../sharestyles';
-import { fetchPostById } from '../../worker/worker.instance';
+import { fetchPostById, getRelatedPost } from '../../worker/worker.instance';
 import { getDate } from '../../utils/post.util';
 import { md } from '../../markdown';
 import { MDCChipSet } from '@material/chips';
@@ -25,11 +25,13 @@ export class AppMain extends connect(store)(LitElement) {
   @property({ type: String }) id;
   @property({ type: String }) title;
   @property({ type: String }) titleId;
-  @property({ type: Object }) date;
+  @property() date;
   @property({ type: String }) content;
   @property({ type: Array }) tags;
   @property({ type: Object }) category;
   @property({ type: Boolean }) isPending;
+  @property({ type: Number }) count = 0;
+  @property({ type: Array }) related;
   
   @property({ type: Boolean }) isPanelOpen = false;
 
@@ -56,6 +58,7 @@ export class AppMain extends connect(store)(LitElement) {
     this.tags = state.postDetail.tags || [];
     this.isPending = state.postDetail.isPending;
     this.category = state.postDetail.category;
+    this.related = state.postDetail.related;
   }
 
   firstUpdated() {
@@ -126,20 +129,26 @@ export class AppMain extends connect(store)(LitElement) {
                   </div>
                 </div>
                 <div class="next-previous-panel">
-                  <a class="prev-button mdc-button">
-                    <i class="material-icons">arrow_back_ios</i>
-                    <div class="np_text">
-                      <div class="np_header">Trước</div>
-                      <div>Bài Viết Trước Đó</div>
-                    </div>
-                  </a>
-                  <a class="next-button mdc-button">
-                    <div class="np_text">
-                      <div class="np_header">Sau</div>
-                      <div>Bài Viết Sau Đó</div>
-                    </div>
-                    <i class="material-icons">arrow_forward_ios</i>
-                  </a>
+                  ${this.related[1]?.id
+                    ? html`
+                    <a class="prev-button mdc-button" href="/post/${this.related[1]?.titleId}/${this.related[1]?.id}">
+                      <i class="material-icons">arrow_back_ios</i>
+                      <div class="np_text">
+                        <div class="np_header">Trước</div>
+                        <div>${this.related[1]?.title}</div>
+                      </div>
+                    </a>
+                    ` : ''}
+                  ${this.related[0]?.id
+                    ? html`
+                    <a class="next-button mdc-button" href="/post/${this.related[0]?.titleId}/${this.related[0]?.id}">
+                      <div class="np_text">
+                        <div class="np_header">Sau</div>
+                        <div>${this.related[0]?.title}</div>
+                      </div>
+                      <i class="material-icons">arrow_forward_ios</i>
+                    </a>
+                    ` : ''}
                 </div>
               </div>
               <div class="additional-information ${this.isPanelOpen ? 'open' : ''}">

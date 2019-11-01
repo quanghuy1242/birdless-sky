@@ -2,6 +2,7 @@ import removeMd from 'remove-markdown';
 import { toURIString } from '../utils/string.util';
 
 export const additionalField = data => {
+  if (!data) { return; }
   const rs =
     /!\[.*?\]\((.*?)\)/.exec(data.content) ||
     /<img[^>]+src=['"]([^">]+)['"]/gim.exec(data.content);
