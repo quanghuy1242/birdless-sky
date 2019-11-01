@@ -205,6 +205,7 @@ export class AppMain extends connect(store)(LitElement) {
                           <div class="mdc-notched-outline__trailing"></div>
                         </div>
                       </div>
+                      <button class="mdc-button mdc-button--raised button-comment">Bình luận</button>
                     </div>
                   </div>
                 </div>
