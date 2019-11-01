@@ -104,6 +104,7 @@ addEventListener('message', e => {
           relatedPost: rs
         });
       }).catch(error => {})
+      break;
     }
 
     case ADD_NEW_USER: {
