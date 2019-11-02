@@ -3,6 +3,7 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const WorkerPlugin = require('worker-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const { createDefaultConfig } = require('@open-wc/building-webpack');
 const config = createDefaultConfig({
@@ -42,7 +43,8 @@ module.exports = (env, argv) => {
       new WorkerPlugin(),
       new CopyPlugin([
         { from: './robots.txt', to: './' },
-      ])
+      ]),
+      new BundleAnalyzerPlugin()
     ],
     devtool: argv.mode !== 'production' ? 'source-map' : 'false',
     devServer: {
