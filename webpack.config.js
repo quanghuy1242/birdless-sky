@@ -44,8 +44,8 @@ module.exports = (env, argv) => {
       new CopyPlugin([
         { from: './robots.txt', to: './' },
       ]),
-      new BundleAnalyzerPlugin()
-    ],
+      argv.mode !== 'production' ? new BundleAnalyzerPlugin() : false,
+    ].filter(Boolean),
     devtool: argv.mode !== 'production' ? 'source-map' : 'false',
     devServer: {
       contentBase: path.join(__dirname, 'dist'),
