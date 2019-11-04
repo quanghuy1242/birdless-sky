@@ -14,6 +14,7 @@ import { MDCTextField } from '@material/textfield';
 import { MDCRipple } from '@material/ripple/component';
 import highlightStyles from 'highlight.js/scss/vs.scss';
 import { classMap } from 'lit-html/directives/class-map';
+import '../../components/Tooltip/app-tooltip';
 
 @customElement('app-post')
 export class AppMain extends connect(store)(LitElement) {
@@ -113,9 +114,11 @@ export class AppMain extends connect(store)(LitElement) {
                     </div>
                   </div>
                   <div class="post-detail__header__action">
-                    <button class="mdc-icon-button material-icons" @click=${this.handleTogglePanel}>
-                      ${this.isPanelOpen ? 'menu_open' : 'menu'}
-                    </button>
+                    <app-tooltip content="Detail" placement="left">
+                      <button class="mdc-icon-button material-icons" @click=${this.handleTogglePanel}>
+                        ${this.isPanelOpen ? 'menu_open' : 'menu'}
+                      </button>
+                    </app-tooltip>
                   </div>
                 </div>
                 <div class="post-detail__body">
