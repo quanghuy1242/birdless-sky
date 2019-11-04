@@ -125,18 +125,22 @@ export class AppCardItem extends LitElement {
         </div>
         <div class="mdc-card__actions">
           <div class="mdc-card__action-buttons">
-            <a
-              class="mdc-button mdc-card__action mdc-card__action--button"
-              href="/post/${this.titleId}/${this.postId}"
-            >
-              Read
-            </a>
-            <a
-              class="mdc-button mdc-card__action mdc-card__action--button"
-              href="/post/${this.titleId}/${this.postId}"
-            >
-              Comment
-            </a>
+            <app-tooltip content="Read full content of this post">
+              <a
+                class="mdc-button mdc-card__action mdc-card__action--button"
+                href="/post/${this.titleId}/${this.postId}"
+              >
+                Read
+              </a>
+            </app-tooltip>
+            <app-tooltip content="Comment">
+              <a
+                class="mdc-button mdc-card__action mdc-card__action--button"
+                href="/post/${this.titleId}/${this.postId}"
+              >
+                Comment
+              </a>
+            </app-tooltip>
           </div>
           <div class="mdc-card__action-icons">
             <app-tooltip content="Shares">
