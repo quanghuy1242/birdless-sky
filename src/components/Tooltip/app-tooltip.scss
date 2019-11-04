@@ -1,5 +1,4 @@
 .tooltip-inner {
-  position: absolute;
   margin: 0.75rem;
   color: white;
   border-radius: 4px;
@@ -13,6 +12,7 @@
   animation-duration: 200ms;
   animation-fill-mode: both;
   animation-timing-function: ease-in-out;
+  line-height: normal;
 }
 
 .isOpening {
