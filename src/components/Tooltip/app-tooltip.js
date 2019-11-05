@@ -1,4 +1,5 @@
 import { LitElement, html, css, property, customElement, query, unsafeCSS } from 'lit-element';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import style from './app-tooltip.scss';
 import Popper from 'popper.js';
 
@@ -53,7 +54,7 @@ export class AppTooltip extends LitElement {
         ${this.isOpen
           ? html`
             <div class="tooltip-inner">
-              ${this.content}
+              ${unsafeHTML(this.content)}
             </div>
           `
           : html``}
