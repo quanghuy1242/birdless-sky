@@ -29,12 +29,11 @@
   }
 
   &__body {
-    &__content {
-      margin: 1rem;
-    }
+    padding: 1rem;
 
     &__author {
       margin: 1rem;
+      margin-bottom: 0;
       display: flex;
       justify-content: flex-end;
     }

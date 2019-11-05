@@ -1,24 +1,21 @@
 import { LitElement, html, css, property, customElement, unsafeCSS, query, queryAll } from 'lit-element';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import { updateMetadata, connect } from 'pwa-helpers';
 import { store } from '../../store';
-import style from './app-post.scss';
 import { mdcTypographyStyles, mdcIconButtonStyles, materialIconsStyles, githubMarkdownStyles, mdcChipsStyles, mdcTextFieldStyles, mdcButtonStyles } from '../../sharestyles';
 import { fetchPostById, getRelatedPost } from '../../worker/worker.instance';
 import { getDate } from '../../utils/post.util';
-import { md } from '../../markdown';
 import { MDCChipSet } from '@material/chips';
-
-import '../../components/CircularProgress/app-circular-progress';
 import { MDCTextField } from '@material/textfield';
 import { MDCRipple } from '@material/ripple/component';
-import highlightStyles from 'highlight.js/scss/vs.scss';
 import { classMap } from 'lit-html/directives/class-map';
+import style from './app-post.scss';
+
+import '../../components/CircularProgress/app-circular-progress';
 import '../../components/Tooltip/app-tooltip';
+import '../../components/MarkdownContent/app-markdown';
 
 @customElement('app-post')
 export class AppMain extends connect(store)(LitElement) {
-  @query('.post-detail__body__content') markdownContent;
   @queryAll('.mdc-chip-set') chipsetElements;
   @queryAll('.mdc-button') buttonElements;
   @queryAll('.mdc-text-field') textFieldElements;
@@ -41,11 +38,9 @@ export class AppMain extends connect(store)(LitElement) {
       materialIconsStyles,
       mdcTypographyStyles,
       mdcIconButtonStyles,
-      githubMarkdownStyles,
       mdcChipsStyles,
       mdcTextFieldStyles,
       mdcButtonStyles,
-      css`${unsafeCSS(highlightStyles)}`,
       css`${unsafeCSS(style)}`
     ];
   }
@@ -118,9 +113,10 @@ export class AppMain extends connect(store)(LitElement) {
                   </div>
                 </div>
                 <div class="post-detail__body">
-                  <div class="post-detail__body__content markdown-body">
-                    ${unsafeHTML(md.render(this.content))}
-                  </div>
+                  <app-markdown
+                    .content=${this.content}
+                    class="post-detail__body__content">
+                  </app-markdown>
                   <div class="post-detail__body__author mdc-typography--subtitle2">
                     <b><i>Quang Huy</i></b>
                   </div>
