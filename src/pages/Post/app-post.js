@@ -28,9 +28,7 @@ export class AppMain extends connect(store)(LitElement) {
   @property({ type: Array }) tags;
   @property({ type: Object }) category;
   @property({ type: Boolean }) isPending;
-  @property({ type: Number }) count = 0;
   @property({ type: Array }) related;
-  
   @property({ type: Boolean }) isPanelOpen = false;
 
   static get styles() {
@@ -84,6 +82,14 @@ export class AppMain extends connect(store)(LitElement) {
     this.isPanelOpen = !this.isPanelOpen;
   }
 
+  renderAuthor() {
+    return html`
+      <div class="post-detail__body__author mdc-typography--subtitle2">
+        <b><i>Quang Huy</i></b>
+      </div>
+    `;
+  }
+
   render() {
     return html`
       <div class="post-detail">
@@ -117,9 +123,7 @@ export class AppMain extends connect(store)(LitElement) {
                     .content=${this.content}
                     class="post-detail__body__content">
                   </app-markdown>
-                  <div class="post-detail__body__author mdc-typography--subtitle2">
-                    <b><i>Quang Huy</i></b>
-                  </div>
+                  ${this.renderAuthor()}
                 </div>
                 <div class="next-previous-panel">
                   ${this.related[1]?.id
