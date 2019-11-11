@@ -37,12 +37,14 @@ export class AppMain extends connect(store)(LitElement) {
     fetchConfig(); // get data
   }
 
-  updated(changedProperties) {
-    this.setBackgroundImage(this.image);
+  updated() {
+    if (this.pathname === '/home') {
+      this.setBackgroundImage(this.image);
+    }
   }
 
   setBackgroundImage(image) {
-    if (image) {
+    if (image && this.bannerWrapper) {
       this.bannerWrapper.style.backgroundImage = `url(${image})`
     }
   }
@@ -53,10 +55,6 @@ export class AppMain extends connect(store)(LitElement) {
         ? html`
           <div class="banner-wrapper">
             <h1 class="mdc-typography--headline2">${this.name}</h1>
-            <!-- <div class="mdc-typography--body1 slogan">
-              ${this.slogan}
-              <mwc-ripple></mwc-ripple>
-            </div> -->
             <mwc-button class="cs-slogan">${this.slogan}</mwc-button>
             <app-tooltip content="Information of something special" style="margin-top: 40px">
               <mwc-button raised label="Learn About Me" class="btn-learn-about" @click=${() => Router.go('/about')} ></mwc-button>

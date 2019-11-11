@@ -82,9 +82,12 @@ export class AppNavTop extends connect(store)(LitElement) {
     [...this.listItems].forEach(buttonElement => {
       MDCRipple.attachTo(buttonElement);
     });
-
+    
     this.shadowRoot.querySelectorAll('mwc-ripple').forEach(rippleElement => {
-      rippleElement.shadowRoot.querySelector('.mdc-ripple-surface').style.borderRadius = '4px';
+      const ripple = rippleElement.shadowRoot.querySelector('.mdc-ripple-surface');
+      if (ripple) {
+        rippleElement.shadowRoot.querySelector('.mdc-ripple-surface').style.borderRadius = '4px';
+      }
     })
   }
 
