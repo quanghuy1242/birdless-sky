@@ -83,6 +83,10 @@ export class AppMain extends connect(store)(LitElement) {
   }
 
   renderNextPreviousButton(isNext, title, link) {
+    this.shadowRoot.querySelectorAll('mwc-ripple').forEach(rippleElement => {
+      rippleElement.shadowRoot.querySelector('.mdc-ripple-surface').style.borderRadius = '4px';
+    });
+    
     return html`
       <div class="prev-button mdc-typography--button ${isNext ? 'reverse' : ''}" @click=${() => Router.go(link)}>
         <mwc-icon>${isNext ? 'arrow_forward_ios' : 'arrow_back_ios'}</mwc-icon>

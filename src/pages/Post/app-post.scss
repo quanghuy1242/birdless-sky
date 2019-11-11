@@ -175,9 +175,14 @@
 
   .prev-button {
     justify-content: flex-start;
+    border-radius: 4px;
 
     &.reverse {
       flex-direction: row-reverse;
+    }
+
+    &:hover {
+      background-color: rgba(65, 98, 117, 0.075);
     }
   }
 
