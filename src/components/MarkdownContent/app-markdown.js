@@ -4,6 +4,8 @@ import { md } from '../../markdown';
 import { githubMarkdownStyles } from '../../sharestyles';
 import highlightStyles from 'highlight.js/scss/vs.scss';
 
+import '../Video/app-video';
+
 @customElement('app-markdown')
 export class AppMarkdown extends LitElement {
   @property({ type: String }) content = '';
