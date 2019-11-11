@@ -198,6 +198,11 @@
     }
   }
 
+  .np_header.flex-end {
+    display: flex;
+    justify-content: flex-end;
+  }
+
   .np_text {
     display: flex;
     flex-direction: column;

@@ -86,12 +86,12 @@ export class AppMain extends connect(store)(LitElement) {
     this.shadowRoot.querySelectorAll('mwc-ripple').forEach(rippleElement => {
       rippleElement.shadowRoot.querySelector('.mdc-ripple-surface').style.borderRadius = '4px';
     });
-    
+
     return html`
       <div class="prev-button mdc-typography--button ${isNext ? 'reverse' : ''}" @click=${() => Router.go(link)}>
         <mwc-icon>${isNext ? 'arrow_forward_ios' : 'arrow_back_ios'}</mwc-icon>
         <div class="np_text">
-          <div class="np_header">${isNext ? 'Sau' : 'Trước'}</div>
+          <div class="np_header ${isNext ? 'flex-end' : ''}">${isNext ? 'Sau' : 'Trước'}</div>
           <div>${title}</div>
         </div>
         <mwc-ripple primary></mwc-ripple>
