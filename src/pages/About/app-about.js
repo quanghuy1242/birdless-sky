@@ -1,30 +1,21 @@
-import { LitElement, html, customElement, css, unsafeCSS, query, property } from 'lit-element';
+import { LitElement, html, customElement, css, unsafeCSS, property } from 'lit-element';
 import { updateMetadata } from 'pwa-helpers';
-import { materialIconsStyles, mdcTabBarStyles, mdcTypographyStyles, mdcElevationStyles } from '../../sharestyles';
+import { mdcTypographyStyles, mdcElevationStyles } from '../../sharestyles';
 import style from './app-about.scss';
-import { MDCTabBar } from '@material/tab-bar';
+
+import '@material/mwc-tab-bar';
 
 @customElement('app-about')
 export class AppAbout extends LitElement {
-  @query('.mdc-tab-bar') tabBarElement;
 
   @property({ type: Number }) seletedIndex = 0;
 
   static get styles() {
     return [
-      materialIconsStyles,
-      mdcTabBarStyles,
       mdcTypographyStyles,
       mdcElevationStyles,
       css`${unsafeCSS(style)}`
     ];
-  }
-
-  firstUpdated() {
-    this.tabBar = new MDCTabBar(this.tabBarElement);
-    this.tabBar.listen('MDCTabBar:activated', e => {
-      this.seletedIndex = e.detail.index;
-    })
   }
 
   updated() {
@@ -70,41 +61,11 @@ export class AppAbout extends LitElement {
           >
         </div>
         <div class="header-text mdc-typography--headline5">Quang Huy</div>
-        <div class="mdc-tab-bar" role="tablist">
-          <div class="mdc-tab-scroller">
-            <div class="mdc-tab-scroller__scroll-area">
-              <div class="mdc-tab-scroller__scroll-content">
-                <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
-                  <span class="mdc-tab__content">
-                    <span class="mdc-tab__text-label">Informations</span>
-                  </span>
-                  <span class="mdc-tab-indicator mdc-tab-indicator--active">
-                    <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                  </span>
-                  <span class="mdc-tab__ripple"></span>
-                </button>
-                <button class="mdc-tab" role="tab" aria-selected="false" tabindex="-1">
-                  <span class="mdc-tab__content">
-                    <span class="mdc-tab__text-label">Contact</span>
-                  </span>
-                  <span class="mdc-tab-indicator">
-                    <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                  </span>
-                  <span class="mdc-tab__ripple"></span>
-                </button>
-                <button class="mdc-tab" role="tab" aria-selected="false" tabindex="-1">
-                  <span class="mdc-tab__content">
-                    <span class="mdc-tab__text-label">Github projects</span>
-                  </span>
-                  <span class="mdc-tab-indicator">
-                    <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                  </span>
-                  <span class="mdc-tab__ripple"></span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <mwc-tab-bar @MDCTabBar:activated=${e => this.seletedIndex = e.detail.index}>
+          <mwc-tab label="Informations"></mwc-tab>
+          <mwc-tab label="Contact"></mwc-tab>
+          <mwc-tab label="Github projects"></mwc-tab>
+        </mwc-tab-bar>
         <div class="tab-content mdc-typography--body2">
           ${this.getContent(this.seletedIndex)}
         </div>

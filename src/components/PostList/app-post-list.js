@@ -1,18 +1,15 @@
-import { LitElement, html, property, customElement, css, unsafeCSS, queryAll } from 'lit-element';
+import { LitElement, html, property, customElement, css, unsafeCSS } from 'lit-element';
 import { connect } from 'pwa-helpers';
 import { store } from '../../store';
 import style from './app-post-list.scss';
-import { mdcButtonStyles } from '../../sharestyles';
-import { MDCRipple } from '@material/ripple';
 import { fetchNextPosts } from '../../worker/worker.instance';
 
 import '../../components/CardItem/app-card-item';
 import '../../components/CircularProgress/app-circular-progress';
+import '@material/mwc-button';
 
 @customElement('app-post-list')
 export class AppPostList extends connect(store)(LitElement) {
-  @queryAll('.mdc-button') buttonMore;
-
   @property({ type: Array }) posts;
   @property({ type: Object }) lastVisible;
   @property({ type: Number }) lastCount;
@@ -20,7 +17,6 @@ export class AppPostList extends connect(store)(LitElement) {
 
   static get styles() {
     return [
-      mdcButtonStyles,
       css`${unsafeCSS(style)}`,
     ];
   }
@@ -30,12 +26,6 @@ export class AppPostList extends connect(store)(LitElement) {
     this.lastVisible = state.post.lastVisible;
     this.lastCount = state.post.lastCount;
     this.isPending = state.post.isPending;
-  }
-
-  firstUpdated() {
-    this.buttonMore.forEach(element => {
-      MDCRipple.attachTo(element);
-    });
   }
 
   handleLoadMore() {
@@ -59,15 +49,8 @@ export class AppPostList extends connect(store)(LitElement) {
       ${this.isPending
         ? html`<app-circular-progress size="xlarge" center></app-circular-progress>`
         : this.lastCount
-            ? html`
-              <button
-                class="mdc-button mdc-button--raised"
-                @click=${this.handleLoadMore}
-              >
-                Load more
-              </button>
-            `
-            : html``}
+            ? html`<mwc-button label="Load more" raised @click=${this.handleLoadMore}></mwc-button>`
+            : ''}
     `;
   }
 }

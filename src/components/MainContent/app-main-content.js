@@ -1,14 +1,10 @@
 import { LitElement, html, css, property, customElement, query, queryAll, unsafeCSS } from 'lit-element';
 import {
   mdcTopAppBarStyles,
-  mdcButtonStyles,
   mdcElevationStyles,
   mdcTypographyStyles,
   mdcListStyles,
   mdcDrawerStyles,
-  materialIconsStyles,
-  mdcIconButtonStyles,
-  mdcTextFieldStyles
 } from '../../sharestyles';
 import { MDCTopAppBar } from '@material/top-app-bar';
 import { MDCRipple } from '@material/ripple';
@@ -18,22 +14,24 @@ import { connect, installMediaQueryWatcher } from 'pwa-helpers';
 import { classMap } from 'lit-html/directives/class-map';
 import { store } from '../../store';
 import style from './app-main-content.scss';
+import { Router } from '@vaadin/router';
 
 import '../Banner/app-banner';
 import '../Tooltip/app-tooltip';
-import { MDCTextField } from '@material/textfield';
 import { signOut } from '../../worker/worker.instance';
+import '@material/mwc-icon';
+import '@material/mwc-textfield';
+import '@material/mwc-icon-button';
+import '@material/mwc-ripple';
 
 @customElement('app-main-content')
 export class AppNavTop extends connect(store)(LitElement) {
   @query('.mdc-top-app-bar') topAppBarElement;
-  @queryAll('.mdc-button') buttonElements;
   @query('.mdc-list') listElement;
   @query('.mdc-drawer') drawerElement;
   @queryAll('.mdc-list-item') listItems;
   @query('.drawer-frame-root') contentElement;
   @query('app-banner') bannerElement;
-  @query('.mdc-text-field') textFieldElement;
 
   @property({ type: String }) name;
   @property({ type: String }) pathname = window.location.pathname;
@@ -44,14 +42,10 @@ export class AppNavTop extends connect(store)(LitElement) {
   static get styles() {
     return [
       mdcTopAppBarStyles,
-      mdcButtonStyles,
       mdcElevationStyles,
       mdcTypographyStyles,
       mdcListStyles,
       mdcDrawerStyles,
-      materialIconsStyles,
-      mdcIconButtonStyles,
-      mdcTextFieldStyles,
       css`${unsafeCSS(style)}`,
     ];
   }
@@ -80,15 +74,18 @@ export class AppNavTop extends connect(store)(LitElement) {
       if (this.isMobile) {
         this.drawer = MDCDrawer.attachTo(this.drawerElement);
       }
-      new MDCTextField(this.textFieldElement);
     } else {
       delete this.drawer;
     }
 
     // Attact Ripple
-    [...this.buttonElements, ...this.listItems].forEach(buttonElement => {
+    [...this.listItems].forEach(buttonElement => {
       MDCRipple.attachTo(buttonElement);
     });
+
+    this.shadowRoot.querySelectorAll('mwc-ripple').forEach(rippleElement => {
+      rippleElement.shadowRoot.querySelector('.mdc-ripple-surface').style.borderRadius = '4px';
+    })
   }
 
   firstUpdated() {
@@ -131,33 +128,24 @@ export class AppNavTop extends connect(store)(LitElement) {
           <div class="mdc-drawer__content">
             <nav class="mdc-list">
               <div class="mdc-text-field-wrapper">
-                <div class="mdc-text-field mdc-text-field--outlined">
-                  <input class="mdc-text-field__input" id="text-field-hero-input" tabindex="-1">
-                  <div class="mdc-notched-outline">
-                    <div class="mdc-notched-outline__leading"></div>
-                    <div class="mdc-notched-outline__notch">
-                      <label for="text-field-hero-input" class="mdc-floating-label">Search</label>
-                    </div>
-                    <div class="mdc-notched-outline__trailing"></div>
-                  </div>
-                </div>
+                <mwc-textfield label="Search" outlined></mwc-textfield>
               </div>
               <a class="mdc-list-item" href="/home" tabindex="0">
-                <i class="material-icons mdc-list-item__graphic">book</i>
+                <mwc-icon class="mdc-list-item__graphic">book</mwc-icon>
                 <span class="mdc-list-item__text">Blog</span>
               </a>
               <a class="mdc-list-item ${classMap({ "mdc-list-item--activated": this.isMobile })}" href="/category">
-                <i class="material-icons mdc-list-item__graphic">category</i>
+                <mwc-icon class="mdc-list-item__graphic">category</mwc-icon>
                 <span class="mdc-list-item__text">Category</span>
               </a>
               <app-tooltip content="External Link" placement="left">
                 <a class="mdc-list-item" href="http://project-showcase.netlify.com" target="_blank" rel="noreferrer">
-                  <i class="material-icons mdc-list-item__graphic">collections</i>
+                  <mwc-icon class="mdc-list-item__graphic">collections</mwc-icon>
                   <span class="mdc-list-item__text">Showcase</span>
                 </a>
               </app-tooltip>
               <a class="mdc-list-item" href="/about">
-                <i class="material-icons mdc-list-item__graphic">info</i>
+              <mwc-icon class="mdc-list-item__graphic">info</mwc-icon>
                 <span class="mdc-list-item__text">About me</span>
               </a>
             </nav>
@@ -171,10 +159,10 @@ export class AppNavTop extends connect(store)(LitElement) {
   getToggleMenu() {
     return this.isMobile
       ? html`
-        <button
-          class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
+        <mwc-icon-button
+          icon="menu"
           @click=${this.handleToggleMenu}
-        >menu</button>
+        ></mwc-icon-button>
       `
       : html``
   }
@@ -184,34 +172,53 @@ export class AppNavTop extends connect(store)(LitElement) {
   }
 
   render() {
-    const buttonClass =
-      !this.isMobile 
-        ? "mdc-button mdc-button--unelevated mdc-typography--body2"
-        : "mdc-icon-button material-icons";
-
     return html`
       <header class="mdc-top-app-bar app-bar mdc-elevation--z4">
         <div class="mdc-top-app-bar__row">
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
             ${this.getToggleMenu()}
-            <a href="/home" class="mdc-button mdc-button--unelevated header-text mdc-typography--body2">Birdless Sky</a>
+            <a href="/home" class="header-text mdc-typography--body2">
+              Birdless Sky
+              <mwc-ripple></mwc-ripple>
+            </a>
           </section>
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end top-bar-sub-item" role="toolbar">
             ${!this.isPending
               ? html`
                 ${!this.isAuth
                   ? html`
-                    <a href="/login" class="${buttonClass}">${!this.isMobile ? "Sign in" : "face"}</a>
-                    <a href="/register" class="${buttonClass}">${!this.isMobile ? "Register" : "exit_to_app"}</a>
+                    ${!this.isMobile
+                      ? html`
+                        <a href="/login" class="button-text mdc-typography--button">
+                          Sign in
+                          <mwc-ripple></mwc-ripple>
+                        </a>
+                        <a href="/register" class="button-text mdc-typography--button">
+                        Register
+                          <mwc-ripple></mwc-ripple>
+                        </a>
+                      `
+                      : html`
+                        <mwc-icon-button icon="face" @click=${() => Router.go('/login')}></mwc-icon-button>
+                        <mwc-icon-button icon="exit_to_app" @click=${() => Router.go('/register')}></mwc-icon-button>
+                      `}
                   `
                   : html`
-                    <button class="${buttonClass}">${!this.isMobile ? "Đã đăng nhập" : "favorite"}</button>
-                    <button
-                      class="${buttonClass}"
-                      @click=${this.handleSignOut}
-                    >
-                      ${!this.isMobile ? "Sign out" : "exit_to_app"}
-                    </button>
+                      ${!this.isMobile
+                        ? html`
+                          <a class="button-text mdc-typography--button">
+                            Đã đăng nhập
+                            <mwc-ripple></mwc-ripple>
+                          </a>
+                          <a class="button-text mdc-typography--button" @click=${this.handleSignOut}>
+                            Sign out
+                            <mwc-ripple></mwc-ripple>
+                          </a>
+                        `
+                        : html`
+                          <mwc-icon-button icon="favorite"></mwc-icon-button>
+                          <mwc-icon-button icon="exit_to_app" @click=${this.handleSignOut}></mwc-icon-button>
+                        `}
                   `}
               `
               : ''}
@@ -226,9 +233,7 @@ export class AppNavTop extends connect(store)(LitElement) {
           "mdc-top-app-bar--fixed-adjust": true
         })}
       >
-        ${this.pathname === '/home'
-          ? html`<app-banner></app-banner>`
-          : html``}
+        <app-banner></app-banner>
         <div class="drawer-frame-root">
           ${!this.isMobile ? this.getDrawerTemplate() : ''}
           <main

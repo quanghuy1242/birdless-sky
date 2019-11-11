@@ -1,52 +1,44 @@
-import { LitElement, html, css, property, customElement, unsafeCSS, queryAll, query } from 'lit-element';
-import { mdcTypographyStyles, mdcButtonStyles } from '../../sharestyles';
+import { LitElement, html, css, property, customElement, unsafeCSS, query } from 'lit-element';
+import { mdcTypographyStyles } from '../../sharestyles';
 import style from './app-banner.scss';
-import { MDCRipple } from '@material/ripple';
 import { connect } from 'pwa-helpers';
 import { store } from '../../store';
 import { fetchConfig } from '../../worker/worker.instance';
+import { Router } from '@vaadin/router';
 
+import '@material/mwc-button';
+import '@material/mwc-ripple';
 import '../Tooltip/app-tooltip';
 
 @customElement('app-banner')
 export class AppMain extends connect(store)(LitElement) {
-  @queryAll('.mdc-button') buttonElements;
   @query('.banner-wrapper') bannerWrapper;
   
   @property({ type: String }) name;
   @property({ type: String }) slogan;
   @property({ type: String }) image;
+  @property({ type: String }) pathname = window.location.pathname;
 
   stateChanged(state) {
     this.name = state.banner.name;
     this.slogan = state.banner.slogan;
     this.image = state.banner.image;
+    this.pathname = state.router.activeRoute;
   }
 
   static get styles() {
     return [
-      mdcButtonStyles,
       mdcTypographyStyles,
       css`${unsafeCSS(style)}`,
     ];
   }
 
   firstUpdated() {
-    this.buttonElements.forEach(buttonElement => {
-      MDCRipple.attachTo(buttonElement);
-    });
-
-    // get data
-    fetchConfig()
+    fetchConfig(); // get data
   }
 
   updated(changedProperties) {
-    changedProperties.forEach((oldValue, propName) => {
-      if (propName === 'image') {
-        this.setBackgroundImage(this.image);
-      }
-    });
-    
+    this.setBackgroundImage(this.image);
   }
 
   setBackgroundImage(image) {
@@ -57,13 +49,21 @@ export class AppMain extends connect(store)(LitElement) {
 
   render() {
     return html`
-      <div class="banner-wrapper">
-        <h1 class="mdc-typography--headline2">${this.name}</h1>
-        <div class="mdc-button mdc-button--unelevated mdc-typography--body1 slogan">${this.slogan}</div>
-        <app-tooltip content="Information of something special" style="margin-top: 40px">
-          <a href='/about' class="mdc-button mdc-button--raised btn-learn-about" role="tooltip">Learn About Me</a>
-        </app-tooltip>
-      </div>
+      ${this.pathname === '/home'
+        ? html`
+          <div class="banner-wrapper">
+            <h1 class="mdc-typography--headline2">${this.name}</h1>
+            <!-- <div class="mdc-typography--body1 slogan">
+              ${this.slogan}
+              <mwc-ripple></mwc-ripple>
+            </div> -->
+            <mwc-button class="cs-slogan">${this.slogan}</mwc-button>
+            <app-tooltip content="Information of something special" style="margin-top: 40px">
+              <mwc-button raised label="Learn About Me" class="btn-learn-about" @click=${() => Router.go('/about')} ></mwc-button>
+            </app-tooltip>
+          </div>
+        `
+        : ''}
     `;
   }
 }

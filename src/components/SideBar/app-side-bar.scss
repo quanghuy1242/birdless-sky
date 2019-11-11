@@ -1,0 +1,14 @@
+:host {
+  min-width: 300px;
+  display: block;
+}
+
+mwc-textfield {
+  width: 95%;
+  margin: 0 0.5rem 0.5rem 0.5rem;
+}
+
+.cs-drawer {
+  position: sticky;
+  top: 64px;
+}

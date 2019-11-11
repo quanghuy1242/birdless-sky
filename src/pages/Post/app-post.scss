@@ -58,7 +58,7 @@
       background-color: white;
     }
 
-    .close-addition {
+    mwc-icon-button {
       position: absolute;
       right: 5px;
       z-index: 5555;
@@ -90,7 +90,7 @@
         margin-bottom: 0.5rem;
       }
 
-      .comment-box {
+      mwc-textarea {
         width: 100%;
       }
 
@@ -98,7 +98,7 @@
         padding: 0 0.5rem;
       }
 
-      .button-comment {
+      mwc-button {
         margin-top: 0.25rem;
       }
     }
@@ -153,7 +153,7 @@
   flex-direction: row;
   margin: 0.5rem;
 
-  > a {
+  > div {
     display: flex;
     flex-direction: row;
     flex-grow: 1;
@@ -161,6 +161,12 @@
     color: black !important;
     padding: 0.5rem 1rem;
     height: auto;
+    user-select: none;
+
+    mwc-icon {
+      display: flex;
+      align-items: center;
+    }
     
     > :not(:last-child) {
       margin-right: 0.7rem;
@@ -169,6 +175,10 @@
 
   .prev-button {
     justify-content: flex-start;
+
+    &.reverse {
+      flex-direction: row-reverse;
+    }
   }
 
   .next-button {
@@ -176,6 +186,10 @@
 
     .np_text {
       text-align: right;
+
+      div {
+        line-height: 1;
+      }
     }
   }
 
@@ -183,11 +197,15 @@
     display: flex;
     flex-direction: column;
 
+    div {
+      line-height: 1;
+    }
+
     > :not(:last-child) {
       margin-bottom: 0.5rem;
     }
 
-    .np_header, .material-icons {
+    .np_header, mwc-icon {
       color: var(--mdc-theme-primary);
     }
   }

@@ -1,12 +1,12 @@
 import { LitElement, html, property, customElement, css, unsafeCSS, query } from 'lit-element';
 import { styleMap } from 'lit-html/directives/style-map';
-import { MDCRipple } from '@material/ripple';
-import { mdcTypographyStyles, mdcElevationStyles, mdcRippleStyles, mdcCardStyles } from '../../sharestyles';
+import { mdcTypographyStyles, mdcElevationStyles } from '../../sharestyles';
 import style from './app-category-item.scss';
+
+import '@material/mwc-ripple';
 
 @customElement('app-category-item')
 export class AppCategoriesList extends LitElement {
-  @query('.mdc-card__primary-action') categoryItemElement;
   @query('.main-text') mainText;
   @query('.subtitle') subtitle;
 
@@ -18,14 +18,8 @@ export class AppCategoriesList extends LitElement {
     return [
       mdcTypographyStyles,
       mdcElevationStyles,
-      mdcRippleStyles,
-      mdcCardStyles,
       css`${unsafeCSS(style)}`,
     ];
-  }
-
-  firstUpdated() {
-    MDCRipple.attachTo(this.categoryItemElement);
   }
 
   handleHover() {
@@ -49,6 +43,7 @@ export class AppCategoriesList extends LitElement {
       >
         <span class="main-text mdc-typography--headline5">${this.name}</span>
         <span class="subtitle mdc-typography--caption">${this.description.slice(0, 35) + '...'}</span>
+        <mwc-ripple primary></mwc-ripple>
       </a>
     `;
   }

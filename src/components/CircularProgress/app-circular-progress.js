@@ -16,6 +16,7 @@ export class AppCircularProgress extends LitElement {
   @property({ type: Number }) progress;
   @property({ type: Number }) min = 0;
   @property({ type: Number }) max = 1;
+  @property({ type: String }) center;
 
   static get styles() {
     return [

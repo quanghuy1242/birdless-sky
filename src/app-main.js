@@ -4,6 +4,7 @@ import { fetchInitPosts, subscribeAuthState, fetchAllCategories } from './worker
 import { initRouter } from './routes/router';
 
 import './components/MainContent/app-main-content';
+// import './components/MainContent/app-main-content-2'
 
 @customElement('app-main')
 export class AppMain extends LitElement {

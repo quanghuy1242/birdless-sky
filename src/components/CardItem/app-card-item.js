@@ -2,23 +2,22 @@ import { LitElement, html, css, property, customElement, unsafeCSS, query } from
 import { styleMap } from 'lit-html/directives/style-map';
 import style from './app-card-item.scss';
 import {
-  mdcButtonStyles,
   mdcCardStyles,
-  materialIconsStyles,
   mdcTypographyStyles,
-  mdcIconButtonStyles,
   mdcElevationStyles,
   mdcChipsStyles
 } from '../../sharestyles';
-import { MDCRipple } from '@material/ripple';
 import { MDCChipSet } from '@material/chips';
 import { getDate } from '../../utils/post.util';
+import { Router } from '@vaadin/router';
 
 import '../Tooltip/app-tooltip';
+import '@material/mwc-icon-button';
+import '@material/mwc-button';
+import '@material/mwc-ripple';
 
 @customElement('app-card-item')
 export class AppCardItem extends LitElement {
-  @query('.mdc-card__media') backgroundImage;
   @query('.mdc-chip-set') chipsetElement;
 
   @property({ type: String }) postId = null;
@@ -33,10 +32,7 @@ export class AppCardItem extends LitElement {
   static get styles() {
     return [
       mdcTypographyStyles,
-      mdcButtonStyles,
       mdcCardStyles,
-      materialIconsStyles,
-      mdcIconButtonStyles,
       mdcElevationStyles,
       mdcChipsStyles,
       css`${unsafeCSS(style)}`,
@@ -44,9 +40,8 @@ export class AppCardItem extends LitElement {
   }
 
   firstUpdated() {
-    const rippleElemnents
-      = this.shadowRoot.querySelectorAll('.mdc-button, .mdc-icon-button, .mdc-card__primary-action')
-    rippleElemnents.forEach(element => MDCRipple.attachTo(element));
+    // const rippleElemnents = this.shadowRoot.querySelectorAll('.mdc-card__primary-action')
+    // rippleElemnents.forEach(element => MDCRipple.attachTo(element));
 
     // Chip
     this.chipSet = new MDCChipSet(this.chipsetElement);
@@ -122,34 +117,20 @@ export class AppCardItem extends LitElement {
             class="card__secondary mdc-typography mdc-typography--body2"
             style=${styleMap({ paddingTop: this.image ? '1rem' : '0.5rem' })}
           >${this.description}</div>
+          <mwc-ripple></mwc-ripple>
         </div>
         <div class="mdc-card__actions">
           <div class="mdc-card__action-buttons">
             <app-tooltip content="Read full content of this post">
-              <a
-                class="mdc-button mdc-card__action mdc-card__action--button"
-                href="/post/${this.titleId}/${this.postId}"
-              >
-                Read
-              </a>
+              <mwc-button label="Read" @click=${() => Router.go(`/post/${this.titleId}/${this.postId}`)}></mwc-button>
             </app-tooltip>
             <app-tooltip content="Comment">
-              <a
-                class="mdc-button mdc-card__action mdc-card__action--button"
-                href="/post/${this.titleId}/${this.postId}"
-              >
-                Comment
-              </a>
+              <mwc-button label="Comment" @click=${() => Router.go(`/post/${this.titleId}/${this.postId}`)}></mwc-button>
             </app-tooltip>
           </div>
           <div class="mdc-card__action-icons">
             <app-tooltip content="Shares">
-              <button
-                class="mdc-icon-button material-icons mdc-card__action mdc-card__action--icon--unbounded"
-                data-mdc-ripple-is-unbounded="true"
-              >
-                share
-              </button>
+              <mwc-icon-button icon="share"></mwc-icon-button>
             </app-tooltip>
           </div>
         </div>

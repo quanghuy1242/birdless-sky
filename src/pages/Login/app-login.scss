@@ -28,12 +28,8 @@
       display: flex;
       flex-direction: column;
 
-      .mdc-textfield-wrapper {
-        display: flex;
-
-        .mdc-text-field {
-          width: 100%;
-        }
+      mwc-textfield {
+        width: 100%;
       }
 
       > :not(:last-child) {

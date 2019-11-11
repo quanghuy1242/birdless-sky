@@ -1,19 +1,17 @@
 import { LitElement, html, css, customElement, unsafeCSS, queryAll, property } from 'lit-element';
 import style from './app-register.scss';
-import { mdcTextFieldStyles, mdcButtonStyles, mdcTypographyStyles } from '../../sharestyles';
-import { MDCTextField } from '@material/textfield';
-import { MDCRipple } from '@material/ripple';
+import { mdcTypographyStyles } from '../../sharestyles';
 import { addNewUser } from '../../worker/worker.instance';
 import { connect, updateMetadata } from 'pwa-helpers';
 import { store } from '../../store';
 import { Router } from '@vaadin/router';
 
 import '../../components/Tooltip/app-tooltip';
+import '@material/mwc-textfield';
+import '@material/mwc-button';
 
 @customElement('app-register')
 export class AppMain extends connect(store)(LitElement) {
-  @queryAll('.mdc-text-field') textFieldElements;
-  @queryAll('.mdc-button') buttonElements;
 
   @property({ type: String }) username = '';
   @property({ type: String }) email = '';
@@ -25,8 +23,6 @@ export class AppMain extends connect(store)(LitElement) {
 
   static get styles() {
     return [
-      mdcTextFieldStyles,
-      mdcButtonStyles,
       mdcTypographyStyles,
       css`${unsafeCSS(style)}`
     ];
@@ -48,16 +44,6 @@ export class AppMain extends connect(store)(LitElement) {
       description: 'Đăng kí tài khoản',
       url: window.location.href
     });
-  }
-
-  firstUpdated() {
-    this.textFieldElements.forEach(element => {
-      new MDCTextField(element);
-    });
-
-    this.buttonElements.forEach(element => {
-      new MDCRipple(element);
-    })
   }
 
   handleValueChange(event, type) {
@@ -120,97 +106,47 @@ export class AppMain extends connect(store)(LitElement) {
           <div class="header mdc-typography--headline4">Đăng ký</div>
           <div class="main-form">
             <app-tooltip content="Tên đăng nhập có tối thiểu 5 chữ số" placement="top-end">
-              <div class="mdc-textfield-wrapper">
-                <div class="mdc-text-field mdc-text-field--outlined">
-                  <input
-                    class="mdc-text-field__input"
-                    id="text-field-hero-input-1"
-                    .value=${this.username}
-                    required
-                    @change=${(event) => this.handleValueChange(event, 'username')}
-                  >
-                  <div class="mdc-notched-outline">
-                    <div class="mdc-notched-outline__leading"></div>
-                    <div class="mdc-notched-outline__notch">
-                      <label for="text-field-hero-input" class="mdc-floating-label">Username</label>
-                    </div>
-                    <div class="mdc-notched-outline__trailing"></div>
-                  </div>
-                </div>
-              </div>
+              <mwc-textfield
+                .value=${this.username}
+                label="Username"
+                required
+                outlined
+                @change=${(event) => this.handleValueChange(event, 'username')}
+              ></mwc-textfield>
             </app-tooltip>
             <app-tooltip content="Email đúng định dạng" placement="top-end">
-              <div class="mdc-textfield-wrapper">
-                <div class="mdc-text-field mdc-text-field--outlined">
-                  <input
-                    class="mdc-text-field__input" 
-                    id="text-field-hero-input-1"
-                    .value=${this.email}
-                    required
-                    type="email"
-                    @change=${(event) => this.handleValueChange(event, 'email')}
-                  >
-                  <div class="mdc-notched-outline">
-                    <div class="mdc-notched-outline__leading"></div>
-                    <div class="mdc-notched-outline__notch">
-                      <label for="text-field-hero-input" class="mdc-floating-label">Email</label>
-                    </div>
-                    <div class="mdc-notched-outline__trailing"></div>
-                  </div>
-                </div>
-              </div>
+              <mwc-textfield
+                .value=${this.email}
+                label="Email"
+                required
+                outlined
+                type="email"
+                @change=${(event) => this.handleValueChange(event, 'email')}
+              ></mwc-textfield>
             </app-tooltip>
             <app-tooltip content="Mật khẩu phải có ít nhất 1 ký tự hoa, 1 ký tự thường, 1 ký tự số" placement="top-end">
-              <div class="mdc-textfield-wrapper">
-                <div class="mdc-text-field mdc-text-field--outlined">
-                  <input
-                    class="mdc-text-field__input"
-                    id="text-field-hero-input-2"
-                    type="password"
-                    .value=${this.password}
-                    required
-                    @change=${(event) => this.handleValueChange(event, 'password')}
-                  >
-                  <div class="mdc-notched-outline">
-                    <div class="mdc-notched-outline__leading"></div>
-                    <div class="mdc-notched-outline__notch">
-                      <label for="text-field-hero-input" class="mdc-floating-label">Password</label>
-                    </div>
-                    <div class="mdc-notched-outline__trailing"></div>
-                  </div>
-                </div>
-              </div>
+              <mwc-textfield
+                .value=${this.password}
+                label="Password"
+                required
+                outlined
+                type="password"
+                @change=${(event) => this.handleValueChange(event, 'password')}
+              ></mwc-textfield>
             </app-tooltip>
             <app-tooltip content="Nhập lại mật khẩu" placement="top-end">
-              <div class="mdc-textfield-wrapper">
-                <div class="mdc-text-field mdc-text-field--outlined">
-                  <input
-                    class="mdc-text-field__input"
-                    id="text-field-hero-input-2"
-                    type="password"
-                    .value=${this.rePassword}
-                    required
-                    @change=${(event) => this.handleValueChange(event, 'rePassword')}
-                  >
-                  <div class="mdc-notched-outline">
-                    <div class="mdc-notched-outline__leading"></div>
-                    <div class="mdc-notched-outline__notch">
-                      <label for="text-field-hero-input" class="mdc-floating-label">Retype Password</label>
-                    </div>
-                    <div class="mdc-notched-outline__trailing"></div>
-                  </div>
-                </div>
-              </div>
+              <mwc-textfield
+                .value=${this.rePassword}
+                label="Retype Password"
+                required
+                outlined
+                type="password"
+                @change=${(event) => this.handleValueChange(event, 'rePassword')}
+              ></mwc-textfield>
             </app-tooltip>
           </div>
           <div class="action">
-            <button
-              class="mdc-button mdc-button--raised"
-              @click=${this.handleRegister}
-              .disabled=${this.isPending}
-            >
-              Register
-            </button>
+            <mwc-button label="Register" raised @click=${this.handleRegister}></mwc-button>
           </div>
           ${this.error
             ? html`<div class="mdc-typography--body2 error">${this.error}</div>`

@@ -1,24 +1,26 @@
-import { LitElement, html, css, property, customElement, unsafeCSS, query, queryAll } from 'lit-element';
+import { LitElement, html, css, property, customElement, unsafeCSS, queryAll } from 'lit-element';
 import { updateMetadata, connect } from 'pwa-helpers';
 import { store } from '../../store';
-import { mdcTypographyStyles, mdcIconButtonStyles, materialIconsStyles, githubMarkdownStyles, mdcChipsStyles, mdcTextFieldStyles, mdcButtonStyles } from '../../sharestyles';
-import { fetchPostById, getRelatedPost } from '../../worker/worker.instance';
+import { mdcTypographyStyles, mdcChipsStyles } from '../../sharestyles';
+import { fetchPostById } from '../../worker/worker.instance';
 import { getDate } from '../../utils/post.util';
 import { MDCChipSet } from '@material/chips';
-import { MDCTextField } from '@material/textfield';
-import { MDCRipple } from '@material/ripple/component';
 import { classMap } from 'lit-html/directives/class-map';
 import style from './app-post.scss';
+import { Router } from '@vaadin/router';
 
 import '../../components/CircularProgress/app-circular-progress';
 import '../../components/Tooltip/app-tooltip';
 import '../../components/MarkdownContent/app-markdown';
+import '@material/mwc-icon-button';
+import '@material/mwc-icon';
+import '@material/mwc-button';
+import '@material/mwc-ripple';
+import '@material/mwc-textarea';
 
 @customElement('app-post')
 export class AppMain extends connect(store)(LitElement) {
   @queryAll('.mdc-chip-set') chipsetElements;
-  @queryAll('.mdc-button') buttonElements;
-  @queryAll('.mdc-text-field') textFieldElements;
 
   @property({ type: String }) id;
   @property({ type: String }) title;
@@ -33,12 +35,8 @@ export class AppMain extends connect(store)(LitElement) {
 
   static get styles() {
     return [
-      materialIconsStyles,
       mdcTypographyStyles,
-      mdcIconButtonStyles,
       mdcChipsStyles,
-      mdcTextFieldStyles,
-      mdcButtonStyles,
       css`${unsafeCSS(style)}`
     ];
   }
@@ -65,12 +63,6 @@ export class AppMain extends connect(store)(LitElement) {
       new MDCChipSet(element)
     });
 
-    this.textFieldElements.forEach(element => {
-      new MDCTextField(element);
-    });
-    
-    this.buttonElements.forEach(button => MDCRipple.attachTo(button));
-
     updateMetadata({
       title: `${this.title ? this.title + ' - Quang Huy' : ''}`,
       description: `Bài viết số ${this.id}`,
@@ -86,6 +78,19 @@ export class AppMain extends connect(store)(LitElement) {
     return html`
       <div class="post-detail__body__author mdc-typography--subtitle2">
         <b><i>Quang Huy</i></b>
+      </div>
+    `;
+  }
+
+  renderNextPreviousButton(isNext, title, link) {
+    return html`
+      <div class="prev-button mdc-typography--button ${isNext ? 'reverse' : ''}" @click=${() => Router.go(link)}>
+        <mwc-icon>${isNext ? 'arrow_forward_ios' : 'arrow_back_ios'}</mwc-icon>
+        <div class="np_text">
+          <div class="np_header">${isNext ? 'Sau' : 'Trước'}</div>
+          <div>${title}</div>
+        </div>
+        <mwc-ripple primary></mwc-ripple>
       </div>
     `;
   }
@@ -112,9 +117,10 @@ export class AppMain extends connect(store)(LitElement) {
                   </div>
                   <div class="post-detail__header__action">
                     <app-tooltip content="Detail" placement="left">
-                      <button class="mdc-icon-button material-icons" @click=${this.handleTogglePanel}>
-                        ${this.isPanelOpen ? 'menu_open' : 'menu'}
-                      </button>
+                      <mwc-icon-button
+                        icon=${this.isPanelOpen ? 'menu_open' : 'menu'}
+                        @click=${this.handleTogglePanel}
+                      ></mwc-icon-button>
                     </app-tooltip>
                   </div>
                 </div>
@@ -128,33 +134,24 @@ export class AppMain extends connect(store)(LitElement) {
                 <div class="next-previous-panel">
                   ${this.related[1]?.id
                     ? html`
-                    <a class="prev-button mdc-button" href="/post/${this.related[1]?.titleId}/${this.related[1]?.id}">
-                      <i class="material-icons">arrow_back_ios</i>
-                      <div class="np_text">
-                        <div class="np_header">Trước</div>
-                        <div>${this.related[1]?.title}</div>
-                      </div>
-                    </a>
+                      ${this.renderNextPreviousButton(
+                        false,
+                        this.related[1]?.title,
+                        `/post/${this.related[1]?.titleId}/${this.related[1]?.id}`
+                      )}
                     ` : ''}
                   ${this.related[0]?.id
                     ? html`
-                    <a class="next-button mdc-button" href="/post/${this.related[0]?.titleId}/${this.related[0]?.id}">
-                      <div class="np_text">
-                        <div class="np_header">Sau</div>
-                        <div>${this.related[0]?.title}</div>
-                      </div>
-                      <i class="material-icons">arrow_forward_ios</i>
-                    </a>
+                      ${this.renderNextPreviousButton(
+                        true,
+                        this.related[0]?.title,
+                        `/post/${this.related[0]?.titleId}/${this.related[0]?.id}`
+                      )}
                     ` : ''}
                 </div>
               </div>
               <div class="additional-information ${this.isPanelOpen ? 'open' : ''}">
-                <button
-                  class="mdc-icon-button material-icons close-addition"
-                  @click=${this.handleTogglePanel}
-                >
-                  close
-                </button>
+                <mwc-icon-button icon="close" @click=${this.handleTogglePanel}></mwc-icon-button>
                 <div class="additional-information-inner">
                   <div class="category">
                     <div class="mdc-typography--caption header">Thể loại</div>
@@ -185,24 +182,18 @@ export class AppMain extends connect(store)(LitElement) {
                   <div class="social">
                     <div class="mdc-typography--caption header">Chia sẻ</div>
                     <div class="action-button">
-                      <button class="mdc-button mdc-button--raised">Facebook</button>
-                      <button class="mdc-button mdc-button--raised">Twitter</button>
+                      <mwc-button raised label="Facebook"></mwc-button>
+                      <mwc-button raised label="Twitter"></mwc-button>
                     </div>
                   </div>
                   <div class="comments">
                     <div class="mdc-typography--caption header">Bình luận</div>
                     <div class="mdc-textfield-wrapper">
-                      <div class="mdc-text-field mdc-text-field--textarea comment-box">
-                        <textarea id="textarea" class="mdc-text-field__input"></textarea>
-                        <div class="mdc-notched-outline">
-                          <div class="mdc-notched-outline__leading"></div>
-                          <div class="mdc-notched-outline__notch">
-                            <label for="textarea" class="mdc-floating-label">Comment</label>
-                          </div>
-                          <div class="mdc-notched-outline__trailing"></div>
-                        </div>
-                      </div>
-                      <button class="mdc-button mdc-button--raised button-comment">Bình luận</button>
+                      <mwc-textarea
+                        outlined
+                        label="Bình luận"
+                      ></mwc-textarea>
+                      <mwc-button raised label="Comment"></mwc-button>
                     </div>
                   </div>
                 </div>
