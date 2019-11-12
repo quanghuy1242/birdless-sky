@@ -11,10 +11,19 @@ export class AppVideo extends LitElement {
     return css`
       :host {
         display: block;
+        position: relative;
+        padding-bottom: 56.25%;
+        padding-top: 30px;
+        height: 0;
+        overflow: hidden;
       }
 
-      :host([center]) {
-        text-align: center;
+      iframe, object, embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 90%;
       }
     `;
   }
