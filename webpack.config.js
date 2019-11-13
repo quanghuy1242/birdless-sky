@@ -43,6 +43,7 @@ module.exports = (env, argv) => {
       new WorkerPlugin(),
       new CopyPlugin([
         { from: './robots.txt', to: './' },
+        { from: './favicon.ico', to: './' },
       ]),
       argv.mode !== 'production' ? new BundleAnalyzerPlugin() : false,
     ].filter(Boolean),
