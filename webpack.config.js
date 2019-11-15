@@ -44,6 +44,7 @@ module.exports = (env, argv) => {
       new CopyPlugin([
         { from: './robots.txt', to: './' },
         { from: './favicon.ico', to: './' },
+        { from: './_redirects', to: './' }
       ]),
       argv.mode !== 'production' ? new BundleAnalyzerPlugin() : false,
     ].filter(Boolean),
