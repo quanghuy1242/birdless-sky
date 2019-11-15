@@ -3,3 +3,5 @@ dist/
 **/.firebaserc
 .runtimeconfig.json
 .firebase/
+# Local Netlify folder
+.netlify
