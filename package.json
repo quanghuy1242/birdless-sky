@@ -1,7 +1,7 @@
 {
   "name": "birdless-sky",
   "version": "1.0.0",
-  "description": "",
+  "description": "Personal Blog",
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
@@ -65,5 +65,13 @@
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "remove-markdown": "^0.3.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quanghuy1242/birdless-sky.git"
+  },
+  "bugs": {
+    "url": "https://github.com/quanghuy1242/birdless-sky/issues"
+  },
+  "homepage": "https://github.com/quanghuy1242/birdless-sky#readme"
 }
