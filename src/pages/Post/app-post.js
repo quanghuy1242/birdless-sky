@@ -1,4 +1,4 @@
-import { LitElement, html, css, property, customElement, unsafeCSS, queryAll } from 'lit-element';
+import { LitElement, html, css, property, customElement, unsafeCSS, queryAll, query } from 'lit-element';
 import { updateMetadata, connect } from 'pwa-helpers';
 import { store } from '../../store';
 import { mdcTypographyStyles, mdcChipsStyles } from '../../sharestyles';
@@ -8,6 +8,7 @@ import { MDCChipSet } from '@material/chips';
 import { classMap } from 'lit-html/directives/class-map';
 import style from './app-post.scss';
 import { Router } from '@vaadin/router';
+import removeMd from 'remove-markdown';
 
 import '../../components/CircularProgress/app-circular-progress';
 import '../../components/Tooltip/app-tooltip';
@@ -17,16 +18,20 @@ import '@material/mwc-icon';
 import '@material/mwc-button';
 import '@material/mwc-ripple';
 import '@material/mwc-textarea';
+import '@material/mwc-snackbar';
 
 @customElement('app-post')
 export class AppMain extends connect(store)(LitElement) {
   @queryAll('.mdc-chip-set') chipsetElements;
+  @query('mwc-snackbar') snackbarElement;
 
   @property({ type: String }) id;
   @property({ type: String }) title;
   @property({ type: String }) titleId;
   @property() date;
   @property({ type: String }) content;
+  @property({ type: String }) image;
+  @property({ type: String }) preview;
   @property({ type: Array }) tags;
   @property({ type: Object }) category;
   @property({ type: Boolean }) isPending;
@@ -51,6 +56,8 @@ export class AppMain extends connect(store)(LitElement) {
     this.isPending = state.postDetail.isPending;
     this.category = state.postDetail.category;
     this.related = state.postDetail.related;
+    this.preview = state.postDetail.preview;
+    this.image = state.postDetail.image;
   }
 
   firstUpdated() {
@@ -97,6 +104,15 @@ export class AppMain extends connect(store)(LitElement) {
         <mwc-ripple primary></mwc-ripple>
       </div>
     `;
+  }
+
+  handleShareClick() {
+    const base = 'https://birdless.page.link';
+    const url = `https://quanghuy.web.app/post/${this.titleId}/${this.id}`;
+    const shareLink = `${base}/?link=${url}&st=${this.title}&sd=${this.preview}&si=${this.image}`;
+    navigator.clipboard
+      .writeText(encodeURI(shareLink))
+      .then(() => this.snackbarElement.open())
   }
 
   render() {
@@ -186,8 +202,7 @@ export class AppMain extends connect(store)(LitElement) {
                   <div class="social">
                     <div class="mdc-typography--caption header">Chia sẻ</div>
                     <div class="action-button">
-                      <mwc-button raised label="Facebook"></mwc-button>
-                      <mwc-button raised label="Twitter"></mwc-button>
+                      <mwc-button raised label="Share link" @click=${this.handleShareClick}></mwc-button>
                     </div>
                   </div>
                   <div class="comments">
@@ -211,6 +226,11 @@ export class AppMain extends connect(store)(LitElement) {
               ></app-circular-progress>
             `}
       </div>
+      <mwc-snackbar
+        labelText="Đã copy link vào bộ nhớ tạm!"
+      >
+        <mwc-icon-button icon="close" slot="dismiss"></mwc-icon-button>
+      </mwc-snackbar>
     `;
   }
 }
